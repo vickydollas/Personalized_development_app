@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+@import "tailwindcss";
+
+@import 'primeicons/primeicons.css';
+
+:root {
+  --roboto-mono: "Roboto", san-serif,
+    --bg-color: #ffffff;
+  --text-color: #1a1a1a;
+  --accent-color: #3498db;
+  /* Font Size Scale */
+  --fs-v: 1rem;
+  --fs-vv: 0.9rem;
+  --fs-vvv: 0.8rem;
+  --fs-vvvv: 0.7rem;
+  --fs-a: 0.6rem;
+  --fs-aa: 0.5rem;
+  --fs-aaa: 0.4rem;
+  --fs-aaaa: 0.3rem;
+  --fs-sm: 0.875rem;
+  /* 14px */
+  --fs-xs: 0.75rem;
+  /* 12px */
+  --fs-md: 1.125rem;
+  /* 18px */
+  --fs-lg: 1.25rem;
+  /* 20px */
+  --fs-xl: 1.5rem;
+  /* 24px */
+  --fs-2xl: 1.875rem;
+  /* 30px */
+  --fs-3xl: 2.25rem;
+  /* 36px */
+
+  /* You can also define Font Weights for consistency */
+  --fw-normal: 400;
+  --fw-medium: 500;
+  --fw-bold: 700;
+}
