@@ -165,7 +165,9 @@ const isStatus = (status) => {
           </p>
           <p class="txt4 text-[0.9rem] py-3 text-[#808080]">{{ task.timeline }}</p>
           <p class="txt5 text-[0.9rem] py-3 text-[#808080]">{{ task.update }}</p>
-          <p class="txt6 text-[0.9rem] py-3 text-[#808080]">{{ task.evidence }}</p>
+          <p class="txt6 text-[0.9rem] py-3 text-[#808080]">
+            {{ task.evidence }} <input type="file" name="yes" id="" />
+          </p>
           <p class="txt7 text-[0.9rem] py-3 text-[#808080]">
             <i @click.stop="removeItem(index)" class="pi pi-trash text-[#FF0000] text-[1.2rem]"></i>
           </p>
