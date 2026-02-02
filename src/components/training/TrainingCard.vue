@@ -1,5 +1,6 @@
 <script setup>
 import { computed, ref } from 'vue'
+import GraphDisplay from '../body/GraphDisplay.vue'
 
 const props = defineProps({
   show: Boolean,
@@ -220,8 +221,12 @@ const menuItems = ref([
 const selectiveItems = computed(() => {
   return props.show ? menuItems.value.slice(0, 5) : menuItems.value.slice(0, 10)
 })
+const setRating = (task, newRating) => {
+  task.rating = newRating
+}
 </script>
 <template>
+  <!-- <GraphDisplay /> -->
   <div class="">
     <div v-if="props.show" class="flex items-center justify-between mt-2">
       <label for="" class="border-2 border-[#EEEEEE] p-2 rounded-[5px]"
@@ -332,7 +337,12 @@ const selectiveItems = computed(() => {
           :class="[props.show ? 'flex-[0_0_10%]' : 'flex-[0_0_15%]']"
           class="text-[#808080] border-b-2 border-[#EAEAEA] text-[0.8rem] py-4"
         >
-          {{ item.rating }}
+          <i
+            v-for="star in 5"
+            :key="star"
+            @click="setRating(item, star)"
+            :class="['pi', star <= item.rating ? 'pi-star-fill text-[#FFB800]' : 'pi-star']"
+          ></i>
         </p>
       </div>
     </div>

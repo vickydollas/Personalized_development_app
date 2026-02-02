@@ -113,6 +113,67 @@ const goal = ref([
     feedback: 'Satisfactory',
   },
 ])
+
+const series = ref([
+  {
+    name: 'Current State',
+    data: [1.1, 1.9, 2.8, 1.3, 2.3, 2.7], // Yellow bars
+  },
+  {
+    name: 'Desired State',
+    data: [1.9, 2.7, 4.0, 2.5, 2.8, 4.0], // Green bars
+  },
+])
+const chartOptions = ref({
+  chart: {
+    type: 'bar',
+    toolbar: { show: false },
+  },
+  colors: ['#FFC107', '#4CAF50'], // Matching your Yellow and Green
+  plotOptions: {
+    bar: {
+      horizontal: false,
+      columnWidth: '45%', // Spacing between bar groups
+      endingShape: 'rounded', // Old versions
+      borderRadius: 6, // New versions: creates those rounded tops
+    },
+  },
+  dataLabels: {
+    enabled: false, // Your image doesn't show numbers on top
+  },
+  stroke: {
+    show: true,
+    width: 2,
+    colors: ['transparent'],
+  },
+  grid: {
+    borderColor: '#000000',
+    strokeDashArray: 8, // Makes the background lines dashed like your image
+    yaxis: {
+      lines: { show: true },
+    },
+  },
+  xaxis: {
+    categories: ['skill 1', 'skill 2', 'skill 3', 'skill 4', 'skill 5', 'skill 6'],
+    axisBorder: { show: false },
+    axisTicks: { show: false },
+  },
+  yaxis: {
+    min: 0,
+    max: 4,
+    tickAmount: 4,
+    labels: {
+      style: { fontSize: '14px', colors: '#333' },
+      formatter: (val) => {
+        const levels = ['Beginner', 'Intermediate', 'Proficient', 'Advanced', 'Expert']
+        return levels[Math.round(val)]
+      },
+    },
+  },
+  legend: {
+    show: true, // Hiding legend as requested
+  },
+})
 </script>
 <template>
   <div class="pb-5">
@@ -120,8 +181,16 @@ const goal = ref([
     <NavMenu />
     <div class="bg-[#EEEEEE]">
       <BodyOption />
-      <div class="py-2 px-4 bg-[#ffffff] mx-20">
-        <div></div>
+      <div class="py-2 px-4 bg-[#ffffff] mx-20 rounded-[7px]">
+        <div class="rounded-[7px] px-2 py-4 my-10 shadow-[0_0_15px_rgba(0,0,0,0.2)] pl-3">
+          <div class="flex items-center px-5 justify-between">
+            <h3 class="text-[1.5rem] font-[600]">Skill Assessment</h3>
+            <button class="py-2 px-8 bg-[#47B65C] cursor-pointer rounded-[7px] text-white">
+              Skill Request
+            </button>
+          </div>
+          <apexchart width="420" type="bar" :options="chartOptions" :series="series"></apexchart>
+        </div>
         <div>
           <h3 class="text-[0.8rem] text-[#808080]">
             Do you the full understanding of your skills Metrics?

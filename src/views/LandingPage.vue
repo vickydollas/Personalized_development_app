@@ -1,14 +1,22 @@
 <script setup>
 import NavMenu from '@/components/navbar/NavMenu.vue'
 import TopHeader from '../components/navbar/TopHeader.vue'
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, reactive } from 'vue'
 import axios from 'axios'
 import BodyOption from '@/components/navbar/BodyOption.vue'
+import GraphDisplay from '../components/body/GraphDisplay.vue'
 // text area display functionality
 const textDisplay = ref(null)
 const toggleText = (id) => {
   textDisplay.value = textDisplay.value ? null : id
 }
+// form parameters
+const formData = reactive({
+  name: '',
+  achievements: '',
+  resources: '',
+  success: '',
+})
 // menuitems to document the detail of your plan
 const menuItems = ref([
   { id: 1, name: 'Goals', path: '/' },
@@ -20,6 +28,7 @@ const menuItems = ref([
   { id: 5, name: 'Progress Metrics', path: '/contact' },
   { id: 5, name: 'Feedback', path: '/contact' },
 ])
+
 // API call
 const isLoading = ref(false)
 const error = ref(null)
@@ -50,7 +59,7 @@ onMounted(() => {
     <NavMenu />
     <div>
       <BodyOption />
-      <div class="py-5 px-4 bg-[#ffffff] mx-20">
+      <div class="py-5 px-4 bg-[#ffffff] rounded-[6px] mx-20">
         <div class="flex items-center justify-between py-5 border-b-2 border-[#808080]">
           <h2 class="text-[1.5rem] font-[600]">Development Plan</h2>
           <button class="bg-[#47B65C] text-white cursor-pointer px-8 py-2 rounded-[5px]">
@@ -62,6 +71,7 @@ onMounted(() => {
           <p class="mr-10">Mid term goal (7-12 months)</p>
           <p class="mr-10">Short term goal (13-24 months)</p>
         </div>
+        <GraphDisplay />
         <div class="mt-5">
           <label for="" class="border-1 border-[#EEEEEE] p-3 rounded-[5px]"
             >Development Plan:
@@ -95,26 +105,23 @@ onMounted(() => {
           </div>
           <div class="col-span-4 px-2 py-4 bg-[#EEEEEE]">
             <h3 class="pl-3 text-[1.4rem] font-[600]">Details</h3>
-            <div v-for="item in menuItems" :key="item.id" class="my-1 px-3">
+            <form @submit="formData" v-for="item in menuItems" :key="item.id" class="my-1 px-3">
               <div
                 class="flex bg-[#ffffff] justify-between items-center px-3 py-3 shadow-[0_0_15px_rgba(0,0,0,0.2)]"
               >
                 <p>{{ item.name }}</p>
                 <i
-                  v-show="textDisplay !== item.id"
                   @click.stop="toggleText(item.id)"
-                  class="pi pi-angle-down text-[1.4rem]"
-                ></i>
-                <i
-                  v-show="textDisplay === item.id"
-                  @click="toggleText(item.id)"
-                  class="pi pi-angle-up text-[1.4rem]"
+                  :class="[
+                    'pi text-[1.4rem]',
+                    textDisplay !== item.id ? 'pi-angle-down' : 'pi-angle-up',
+                  ]"
                 ></i>
               </div>
               <div v-show="textDisplay === item.id" class="bg-[#ffffff] py-7 px-4">
-                <textarea class="w-full" cols="40" rows="4"></textarea>
+                <textarea v-model="formData.name" class="w-full" cols="40" rows="4"></textarea>
               </div>
-            </div>
+            </form>
             <div class="flex justify-end">
               <button class="mx-3 my-2 py-2 px-8 rounded-[7px] bg-[#FF0000] text-white">
                 Delete
