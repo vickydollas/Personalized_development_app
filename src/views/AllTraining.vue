@@ -13,7 +13,7 @@ const toggleText = (id) => {
 // menuitems to document the detail of your plan
 </script>
 <template>
-  <div class="bg-[#EEEEEE]">
+  <div class="bg-[#EEEEEE] pb-7">
     <TopHeader />
     <NavMenu />
     <div>

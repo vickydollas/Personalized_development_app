@@ -176,7 +176,7 @@ const chartOptions = ref({
 })
 </script>
 <template>
-  <div class="pb-5">
+  <div class="bg-[#EEEEEE] pb-7">
     <TopHeader />
     <NavMenu />
     <div class="bg-[#EEEEEE]">

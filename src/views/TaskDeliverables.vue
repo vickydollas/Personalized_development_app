@@ -120,7 +120,6 @@ const tableItems = ref([
   },
 ])
 const removeItem = (index) => {
-  console.log(tableItems.value)
   tableItems.value.splice(index, 1)
 }
 const isStatus = (status) => {
@@ -134,12 +133,12 @@ const isStatus = (status) => {
 }
 </script>
 <template>
-  <div class="bg-[#EEEEEE]">
+  <div class="bg-[#EEEEEE] pb-7">
     <TopHeader />
     <NavMenu />
     <div>
       <BodyOption />
-      <div class="py-5 px-4 bg-[#ffffff] mx-20">
+      <div class="rounded-[7px] py-5 px-4 bg-[#ffffff] mx-20">
         <div class="flex items-center border-b-2 border-[#EEEEEE] py-1">
           <p class="txt1 text-[0.9rem]">S/N</p>
           <p class="txt2 text-[0.9rem]">Task/Deliverables</p>
@@ -166,7 +165,7 @@ const isStatus = (status) => {
           <p class="txt4 text-[0.9rem] py-3 text-[#808080]">{{ task.timeline }}</p>
           <p class="txt5 text-[0.9rem] py-3 text-[#808080]">{{ task.update }}</p>
           <p class="txt6 text-[0.9rem] py-3 text-[#808080]">
-            {{ task.evidence }} <input type="file" name="yes" id="" />
+            {{ task.evidence }} <input type="file" />
           </p>
           <p class="txt7 text-[0.9rem] py-3 text-[#808080]">
             <i @click.stop="removeItem(index)" class="pi pi-trash text-[#FF0000] text-[1.2rem]"></i>
