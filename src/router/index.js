@@ -4,6 +4,7 @@ import SkillAssessment from '../views/SkillAssessment.vue'
 import TaskDeliverables from '../views/TaskDeliverables.vue'
 import AllTraining from '../views/AllTraining.vue'
 import TrainingView from '../views/TrainingView.vue'
+import FormFeedback from '../views/FormFeedback.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -12,6 +13,11 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: LandingPage
+    },
+    {
+      path: '//:feedback',
+      name: 'feedback',
+      component: FormFeedback
     },
     {
       path: '/assessment',

@@ -12,24 +12,63 @@ const props = defineProps({
     default: false,
   },
 })
-
-const getSeries = ref([
-  {
-    series: [45, 30, 25],
-    labels: ['Completed', 'On going', 'Not Started'],
-    text: 'Career goals and inspiration',
-  },
-  {
-    series: [25, 45, 30],
-    labels: ['Completed', 'On going', 'Not Started'],
-    text: 'Area Of Interest',
-  },
-  {
-    series: [35, 30, 35],
-    labels: ['Completed', 'On going', 'Not Started'],
-    text: 'Mentorship and Skill building',
-  },
-])
+const series = ref('short')
+const selectedSeries = (item) => {
+  series.value = item
+}
+const getSeries = {
+  short: [
+    {
+      series: [45, 30, 25],
+      labels: ['Completed', 'On going', 'Not Started'],
+      text: 'Career goals and inspiration',
+    },
+    {
+      series: [25, 45, 30],
+      labels: ['Completed', 'On going', 'Not Started'],
+      text: 'Area Of Interest',
+    },
+    {
+      series: [35, 30, 35],
+      labels: ['Completed', 'On going', 'Not Started'],
+      text: 'Mentorship and Skill building',
+    },
+  ],
+  mid: [
+    {
+      series: [45, 30, 25],
+      labels: ['Completed', 'On going', 'Not Started'],
+      text: 'Career goals and inspiration',
+    },
+    {
+      series: [22, 23, 55],
+      labels: ['Completed', 'On going', 'Not Started'],
+      text: 'Area Of Interest',
+    },
+    {
+      series: [10, 30, 60],
+      labels: ['Completed', 'On going', 'Not Started'],
+      text: 'Mentorship and Skill building',
+    },
+  ],
+  long: [
+    {
+      series: [50, 40, 10],
+      labels: ['Completed', 'On going', 'Not Started'],
+      text: 'Career goals and inspiration',
+    },
+    {
+      series: [25, 45, 30],
+      labels: ['Completed', 'On going', 'Not Started'],
+      text: 'Area Of Interest',
+    },
+    {
+      series: [15, 30, 55],
+      labels: ['Completed', 'On going', 'Not Started'],
+      text: 'Mentorship and Skill building',
+    },
+  ],
+}
 
 const getOptions = (item) => {
   return {
@@ -71,13 +110,46 @@ const getOptions = (item) => {
   }
 }
 const filteredSeries = computed(() => {
+  const filter = getSeries[series.value]
   if (props.showLast) {
-    return getSeries.value.slice(-1)
+    return filter.slice(-1)
   }
-  return getSeries.value
+  return filter
 })
 </script>
 <template>
+  <div class="flex items-center bg-[#EEEEEE] p-3 rounded-[50px] mt-5">
+    <p
+      :class="[
+        'px-2 rounded-[20px] cursor-pointer',
+        series === 'short' ? 'bg-[#227CBF]' : 'bg-inherit',
+      ]"
+      @click="selectedSeries('short')"
+      class="mr-10"
+    >
+      Short term goal (3-6 months)
+    </p>
+    <p
+      :class="[
+        'px-2 rounded-[20px] cursor-pointer',
+        series === 'mid' ? 'bg-[#227CBF]' : 'bg-inherit',
+      ]"
+      @click="selectedSeries('mid')"
+      class="mr-10"
+    >
+      Mid term goal (7-12 months)
+    </p>
+    <p
+      :class="[
+        'px-2 rounded-[20px] cursor-pointer',
+        series === 'long' ? 'bg-[#227CBF]' : 'bg-inherit',
+      ]"
+      @click="selectedSeries('long')"
+      class="mr-10"
+    >
+      Short term goal (13-24 months)
+    </p>
+  </div>
   <div
     :class="[
       props.showLast ? 'justify-center' : 'justify-between',

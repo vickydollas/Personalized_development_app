@@ -6,9 +6,9 @@ import axios from 'axios'
 import BodyOption from '@/components/navbar/BodyOption.vue'
 import GraphDisplay from '../components/body/GraphDisplay.vue'
 // text area display functionality
-const textDisplay = ref(null)
-const toggleText = (id) => {
-  textDisplay.value = textDisplay.value ? null : id
+const fieldDisplay = ref(null)
+const toggleButton = (id) => {
+  fieldDisplay.value = fieldDisplay.value ? null : id
 }
 // form parameters
 const formData = reactive({
@@ -19,14 +19,17 @@ const formData = reactive({
 })
 // menuitems to document the detail of your plan
 const menuItems = ref([
-  { id: 1, name: 'Goals', path: '/' },
-  { id: 2, name: 'What i will do to achieve this', path: '/goals' },
-  { id: 3, name: 'Resources and Support Needed', path: '/portfolio' },
-  { id: 4, name: 'What does Success looks like', path: '/writing' },
-  { id: 5, name: 'Potential Challenges', path: '/contact' },
-  { id: 5, name: 'Solution', path: '/contact' },
-  { id: 5, name: 'Progress Metrics', path: '/contact' },
-  { id: 5, name: 'Feedback', path: '/contact' },
+  { id: 1, name: 'Goals', key: 'goal', type: 'textarea' },
+  { id: 2, name: 'What i will do to achieve this', key: 'achieve', type: 'textarea' },
+  { id: 3, name: 'Resources and Support Needed', key: 'resourse', type: 'textarea' },
+  { id: 4, name: 'What does Success looks like', key: 'success', type: 'textarea' },
+  { id: 5, name: 'Target Date for Completion', key: 'target', type: 'date' },
+  { id: 6, name: 'Potential Challenges', key: 'challenges', type: 'textarea' },
+  { id: 7, name: 'Solution', key: 'solution', type: 'textarea' },
+  { id: 8, name: 'Progress Metrics', key: 'progress', type: 'textarea' },
+  { id: 9, name: 'Status', key: 'status', type: 'radio' },
+  { id: 10, name: 'Feedback', key: 'feedback', type: 'textarea' },
+  { id: 11, name: 'Evidence', key: 'evidence', type: 'file' },
 ])
 
 // API call
@@ -66,11 +69,6 @@ onMounted(() => {
             Development Plan Request
           </button>
         </div>
-        <div class="flex items-center bg-[#EEEEEE] p-3 rounded-[50px] mt-5">
-          <p class="mr-10">Short term goal (3-6 months)</p>
-          <p class="mr-10">Mid term goal (7-12 months)</p>
-          <p class="mr-10">Short term goal (13-24 months)</p>
-        </div>
         <GraphDisplay />
         <div class="mt-5">
           <label for="" class="border-1 border-[#EEEEEE] p-3 rounded-[5px]"
@@ -92,34 +90,77 @@ onMounted(() => {
               <p class="txt5 text-[0.9rem]">Feedback</p>
             </div>
             <div
-              class="flex items-center border-b-2 px-3 border-[#EAEAEA]"
+              class="flex items-center hover:bg-[#EEEEEE] border-b-2 px-3 border-[#EAEAEA]"
               v-for="goals in goal"
               :key="goals.id"
             >
-              <p class="txt1 py-4 text-[#808080] text-[0.8rem]">{{ goals.id }}</p>
-              <p class="txt2 py-4 text-[#808080] text-[0.8rem]">{{ goals.goal }}</p>
-              <p class="txt3 py-4 text-[#808080] text-[0.8rem]">{{ goals.completion_date }}</p>
-              <p class="txt4 py-4 text-[#808080] text-[0.8rem]">{{ goals.status }}</p>
-              <p class="txt5 py-4 text-[#808080] text-[0.8rem]">{{ goals.feedback }}</p>
+              <router-link to="/feedback" class="txt1 py-4 text-[#808080] text-[0.8rem]">{{
+                goals.id
+              }}</router-link>
+              <router-link to="/feedback" class="txt2 py-4 text-[#808080] text-[0.8rem]">{{
+                goals.goal
+              }}</router-link>
+              <router-link to="/feedback" class="txt3 py-4 text-[#808080] text-[0.8rem]">{{
+                goals.completion_date
+              }}</router-link>
+              <router-link to="/feedback" class="txt4 py-4 text-[#808080] text-[0.8rem]">{{
+                goals.status
+              }}</router-link>
+              <router-link to="/feedback" class="txt5 py-4 text-[#808080] text-[0.8rem]">{{
+                goals.feedback
+              }}</router-link>
             </div>
           </div>
           <div class="col-span-4 px-2 py-4 bg-[#EEEEEE]">
             <h3 class="pl-3 text-[1.4rem] font-[600]">Details</h3>
             <form @submit="formData" v-for="item in menuItems" :key="item.id" class="my-1 px-3">
               <div
-                class="flex bg-[#ffffff] justify-between items-center px-3 py-3 shadow-[0_0_15px_rgba(0,0,0,0.2)]"
+                class="flex bg-[#ffffff] rounded-[7px] justify-between items-center px-3 py-3 shadow-[0_0_15px_rgba(0,0,0,0.2)]"
               >
                 <p>{{ item.name }}</p>
                 <i
-                  @click.stop="toggleText(item.id)"
+                  @click.stop="toggleButton(item.key)"
                   :class="[
                     'pi text-[1.4rem]',
-                    textDisplay !== item.id ? 'pi-angle-down' : 'pi-angle-up',
+                    fieldDisplay !== item.key ? 'pi-angle-down' : 'pi-angle-up',
                   ]"
                 ></i>
               </div>
-              <div v-show="textDisplay === item.id" class="bg-[#ffffff] py-7 px-4">
+              <div
+                v-if="item.type === 'textarea' && fieldDisplay === item.key"
+                class="bg-[#ffffff] py-7 px-4"
+              >
                 <textarea v-model="formData.name" class="w-full" cols="40" rows="4"></textarea>
+              </div>
+              <div
+                class="bg-[#ffffff] py-2 px-4"
+                v-else-if="item.type === 'date' && fieldDisplay === item.key"
+              >
+                <input
+                  class="w-full shadow-[0_0_15px_rgba(0,0,0,0.2)] rounded-[7px] p-2"
+                  type="date"
+                />
+              </div>
+              <div
+                class="bg-[#ffffff] py-2 px-4"
+                v-else-if="item.type === 'file' && fieldDisplay === item.key"
+              >
+                <input
+                  class="w-full text-[0.7rem] shadow-[0_0_15px_rgba(0,0,0,0.2)] rounded-[7px] p-2 cursor-pointer"
+                  type="file"
+                  name=""
+                  id=""
+                />
+              </div>
+              <div
+                class="bg-[#ffffff] py-2 px-4"
+                v-else-if="item.type === 'radio' && fieldDisplay === item.key"
+              >
+                <select class="shadow-[0_0_15px_rgba(0,0,0,0.2)] py-1 w-full" name="" id="">
+                  <option value="">Completed</option>
+                  <option value="">On going</option>
+                  <option value="">Not Started</option>
+                </select>
               </div>
             </form>
             <div class="flex justify-end">
