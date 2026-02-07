@@ -5,11 +5,28 @@ import { onMounted, ref, reactive } from 'vue'
 import axios from 'axios'
 import BodyOption from '@/components/navbar/BodyOption.vue'
 import GraphDisplay from '../components/body/GraphDisplay.vue'
+import FormPop from '../components/body/FormPop.vue'
 // text area display functionality
 const fieldDisplay = ref(null)
 const toggleButton = (id) => {
   fieldDisplay.value = fieldDisplay.value ? null : id
 }
+// modeal functionality
+const isModalActive = ref(false)
+const toggleModal = () => {
+  isModalActive.value = !isModalActive.value
+}
+const closeModal = () => {
+  isModalActive.value = false
+}
+const keyClose = (event) => {
+  if (isModalActive && event.key === 'Escape') {
+    closeModal()
+  }
+}
+onMounted(() => {
+  document.addEventListener('keydown', keyClose)
+})
 // form parameters
 const formData = reactive({
   name: '',
@@ -65,10 +82,14 @@ onMounted(() => {
       <div class="py-5 px-4 bg-[#ffffff] rounded-[6px] mx-20">
         <div class="flex items-center justify-between py-5 border-b-2 border-[#808080]">
           <h2 class="text-[1.5rem] font-[600]">Development Plan</h2>
-          <button class="bg-[#47B65C] text-white cursor-pointer px-8 py-2 rounded-[5px]">
+          <button
+            @close="toggleModal"
+            class="bg-[#47B65C] text-white cursor-pointer px-8 py-2 rounded-[5px]"
+          >
             Development Plan Request
           </button>
         </div>
+        <FormPop />
         <GraphDisplay />
         <div class="mt-5">
           <label for="" class="border-1 border-[#EEEEEE] p-3 rounded-[5px]"

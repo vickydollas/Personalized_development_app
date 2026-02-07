@@ -67,7 +67,7 @@ const inputItems = ref({
                 <option value="">Not Started</option>
               </select>
             </div>
-            <div class="justify">
+            <div class="justify-self-end mt-30">
               <button
                 class="shadow-[0_0_15px_rgba(0,0,0,0.2)] py-2 px-10 rounded-[8px] mr-5 bg-[#EEEEEE]"
               >
@@ -86,8 +86,4 @@ const inputItems = ref({
   </div>
 </template>
 <style scoped>
-.justify {
-  justify-self: end;
-  align-items: flex-end;
-}
 </style>
