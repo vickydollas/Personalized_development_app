@@ -1,5 +1,23 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
+// modeal functionality
+const closeModal = () => {
+  isModalActive.value = false
+}
+const keyClose = (event) => {
+  if (isModalActive && event.key === 'Escape') {
+    closeModal()
+  }
+}
+onMounted(() => {
+  document.addEventListener('keydown', keyClose)
+})
+const props = defineProps({
+  isModalActive: {
+    type: Boolean,
+    default: false,
+  },
+})
 // items for the modal form
 const inputItems = ref({
   first: [
@@ -29,7 +47,7 @@ defineEmits(['close'])
     >
       <div
         @click="keyClose"
-        v-if="isModalActive"
+        v-if="props.isModalActive"
         class="w-full min-h-[100vh] backdrop-blur-[1px] absolute shadow-[0_0_15px_rgba(0,0,0,0.2)] left-0 top-0 rounded-[8px]"
       >
         <div class="bg-[#EEEEEE] p-1 my-10 relative rounded-[8px] w-[60%] mx-auto">
@@ -48,19 +66,19 @@ defineEmits(['close'])
                 </p>
                 <textarea
                   v-if="item.key === 'textarea'"
-                  class="block w-100 bg-[#EEEEEE] rounded-[7px]"
+                  class="block w-90 shadow-[0_0_15px_rgba(0,0,0,0.2)] bg-[#EEEEEE] rounded-[7px]"
                   name=""
                   id=""
                   rows="4"
                 ></textarea>
                 <input
-                  class="block w-100 bg-[#EEEEEE] rounded-[7px] py-5 px-2"
+                  class="block w-90 bg-[#EEEEEE] shadow-[0_0_15px_rgba(0,0,0,0.2)] rounded-[7px] py-5 px-2"
                   v-else-if="item.key === 'date'"
                   type="date"
                 />
                 <select
                   v-else
-                  class="w-100 bg-[#EEEEEE] shadow-[0_0_15px_rgba(0,0,0,0.2)] p-2 rounded-[7px]"
+                  class="w-90 bg-[#EEEEEE] shadow-[0_0_15px_rgba(0,0,0,0.2)] p-2 rounded-[7px]"
                   name=""
                   id=""
                 >
@@ -75,22 +93,17 @@ defineEmits(['close'])
                 <p class="my-4 py-2 border-b-2 border-[#EEEEEE]">{{ item.name }}</p>
                 <textarea
                   v-if="item.key === 'textarea'"
-                  class="block w-100 bg-[#EEEEEE] rounded-[7px]"
+                  class="block w-90 shadow-[0_0_15px_rgba(0,0,0,0.2)] bg-[#EEEEEE] rounded-[7px]"
                   name=""
                   id=""
                   rows="4"
                 ></textarea>
               </div>
-              <div class="justify-self-end mt-30">
+              <div class="justify-self-end mt-30 mr-5">
                 <button
-                  class="shadow-[0_0_15px_rgba(0,0,0,0.2)] py-2 px-10 rounded-[8px] mr-5 bg-[#EEEEEE]"
+                  class="text-white shadow-[0_0_15px_rgba(0,0,0,0.2)] py-2 px-15 rounded-[8px] bg-[#47B65C]"
                 >
-                  Back
-                </button>
-                <button
-                  class="shadow-[0_0_15px_rgba(0,0,0,0.2)] py-2 px-15 rounded-[8px] bg-[#47B65C]"
-                >
-                  Save Changes
+                  Submit Request
                 </button>
               </div>
             </div>

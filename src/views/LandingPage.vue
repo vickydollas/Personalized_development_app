@@ -11,22 +11,10 @@ const fieldDisplay = ref(null)
 const toggleButton = (id) => {
   fieldDisplay.value = fieldDisplay.value ? null : id
 }
-// modeal functionality
-const isModalActive = ref(false)
 const toggleModal = () => {
   isModalActive.value = !isModalActive.value
 }
-const closeModal = () => {
-  isModalActive.value = false
-}
-const keyClose = (event) => {
-  if (isModalActive && event.key === 'Escape') {
-    closeModal()
-  }
-}
-onMounted(() => {
-  document.addEventListener('keydown', keyClose)
-})
+const isModalActive = ref(false)
 // form parameters
 const formData = reactive({
   name: '',
@@ -83,13 +71,13 @@ onMounted(() => {
         <div class="flex items-center justify-between py-5 border-b-2 border-[#808080]">
           <h2 class="text-[1.5rem] font-[600]">Development Plan</h2>
           <button
-            @close="toggleModal"
+            @click="toggleModal"
             class="bg-[#47B65C] text-white cursor-pointer px-8 py-2 rounded-[5px]"
           >
             Development Plan Request
           </button>
         </div>
-        <FormPop />
+        <FormPop @close="toggleModal" :isModalActive="isModalActive" />
         <GraphDisplay />
         <div class="mt-5">
           <label for="" class="border-1 border-[#EEEEEE] p-3 rounded-[5px]"
