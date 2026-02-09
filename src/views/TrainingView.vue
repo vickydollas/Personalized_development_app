@@ -5,6 +5,7 @@ import { ref } from 'vue'
 import TrainingCard from '../components/training/TrainingCard.vue'
 import BodyOption from '@/components/navbar/BodyOption.vue'
 import GraphDisplay from '../components/body/GraphDisplay.vue'
+import FormPop from '../components/body/FormPop.vue'
 // text area display functionality
 const textDisplay = ref(null)
 const toggleText = (id) => {
@@ -21,6 +22,23 @@ const menuItems = ref([
   { id: 5, name: 'Status', path: '/contact' },
   { id: 5, name: 'Evidence', path: '/contact' },
 ])
+// menuitems for form pop up
+const popUp = ref([
+  { name: 'Month', key: 'date' },
+  { name: 'Training Topic', key: 'textarea' },
+  { name: 'Learning Outcome', key: 'textarea' },
+  { name: 'Training Method', key: 'select', option: ['Begineer', 'Intermediate', 'Expert'] },
+  { name: 'Training Initiator', key: 'select', option: ['Self', 'Instructor'] },
+  { name: 'Skill Matrix Mapping', key: 'textarea' },
+])
+// modal activeness
+const isModalActive = ref(false)
+const toggleModal = () => {
+  isModalActive.value = !isModalActive.value
+}
+const closeModal = () => {
+  isModalActive.value = false
+}
 </script>
 <template>
   <div class="bg-[#EEEEEE] pb-7">
@@ -29,7 +47,46 @@ const menuItems = ref([
     <div>
       <BodyOption />
       <div class="py-5 px-4 bg-[#ffffff] mx-20 rounded-[7px]">
-        <h2 class="text-[1.5rem] text-[500]">Training Schedule</h2>
+        <div class="flex items-center px-5 justify-between">
+          <h2 class="text-[1.5rem] text-[500]">Training Schedule</h2>
+          <button
+            @click="toggleModal"
+            class="py-2 px-8 bg-[#47B65C] cursor-pointer rounded-[7px] text-white"
+          >
+            Skill Request
+          </button>
+        </div>
+        <FormPop
+          :layOut="true"
+          title="Skill Request Form"
+          :isModalActive="isModalActive"
+          @close="closeModal"
+        >
+          <div class="p-5 my-5 rounded-[8px]">
+            <div v-for="item in popUp" :key="item.key" class="mx-auto py-2 mb-1 px-6 rounded-[9px]">
+              <p class="w-110 mb-1 rounded-[8px]">{{ item.name }}</p>
+              <textarea
+                v-if="item.key === 'textarea'"
+                class="w-110 rounded-[8px] shadow-[0_0_15px_rgba(0,0,0,0.2)]"
+                rows="3"
+              ></textarea>
+              <select
+                class="w-110 rounded-[8px] shadow-[0_0_15px_rgba(0,0,0,0.2)] py-1 px-3"
+                v-else-if="item.key === 'select'"
+                name=""
+                id=""
+              >
+                <option v-for="opt in item.option" :key="opt" value="">{{ opt }}</option>
+              </select>
+              <input
+                type="date"
+                class="w-110 rounded-[8px] shadow-[0_0_15px_rgba(0,0,0,0.2)] py-1 px-3"
+                v-else
+              />
+            </div>
+          </div>
+          <button class="bg-[#47B65C] px-7 py-2 rounded-[7px]">Submit</button>
+        </FormPop>
         <GraphDisplay :showLast="true" />
         <div class="grid grid-cols-12">
           <TrainingCard class="col-span-8" :show="false" />

@@ -2,6 +2,7 @@
 import TopHeader from '../components/navbar/TopHeader.vue'
 import NavMenu from '../components/navbar/NavMenu.vue'
 import BodyOption from '@/components/navbar/BodyOption.vue'
+import FormPop from '../components/body/FormPop.vue'
 import { ref } from 'vue'
 
 // menuitems to document the detail of your plan
@@ -15,6 +16,22 @@ const menuItems = ref([
   { id: 5, name: 'Progress Metrics', path: '/contact' },
   { id: 5, name: 'Feedback', path: '/contact' },
 ])
+// menuitems for form pop up
+const popUp = ref([
+  { name: 'Skills', key: 'textarea' },
+  { name: 'Current State', key: 'select' },
+  { name: 'Gap', key: 'textarea' },
+  { name: 'Desired State', key: 'select' },
+  { name: 'Initiatives', key: 'textarea' },
+])
+// modal activeness
+const isModalActive = ref(false)
+const toggleModal = () => {
+  isModalActive.value = !isModalActive.value
+}
+const closeModal = () => {
+  isModalActive.value = false
+}
 const goal = ref([
   {
     id: 1,
@@ -185,10 +202,45 @@ const chartOptions = ref({
         <div class="rounded-[7px] px-2 py-4 my-10 shadow-[0_0_15px_rgba(0,0,0,0.2)] pl-3">
           <div class="flex items-center px-5 justify-between">
             <h3 class="text-[1.5rem] font-[600]">Skill Assessment</h3>
-            <button class="py-2 px-8 bg-[#47B65C] cursor-pointer rounded-[7px] text-white">
+            <button
+              @click="toggleModal"
+              class="py-2 px-8 bg-[#47B65C] cursor-pointer rounded-[7px] text-white"
+            >
               Skill Request
             </button>
           </div>
+          <FormPop
+            :layOut="true"
+            title="Skill Request Form"
+            :isModalActive="isModalActive"
+            @close="closeModal"
+          >
+            <div class="p-5 my-5 rounded-[8px]">
+              <div
+                v-for="item in popUp"
+                :key="item.key"
+                class="mx-auto py-2 mb-1 px-6 rounded-[9px]"
+              >
+                <p class="w-110 mb-1 rounded-[8px]">{{ item.name }}</p>
+                <textarea
+                  v-if="item.key === 'textarea'"
+                  class="w-110 rounded-[8px] shadow-[0_0_15px_rgba(0,0,0,0.2)]"
+                  rows="3"
+                ></textarea>
+                <select
+                  class="w-110 rounded-[8px] shadow-[0_0_15px_rgba(0,0,0,0.2)] py-1 px-3"
+                  v-else
+                  name=""
+                  id=""
+                >
+                  <option value="">Begineer</option>
+                  <option value="">Intermediate</option>
+                  <option value="">Expert</option>
+                </select>
+              </div>
+            </div>
+            <button class="bg-[#47B65C] px-7 py-2 rounded-[7px]">Submit</button>
+          </FormPop>
           <apexchart width="420" type="bar" :options="chartOptions" :series="series"></apexchart>
         </div>
         <div>

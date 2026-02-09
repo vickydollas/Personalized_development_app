@@ -15,7 +15,7 @@ const router = createRouter({
       component: LandingPage
     },
     {
-      path: '//:feedback',
+      path: '/:feedback',
       name: 'feedback',
       component: FormFeedback
     },

@@ -11,16 +11,44 @@ const fieldDisplay = ref(null)
 const toggleButton = (id) => {
   fieldDisplay.value = fieldDisplay.value ? null : id
 }
+// modal function
 const toggleModal = () => {
   isModalActive.value = !isModalActive.value
 }
 const isModalActive = ref(false)
+const closeModal = () => {
+  isModalActive.value = false
+}
+const keyClose = (event) => {
+  if (props.isModalActive && event.key === 'Escape') {
+    closeModal()
+  }
+}
+onMounted(() => {
+  document.addEventListener('keydown', keyClose)
+})
 // form parameters
 const formData = reactive({
   name: '',
   achievements: '',
   resources: '',
   success: '',
+})
+// items for the modal form
+const inputItems = ref({
+  first: [
+    { id: 1, name: 'Development Plan Type', key: 'select' },
+    { id: 2, name: 'Goals', key: 'textarea' },
+    { id: 3, name: 'Resources and Support Needed?', key: 'textarea' },
+    { id: 4, name: 'Potential Challenges', key: 'textarea' },
+    { id: 5, name: 'Target Date for Completion', key: 'date' },
+  ],
+  second: [
+    { id: 1, name: 'What i will do to achieve this', key: 'textarea' },
+    { id: 2, name: 'What does success look like?', key: 'textarea' },
+    { id: 3, name: 'Solution', key: 'textarea' },
+  ],
+  assessment: [],
 })
 // menuitems to document the detail of your plan
 const menuItems = ref([
@@ -77,7 +105,57 @@ onMounted(() => {
             Development Plan Request
           </button>
         </div>
-        <FormPop @close="toggleModal" :isModalActive="isModalActive" />
+        <FormPop @close="toggleModal" :isModalActive="isModalActive">
+          <div class="justify-items-center">
+            <div class="block my-1" for="" v-for="item in inputItems.first" :key="item">
+              <p class="my-4 py-2 border-b-2 border-[#EEEEEE] font-[600]">
+                {{ item.name }}
+              </p>
+              <textarea
+                v-if="item.key === 'textarea'"
+                class="block w-90 shadow-[0_0_15px_rgba(0,0,0,0.2)] bg-[#EEEEEE] rounded-[7px]"
+                name=""
+                id=""
+                rows="3"
+              ></textarea>
+              <input
+                class="block w-90 bg-[#EEEEEE] shadow-[0_0_15px_rgba(0,0,0,0.2)] rounded-[7px] py-2 px-2"
+                v-else-if="item.key === 'date'"
+                type="date"
+              />
+              <select
+                v-else
+                class="w-90 bg-[#EEEEEE] shadow-[0_0_15px_rgba(0,0,0,0.2)] p-2 rounded-[7px]"
+                name=""
+                id=""
+              >
+                <option value="">Completed</option>
+                <option value="">On going</option>
+                <option value="">Not Started</option>
+              </select>
+            </div>
+          </div>
+          <!-- second form  -->
+          <div class="justify-items-center">
+            <div class="block my-1" for="" v-for="item in inputItems.second" :key="item">
+              <p class="my-4 py-2 border-b-2 border-[#EEEEEE]">{{ item.name }}</p>
+              <textarea
+                v-if="item.key === 'textarea'"
+                class="block w-90 shadow-[0_0_15px_rgba(0,0,0,0.2)] bg-[#EEEEEE] rounded-[7px]"
+                name=""
+                id=""
+                rows="3"
+              ></textarea>
+            </div>
+            <div class="justify-self-end mt-30 mr-5">
+              <button
+                class="text-white shadow-[0_0_15px_rgba(0,0,0,0.2)] py-2 px-15 rounded-[8px] bg-[#47B65C]"
+              >
+                Submit Request
+              </button>
+            </div>
+          </div>
+        </FormPop>
         <GraphDisplay />
         <div class="mt-5">
           <label for="" class="border-1 border-[#EEEEEE] p-3 rounded-[5px]"
