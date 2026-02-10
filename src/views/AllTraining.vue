@@ -19,7 +19,7 @@ const toggleText = (id) => {
     <div>
       <BodyOption />
       <div class="py-5 px-4 bg-[#ffffff] mx-20 rounded-[7px]">
-        <h2>All Training Schedule</h2>
+        <h2 class="text-[1.5rem] text-[500]">All Training Schedule</h2>
         <GraphDisplay :showLast="true" />
         <TrainingCard :show="true" />
       </div>

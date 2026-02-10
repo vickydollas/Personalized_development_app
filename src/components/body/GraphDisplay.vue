@@ -118,7 +118,7 @@ const filteredSeries = computed(() => {
 })
 </script>
 <template>
-  <div class="flex items-center bg-[#EEEEEE] p-3 rounded-[50px] mt-5">
+  <div v-if="!props.showLast" class="flex items-center bg-[#EEEEEE] p-3 rounded-[50px] mt-5">
     <p
       :class="[
         'px-2 rounded-[20px] cursor-pointer',

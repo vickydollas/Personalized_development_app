@@ -29,14 +29,6 @@ const popUp = ref([
   { name: 'Training Initiator', key: 'select', option: ['Self', 'Instructor'] },
   { name: 'Skill Matrix Mapping', key: 'textarea' },
 ])
-// modal activeness
-const isModalActive = ref(false)
-const toggleModal = () => {
-  isModalActive.value = !isModalActive.value
-}
-const closeModal = () => {
-  isModalActive.value = false
-}
 </script>
 <template>
   <div class="bg-[#EEEEEE] pb-7">
@@ -48,18 +40,13 @@ const closeModal = () => {
         <div class="flex items-center px-5 justify-between">
           <h2 class="text-[1.5rem] text-[500]">Training Schedule</h2>
           <button
-            @click="toggleModal"
+            @click="store.toggleModal"
             class="py-2 px-8 bg-[#47B65C] cursor-pointer rounded-[7px] text-white"
           >
             Skill Request
           </button>
         </div>
-        <FormPop
-          :layOut="true"
-          title="Skill Request Form"
-          :isModalActive="isModalActive"
-          @close="closeModal"
-        >
+        <FormPop :layOut="true" title="Skill Request Form" :isModalActive="store.isModalActive">
           <div class="p-5 my-5 rounded-[8px]">
             <div v-for="item in popUp" :key="item.key" class="mx-auto py-2 mb-1 px-6 rounded-[9px]">
               <p class="w-110 mb-1 rounded-[8px]">{{ item.name }}</p>
@@ -87,7 +74,7 @@ const closeModal = () => {
         </FormPop>
         <GraphDisplay :showLast="true" />
         <div class="grid grid-cols-12">
-          <TrainingCard class="col-span-8" :show="false" />
+          <TrainingCard class="col-span-8" :show="true" />
           <div class="col-span-4">
             <h3 class="pl-3 mt-5 text-[1.4rem] font-[600]">Details</h3>
             <div v-for="item in menuItems" :key="item.id" class="my-1 px-3">
