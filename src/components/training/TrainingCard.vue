@@ -272,68 +272,83 @@ const setRating = (task, newRating) => {
           Rating
         </p>
       </div>
-      <div v-for="(item, index) in selectiveItems" :key="item.id" class="flex items-center">
-        <p
+      <div
+        v-for="(item, index) in selectiveItems"
+        :key="item.id"
+        class="flex hover:bg-[#EEEEEE] items-center"
+      >
+        <router-link
+          to="/feedback"
           :class="[props.show ? 'flex-[0_0_10%]' : 'flex-[0_0_5%]']"
           class="text-[#808080] text-[0.8rem] py-4 border-b-2 border-[#EAEAEA]"
         >
           {{ props.show ? item.employee : index }}
-        </p>
-        <p
+        </router-link>
+        <router-link
+          to="/feedback"
           v-if="props.show"
           class="text-[#808080] flex-[0_0_7%] text-[0.8rem] py-4 border-b-2 border-[#EAEAEA]"
         >
           {{ item.department }}
-        </p>
-        <p
+        </router-link>
+        <router-link
+          to="/feedback"
           :class="[props.show ? 'flex-[0_0_7%]' : 'flex-[0_0_25%]']"
           class="text-[#808080] text-[0.8rem] py-4 border-b-2 border-[#EAEAEA]"
         >
           {{ item.month }}
-        </p>
-        <p
+        </router-link>
+        <router-link
+          to="/feedback"
           :class="[props.show ? 'flex-[0_0_8%]' : 'flex-[0_0_20%]']"
           class="text-[#808080] text-[0.8rem] py-4 border-b-2 border-[#EAEAEA]"
         >
           {{ item.topic }}
-        </p>
-        <p
+        </router-link>
+        <router-link
+          to="/feedback"
           v-if="props.show"
           class="text-[#808080] flex-[0_0_15%] text-[0.8rem] py-4 border-b-2 border-[#EAEAEA]"
         >
           {{ item.outcome }}
-        </p>
-        <p
+        </router-link>
+        <router-link
+          to="/feedback"
           :class="[props.show ? 'flex-[0_0_10%]' : 'flex-[0_0_15%]']"
           class="text-[#808080] text-[0.8rem] py-4 border-b-2 border-[#EAEAEA]"
         >
           {{ item.method }}
-        </p>
-        <p
+        </router-link>
+        <router-link
+          to="/feedback"
           v-if="props.show"
           class="text-[#808080] flex-[0_0_10%] text-[0.8rem] py-4 border-b-2 border-[#EAEAEA]"
         >
           {{ item.skillsMapping }}
-        </p>
-        <p
+        </router-link>
+        <router-link
+          to="/feedback"
           :class="[props.show ? 'flex-[0_0_8%]' : 'flex-[0_0_20%]']"
           class="text-[#808080] text-[0.8rem] py-4 border-b-2 border-[#EAEAEA]"
         >
           {{ item.status }}
-        </p>
-        <p
+        </router-link>
+        <router-link
+          to="/feedback"
           v-if="props.show"
           class="text-[#808080] flex-[0_0_10%] text-[0.8rem] py-4 border-b-2 border-[#EAEAEA]"
         >
           {{ item.dueDate }}
-        </p>
-        <p
+        </router-link>
+        <router-link
+          to="/feedback"
           v-if="props.show"
           class="text-[#808080] flex-[0_0_5%] text-[0.8rem] py-4 border-b-2 border-[#EAEAEA]"
         >
           {{ item.evidence }}
-        </p>
-        <p
+        </router-link>
+        <router-link
+          to="/feedback"
           :class="[props.show ? 'flex-[0_0_10%]' : 'flex-[0_0_15%]']"
           class="text-[#808080] border-b-2 border-[#EAEAEA] text-[0.8rem] py-4"
         >
@@ -343,7 +358,7 @@ const setRating = (task, newRating) => {
             @click="setRating(item, star)"
             :class="['pi', star <= item.rating ? 'pi-star-fill text-[#FFB800]' : 'pi-star']"
           ></i>
-        </p>
+        </router-link>
       </div>
     </div>
   </div>

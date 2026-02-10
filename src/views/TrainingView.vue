@@ -6,11 +6,9 @@ import TrainingCard from '../components/training/TrainingCard.vue'
 import BodyOption from '@/components/navbar/BodyOption.vue'
 import GraphDisplay from '../components/body/GraphDisplay.vue'
 import FormPop from '../components/body/FormPop.vue'
-// text area display functionality
-const textDisplay = ref(null)
-const toggleText = (id) => {
-  textDisplay.value = textDisplay.value ? null : id
-}
+import { useStore } from '../stores/formPop'
+
+const store = useStore()
 // menuitems to document the detail of your plan
 const menuItems = ref([
   { id: 1, name: 'Month', path: '/' },
@@ -98,17 +96,12 @@ const closeModal = () => {
               >
                 <p>{{ item.name }}</p>
                 <i
-                  @click.stop="toggleText(item.id)"
-                  :class="[textDisplay !== item.id ? 'pi-angle-down' : 'pi-angle-up']"
+                  @click.stop="store.toggleButton(item.id)"
+                  :class="[store.fieldDisplay !== item.id ? 'pi-angle-down' : 'pi-angle-up']"
                   class="pi pi-angle-down text-[1.4rem]"
                 ></i>
-                <!-- <i
-                  v-show="textDisplay === item.id"
-                  @click="toggleText(item.id)"
-                  class="pi pi-angle-up text-[1.4rem]"
-                ></i> -->
               </div>
-              <div v-show="textDisplay === item.id" class="bg-[#ffffff] py-7 px-4">
+              <div v-show="store.fieldDisplay === item.id" class="bg-[#ffffff] py-7 px-4">
                 <textarea class="w-full" cols="40" rows="4"></textarea>
               </div>
             </div>

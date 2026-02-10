@@ -6,27 +6,8 @@ import axios from 'axios'
 import BodyOption from '@/components/navbar/BodyOption.vue'
 import GraphDisplay from '../components/body/GraphDisplay.vue'
 import FormPop from '../components/body/FormPop.vue'
-// text area display functionality
-const fieldDisplay = ref(null)
-const toggleButton = (id) => {
-  fieldDisplay.value = fieldDisplay.value ? null : id
-}
-// modal function
-const toggleModal = () => {
-  isModalActive.value = !isModalActive.value
-}
-const isModalActive = ref(false)
-const closeModal = () => {
-  isModalActive.value = false
-}
-const keyClose = (event) => {
-  if (props.isModalActive && event.key === 'Escape') {
-    closeModal()
-  }
-}
-onMounted(() => {
-  document.addEventListener('keydown', keyClose)
-})
+import { useStore } from '../stores/formPop'
+
 // form parameters
 const formData = reactive({
   name: '',
@@ -35,21 +16,7 @@ const formData = reactive({
   success: '',
 })
 // items for the modal form
-const inputItems = ref({
-  first: [
-    { id: 1, name: 'Development Plan Type', key: 'select' },
-    { id: 2, name: 'Goals', key: 'textarea' },
-    { id: 3, name: 'Resources and Support Needed?', key: 'textarea' },
-    { id: 4, name: 'Potential Challenges', key: 'textarea' },
-    { id: 5, name: 'Target Date for Completion', key: 'date' },
-  ],
-  second: [
-    { id: 1, name: 'What i will do to achieve this', key: 'textarea' },
-    { id: 2, name: 'What does success look like?', key: 'textarea' },
-    { id: 3, name: 'Solution', key: 'textarea' },
-  ],
-  assessment: [],
-})
+const store = useStore()
 // menuitems to document the detail of your plan
 const menuItems = ref([
   { id: 1, name: 'Goals', key: 'goal', type: 'textarea' },
@@ -99,15 +66,15 @@ onMounted(() => {
         <div class="flex items-center justify-between py-5 border-b-2 border-[#808080]">
           <h2 class="text-[1.5rem] font-[600]">Development Plan</h2>
           <button
-            @click="toggleModal"
+            @click="store.toggleModal"
             class="bg-[#47B65C] text-white cursor-pointer px-8 py-2 rounded-[5px]"
           >
             Development Plan Request
           </button>
         </div>
-        <FormPop @close="toggleModal" :isModalActive="isModalActive">
+        <FormPop>
           <div class="justify-items-center">
-            <div class="block my-1" for="" v-for="item in inputItems.first" :key="item">
+            <div class="block my-1" for="" v-for="item in store.inputItems.first" :key="item">
               <p class="my-4 py-2 border-b-2 border-[#EEEEEE] font-[600]">
                 {{ item.name }}
               </p>
@@ -137,7 +104,7 @@ onMounted(() => {
           </div>
           <!-- second form  -->
           <div class="justify-items-center">
-            <div class="block my-1" for="" v-for="item in inputItems.second" :key="item">
+            <div class="block my-1" for="" v-for="item in store.inputItems.second" :key="item">
               <p class="my-4 py-2 border-b-2 border-[#EEEEEE]">{{ item.name }}</p>
               <textarea
                 v-if="item.key === 'textarea'"
@@ -206,22 +173,27 @@ onMounted(() => {
               >
                 <p>{{ item.name }}</p>
                 <i
-                  @click.stop="toggleButton(item.key)"
+                  @click.stop="store.toggleButton(item.key)"
                   :class="[
                     'pi text-[1.4rem]',
-                    fieldDisplay !== item.key ? 'pi-angle-down' : 'pi-angle-up',
+                    store.fieldDisplay !== item.key ? 'pi-angle-down' : 'pi-angle-up',
                   ]"
                 ></i>
               </div>
               <div
-                v-if="item.type === 'textarea' && fieldDisplay === item.key"
-                class="bg-[#ffffff] py-7 px-4"
+                v-if="item.type === 'textarea' && store.fieldDisplay === item.key"
+                class="bg-[#ffffff] py-3 px-4"
               >
-                <textarea v-model="formData.name" class="w-full" cols="40" rows="4"></textarea>
+                <textarea
+                  v-model="formData.name"
+                  class="w-full rounded-[7px]"
+                  cols="40"
+                  rows="4"
+                ></textarea>
               </div>
               <div
                 class="bg-[#ffffff] py-2 px-4"
-                v-else-if="item.type === 'date' && fieldDisplay === item.key"
+                v-else-if="item.type === 'date' && store.fieldDisplay === item.key"
               >
                 <input
                   class="w-full shadow-[0_0_15px_rgba(0,0,0,0.2)] rounded-[7px] p-2"
@@ -230,7 +202,7 @@ onMounted(() => {
               </div>
               <div
                 class="bg-[#ffffff] py-2 px-4"
-                v-else-if="item.type === 'file' && fieldDisplay === item.key"
+                v-else-if="item.type === 'file' && store.fieldDisplay === item.key"
               >
                 <input
                   class="w-full text-[0.7rem] shadow-[0_0_15px_rgba(0,0,0,0.2)] rounded-[7px] p-2 cursor-pointer"
@@ -241,7 +213,7 @@ onMounted(() => {
               </div>
               <div
                 class="bg-[#ffffff] py-2 px-4"
-                v-else-if="item.type === 'radio' && fieldDisplay === item.key"
+                v-else-if="item.type === 'radio' && store.fieldDisplay === item.key"
               >
                 <select class="shadow-[0_0_15px_rgba(0,0,0,0.2)] py-1 w-full" name="" id="">
                   <option value="">Completed</option>

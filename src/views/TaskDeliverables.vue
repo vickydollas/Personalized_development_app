@@ -3,124 +3,16 @@ import NavMenu from '@/components/navbar/NavMenu.vue'
 import TopHeader from '../components/navbar/TopHeader.vue'
 import { computed, ref } from 'vue'
 import BodyOption from '@/components/navbar/BodyOption.vue'
+import { useStore } from '../stores/formPop'
+
+const store = useStore()
 // text area display functionality
 const textDisplay = ref(null)
 const toggleText = (id) => {
   textDisplay.value = textDisplay.value ? null : id
 }
-// table items
-const tableItems = ref([
-  {
-    id: 1,
-    task: 'Complete my training',
-    status: 'Completed',
-    timeline: '2025-01-15',
-    update: 'In progress',
-    evidence: 'Attach a file',
-    action: '',
-  },
-  {
-    id: 2,
-    task: 'Submit my weekly task',
-    status: 'On going',
-    timeline: '2025-02-10',
-    update: 'In progress',
-    evidence: 'Attach a file',
-    action: '',
-  },
-  {
-    id: 3,
-    task: 'Review monthly goals',
-    status: 'Not started',
-    timeline: '2025-03-05',
-    update: 'In progress',
-    evidence: 'Attach a file',
-    action: '',
-  },
-  {
-    id: 4,
-    task: 'Update portfolio projects',
-    status: 'On going',
-    timeline: '2025-04-20',
-    update: 'In progress',
-    evidence: 'Attach a file',
-    action: '',
-  },
-  {
-    id: 5,
-    task: 'Attend team sync meeting',
-    status: 'Completed',
-    timeline: '2025-05-12',
-    update: 'In progress',
-    evidence: 'Attach a file',
-    action: '',
-  },
-  {
-    id: 6,
-    task: 'Draft quarterly report',
-    status: 'Not started',
-    timeline: '2025-06-30',
-    update: 'In progress',
-    evidence: 'Attach a file',
-    action: '',
-  },
-  {
-    id: 7,
-    task: 'Client feedback session',
-    status: 'On going',
-    timeline: '2025-07-14',
-    update: 'In progress',
-    evidence: 'Attach a file',
-    action: '',
-  },
-  {
-    id: 8,
-    task: 'Back-end server migration',
-    status: 'Not started',
-    timeline: '2025-08-22',
-    update: 'In progress',
-    evidence: 'Attach a file',
-    action: '',
-  },
-  {
-    id: 9,
-    task: 'SEO audit for landing page',
-    status: 'Completed',
-    timeline: '2025-09-05',
-    update: 'In progress',
-    evidence: 'Attach a file',
-    action: '',
-  },
-  {
-    id: 10,
-    task: 'Optimize image assets',
-    status: 'On going',
-    timeline: '2025-10-18',
-    update: 'In progress',
-    evidence: 'Attach a file',
-    action: '',
-  },
-  {
-    id: 11,
-    task: 'Bug fixing sprint',
-    status: 'Not started',
-    timeline: '2025-11-10',
-    update: 'In progress',
-    evidence: 'Attach a file',
-    action: '',
-  },
-  {
-    id: 12,
-    task: 'Final year-end review',
-    status: 'Not started',
-    timeline: '2025-12-20',
-    update: 'In progress',
-    evidence: 'Attach a file',
-    action: '',
-  },
-])
 const removeItem = (index) => {
-  tableItems.value.splice(index, 1)
+  store.taskDeliverables.splice(index, 1)
 }
 const isStatus = (status) => {
   if (status === 'Not started') {
@@ -149,7 +41,7 @@ const isStatus = (status) => {
           <p class="txt7 text-[0.9rem]">Action</p>
         </div>
         <div
-          v-for="(task, index) in tableItems"
+          v-for="(task, index) in store.taskDeliverables"
           :key="task.id"
           class="flex items-center py-2 border-b-2 border-[#EEEEEE]"
         >

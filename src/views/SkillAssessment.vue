@@ -4,17 +4,18 @@ import NavMenu from '../components/navbar/NavMenu.vue'
 import BodyOption from '@/components/navbar/BodyOption.vue'
 import FormPop from '../components/body/FormPop.vue'
 import { ref } from 'vue'
+import { useStore } from '../stores/formPop'
 
 // menuitems to document the detail of your plan
 const menuItems = ref([
-  { id: 1, name: 'Goals', path: '/' },
-  { id: 2, name: 'What i will do to achieve this', path: '/goals' },
-  { id: 3, name: 'Resources and Support Needed', path: '/portfolio' },
-  { id: 4, name: 'What does Success looks like', path: '/writing' },
-  { id: 5, name: 'Potential Challenges', path: '/contact' },
-  { id: 5, name: 'Solution', path: '/contact' },
-  { id: 5, name: 'Progress Metrics', path: '/contact' },
-  { id: 5, name: 'Feedback', path: '/contact' },
+  { id: 1, name: 'Goals', key: 'textarea', path: '/' },
+  { id: 2, name: 'Current State', key: 'select', path: ['Expert', 'Begineer', 'Intermediate'] },
+  { id: 3, name: 'Gap', key: 'textarea', path: '/portfolio' },
+  { id: 4, name: 'Desired State', key: 'select', path: ['Expert', 'Professional'] },
+  { id: 5, name: 'Initiatives', key: 'textarea', path: '/contact' },
+  { id: 6, name: 'Status', key: 'select', path: ['completed', 'On going', 'Not started'] },
+  { id: 7, name: 'Feedback', key: 'textarea', path: '/contact' },
+  { id: 8, name: 'Evidence', key: 'file', path: '/contact' },
 ])
 // menuitems for form pop up
 const popUp = ref([
@@ -25,109 +26,104 @@ const popUp = ref([
   { name: 'Initiatives', key: 'textarea' },
 ])
 // modal activeness
-const isModalActive = ref(false)
-const toggleModal = () => {
-  isModalActive.value = !isModalActive.value
-}
-const closeModal = () => {
-  isModalActive.value = false
-}
+const store = useStore()
+
 const goal = ref([
   {
-    id: 1,
-    skill: 'Public Speaking',
-    current_state: 'Beginner',
-    desired_state: 'Expert',
-    status: 'On going',
-    feedback: 'Satisfactory',
+    id: [{ num: 1, size: 'flex-[0_0_10%]' }],
+    skill: [{ num: 'Public Speaking', size: 'flex-[0_0_20%]' }],
+    current_state: [{ num: 'Begineer', size: 'flex-[0_0_15%]' }],
+    desired_state: [{ num: 'Expert', size: 'flex-[0_0_15%]' }],
+    status: [{ num: 'On going', size: 'flex-[0_0_15%]' }],
+    feedback: [{ num: 'satisfactory', size: 'flex-[0_0_15%]' }],
   },
   {
-    id: 2,
-    skill: 'Public Speaking',
-    current_state: 'Intermediate',
-    desired_state: 'Expert',
-    status: 'Completed',
-    feedback: 'Satisfactory',
+    id: [{ num: 2, size: 'flex-[0_0_10%]' }],
+    skill: [{ num: 'Public Speaking', size: 'flex-[0_0_20%]' }],
+    current_state: [{ num: 'Intermediate', size: 'flex-[0_0_15%]' }],
+    desired_state: [{ num: 'Expert', size: 'flex-[0_0_15%]' }],
+    status: [{ num: 'Completed', size: 'flex-[0_0_15%]' }],
+    feedback: [{ num: 'Satisfactory', size: 'flex-[0_0_15%]' }],
   },
   {
-    id: 3,
-    skill: 'Public Speaking',
-    current_state: 'Beginner',
-    desired_state: 'Expert',
-    status: 'Not started',
-    feedback: 'Satisfactory',
+    id: [{ num: 3, size: 'flex-[0_0_10%]' }],
+    skill: [{ num: 'Public Speaking', size: 'flex-[0_0_20%]' }],
+    current_state: [{ num: 'Beginner', size: 'flex-[0_0_15%]' }],
+    desired_state: [{ num: 'Expert', size: 'flex-[0_0_15%]' }],
+    status: [{ num: 'Not started', size: 'flex-[0_0_15%]' }],
+    feedback: [{ num: 'Satisfactory', size: 'flex-[0_0_15%]' }],
   },
   {
-    id: 4,
-    skill: 'Public Speaking',
-    current_state: 'Intermediate',
-    desired_state: 'Expert',
-    status: 'On going',
-    feedback: 'Satisfactory',
+    id: [{ num: 4, size: 'flex-[0_0_10%]' }],
+    skill: [{ num: 'Public Speaking', size: 'flex-[0_0_20%]' }],
+    current_state: [{ num: 'Intermediate', size: 'flex-[0_0_15%]' }],
+    desired_state: [{ num: 'Expert', size: 'flex-[0_0_15%]' }],
+    status: [{ num: 'On going', size: 'flex-[0_0_15%]' }],
+    feedback: [{ num: 'Satisfactory', size: 'flex-[0_0_15%]' }],
   },
   {
-    id: 5,
-    skill: 'Public Speaking',
-    current_state: 'Beginner',
-    desired_state: 'Expert',
-    status: 'Completed',
-    feedback: 'Satisfactory',
+    id: [{ num: 5, size: 'flex-[0_0_10%]' }],
+    skill: [{ num: 'Public Speaking', size: 'flex-[0_0_20%]' }],
+    current_state: [{ num: 'Beginner', size: 'flex-[0_0_15%]' }],
+    desired_state: [{ num: 'Expert', size: 'flex-[0_0_15%]' }],
+    status: [{ num: 'Completed', size: 'flex-[0_0_15%]' }],
+    feedback: [{ num: 'Satisfactory', size: 'flex-[0_0_15%]' }],
   },
   {
-    id: 6,
-    skill: 'Public Speaking',
-    current_state: 'Intermediate',
-    desired_state: 'Expert',
-    status: 'Not started',
-    feedback: 'Satisfactory',
+    id: [{ num: 6, size: 'flex-[0_0_10%]' }],
+    skill: [{ num: 'Public Speaking', size: 'flex-[0_0_20%]' }],
+    current_state: [{ num: 'Intermediate', size: 'flex-[0_0_15%]' }],
+    desired_state: [{ num: 'Expert', size: 'flex-[0_0_15%]' }],
+    status: [{ num: 'Not started', size: 'flex-[0_0_15%]' }],
+    feedback: [{ num: 'Satisfactory', size: 'flex-[0_0_15%]' }],
   },
   {
-    id: 7,
-    skill: 'Public Speaking',
-    current_state: 'Beginner',
-    desired_state: 'Expert',
-    status: 'On going',
-    feedback: 'Satisfactory',
+    id: [{ num: 7, size: 'flex-[0_0_10%]' }],
+    skill: [{ num: 'Public Speaking', size: 'flex-[0_0_20%]' }],
+    current_state: [{ num: 'Beginner', size: 'flex-[0_0_15%]' }],
+    desired_state: [{ num: 'Expert', size: 'flex-[0_0_15%]' }],
+    status: [{ num: 'On going', size: 'flex-[0_0_15%]' }],
+    feedback: [{ num: 'Satisfactory', size: 'flex-[0_0_15%]' }],
   },
   {
-    id: 8,
-    skill: 'Public Speaking',
-    current_state: 'Intermediate',
-    desired_state: 'Expert',
-    status: 'Completed',
-    feedback: 'Satisfactory',
+    id: [{ num: 8, size: 'flex-[0_0_10%]' }],
+    skill: [{ num: 'Public Speaking', size: 'flex-[0_0_20%]' }],
+    current_state: [{ num: 'Intermediate', size: 'flex-[0_0_15%]' }],
+    desired_state: [{ num: 'Expert', size: 'flex-[0_0_15%]' }],
+    status: [{ num: 'Completed', size: 'flex-[0_0_15%]' }],
+    feedback: [{ num: 'Satisfactory', size: 'flex-[0_0_15%]' }],
   },
   {
-    id: 9,
-    skill: 'Public Speaking',
-    current_state: 'Beginner',
-    desired_state: 'Expert',
-    status: 'Not started',
-    feedback: 'Satisfactory',
+    id: [{ num: 9, size: 'flex-[0_0_10%]' }],
+    skill: [{ num: 'Public Speaking', size: 'flex-[0_0_20%]' }],
+    current_state: [{ num: 'Beginner', size: 'flex-[0_0_15%]' }],
+    desired_state: [{ num: 'Expert', size: 'flex-[0_0_15%]' }],
+    status: [{ num: 'Not started', size: 'flex-[0_0_15%]' }],
+    feedback: [{ num: 'Satisfactory', size: 'flex-[0_0_15%]' }],
   },
   {
-    id: 10,
-    skill: 'Public Speaking',
-    current_state: 'Intermediate',
-    desired_state: 'Expert',
-    status: 'On going',
-    feedback: 'Satisfactory',
+    id: [{ num: 10, size: 'flex-[0_0_10%]' }],
+    skill: [{ num: 'Public Speaking', size: 'flex-[0_0_20%]' }],
+    current_state: [{ num: 'Intermediate', size: 'flex-[0_0_15%]' }],
+    desired_state: [{ num: 'Expert', size: 'flex-[0_0_15%]' }],
+    status: [{ num: 'On going', size: 'flex-[0_0_15%]' }],
+    feedback: [{ num: 'Satisfactory', size: 'flex-[0_0_15%]' }],
   },
   {
-    id: 11,
-    skill: 'Public Speaking',
-    current_state: 'Beginner',
-    desired_state: 'Expert',
-    status: 'Completed',
-    feedback: 'Satisfactory',
+    id: [{ num: 11, size: 'flex-[0_0_10%]' }],
+    skill: [{ num: 'Public Speaking', size: 'flex-[0_0_20%]' }],
+    current_state: [{ num: 'Beginner', size: 'flex-[0_0_15%]' }],
+    desired_state: [{ num: 'Expert', size: 'flex-[0_0_15%]' }],
+    status: [{ num: 'Completed', size: 'flex-[0_0_15%]' }],
+    feedback: [{ num: 'Satisfactory', size: 'flex-[0_0_15%]' }],
   },
   {
-    id: 12,
-    skill: 'Public Speaking',
-    current_state: 'Intermediate',
-    desired_state: 'Expert',
-    status: 'Not started',
-    feedback: 'Satisfactory',
+    id: [{ num: 12, size: 'flex-[0_0_10%]' }],
+    skill: [{ num: 'Public Speaking', size: 'flex-[0_0_20%]' }],
+    current_state: [{ num: 'Intermediate', size: 'flex-[0_0_15%]' }],
+    desired_state: [{ num: 'Expert', size: 'flex-[0_0_15%]' }],
+    status: [{ num: 'Not started', size: 'flex-[0_0_15%]' }],
+    feedback: [{ num: 'Satisfactory', size: 'flex-[0_0_15%]' }],
   },
 ])
 
@@ -203,18 +199,13 @@ const chartOptions = ref({
           <div class="flex items-center px-5 justify-between">
             <h3 class="text-[1.5rem] font-[600]">Skill Assessment</h3>
             <button
-              @click="toggleModal"
-              class="py-2 px-8 bg-[#47B65C] cursor-pointer rounded-[7px] text-white"
+              @click="store.toggleModal"
+              class="py-2 px-10 bg-[#47B65C] cursor-pointer rounded-[7px] text-white"
             >
               Skill Request
             </button>
           </div>
-          <FormPop
-            :layOut="true"
-            title="Skill Request Form"
-            :isModalActive="isModalActive"
-            @close="closeModal"
-          >
+          <FormPop :layOut="true" title="Skill Request Form">
             <div class="p-5 my-5 rounded-[8px]">
               <div
                 v-for="item in popUp"
@@ -267,16 +258,18 @@ const chartOptions = ref({
               <p class="txt6 text-[0.9rem]">Feedback</p>
             </div>
             <div
-              class="flex items-center border-b-2 px-3 border-[#EAEAEA]"
+              class="flex items-center hover:bg-[#EEEEEE] border-b-2 px-3 border-[#EAEAEA]"
               v-for="goals in goal"
               :key="goals.id"
             >
-              <p class="txt1 py-4 text-[#808080] text-[0.8rem]">{{ goals.id }}</p>
-              <p class="txt2 py-4 text-[#808080] text-[0.8rem]">{{ goals.skill }}</p>
-              <p class="txt3 py-4 text-[#808080] text-[0.8rem]">{{ goals.current_state }}</p>
-              <p class="txt4 py-4 text-[#808080] text-[0.8rem]">{{ goals.desired_state }}</p>
-              <p class="txt5 py-4 text-[#808080] text-[0.8rem]">{{ goals.status }}</p>
-              <p class="txt5 py-4 text-[#808080] text-[0.8rem]">{{ goals.feedback }}</p>
+              <router-link
+                to="/feedback"
+                v-for="(opt, key) in goals"
+                :key="key"
+                :class="['py-4 text-[#808080] text-[0.8rem]', opt[0].size]"
+              >
+                {{ opt[0].num }}
+              </router-link>
             </div>
           </div>
           <div class="col-span-4 px-2 py-4 bg-[#EEEEEE]">
@@ -287,18 +280,32 @@ const chartOptions = ref({
               >
                 <p>{{ item.name }}</p>
                 <i
-                  v-show="textDisplay !== item.id"
-                  @click.stop="toggleText(item.id)"
-                  class="pi pi-angle-down text-[1.4rem]"
-                ></i>
-                <i
-                  v-show="textDisplay === item.id"
-                  @click="toggleText(item.id)"
-                  class="pi pi-angle-up text-[1.4rem]"
+                  @click="store.toggleButton(item.id)"
+                  :class="[
+                    'pi text-[1.4rem]',
+                    store.fieldDisplay === item.id ? 'pi-angle-up' : 'pi-angle-down',
+                  ]"
                 ></i>
               </div>
-              <div v-show="textDisplay === item.id" class="bg-[#ffffff] py-7 px-4">
-                <textarea class="w-full" cols="40" rows="4"></textarea>
+              <div class="bg-[#ffffff] px-2">
+                <textarea
+                  v-if="store.fieldDisplay === item.id && item.key === 'textarea'"
+                  class="w-full mb-1 shadow-[0_0_15px_rgba(0,0,0,0.2)] rounded-[8px]"
+                  cols="40"
+                  rows="4"
+                ></textarea>
+                <input
+                  class="w-full py-1 px-2 shadow-[0_0_15px_rgba(0,0,0,0.2)] mb-2"
+                  type="file"
+                  v-else-if="store.fieldDisplay === item.id && item.key === 'file'"
+                />
+                <select
+                  name=""
+                  v-else-if="store.fieldDisplay === item.id && item.key === 'select'"
+                  class="w-full py-1 px-2 shadow-[0_0_15px_rgba(0,0,0,0.2)] mb-2"
+                >
+                  <option value="" v-for="opt in item.path" :key="opt">{{ opt }}</option>
+                </select>
               </div>
             </div>
             <div class="flex justify-end">

@@ -1,9 +1,7 @@
 <script setup>
-import { ref, onMounted } from 'vue'
-// modeal functionality
-const closeModal = () => {
-  isModalActive.value = false
-}
+import { useStore } from '../../stores/formPop'
+
+const store = useStore()
 const props = defineProps({
   isModalActive: {
     type: Boolean,
@@ -19,7 +17,7 @@ const props = defineProps({
   },
 })
 
-defineEmits(['close'])
+// defineEmits(['close'])
 </script>
 <template>
   <Teleport to="body">
@@ -32,8 +30,7 @@ defineEmits(['close'])
       leave-to-class="opacity-0 scale-95"
     >
       <div
-        @click="keyClose"
-        v-if="props.isModalActive"
+        v-if="store.isModalActive"
         class="w-full min-h-[100vh] backdrop-blur-[1px] absolute shadow-[0_0_15px_rgba(0,0,0,0.2)] left-0 top-0 rounded-[8px]"
       >
         <div
@@ -44,7 +41,7 @@ defineEmits(['close'])
         >
           <div class="mx-10 my-1 flex items-center justify-between">
             <h2 class="text-[1.5rem] font-[700]">{{ props.title }}</h2>
-            <i @click="$emit('close')" class="pi pi-times cursor-pointer"></i>
+            <i @click="store.toggleModal" class="pi pi-times cursor-pointer"></i>
           </div>
           <div
             :class="[
@@ -61,3 +58,7 @@ defineEmits(['close'])
     </Transition>
   </Teleport>
 </template>
+<style scoped>
+h1 {
+}
+</style>
