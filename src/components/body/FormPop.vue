@@ -3,10 +3,6 @@ import { useStore } from '../../stores/formPop'
 
 const store = useStore()
 const props = defineProps({
-  isModalActive: {
-    type: Boolean,
-    default: false,
-  },
   title: {
     type: String,
     default: 'Development Plan Request Form',
@@ -16,8 +12,6 @@ const props = defineProps({
     default: false,
   },
 })
-
-// defineEmits(['close'])
 </script>
 <template>
   <Teleport to="body">

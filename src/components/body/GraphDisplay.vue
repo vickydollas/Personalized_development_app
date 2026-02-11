@@ -122,7 +122,7 @@ const filteredSeries = computed(() => {
     <p
       :class="[
         'px-2 rounded-[20px] cursor-pointer',
-        series === 'short' ? 'bg-[#227CBF]' : 'bg-inherit',
+        series === 'short' ? 'bg-[#227CBF] text-white' : 'bg-inherit',
       ]"
       @click="selectedSeries('short')"
       class="mr-10"
@@ -132,7 +132,7 @@ const filteredSeries = computed(() => {
     <p
       :class="[
         'px-2 rounded-[20px] cursor-pointer',
-        series === 'mid' ? 'bg-[#227CBF]' : 'bg-inherit',
+        series === 'mid' ? 'bg-[#227CBF] text-white' : 'bg-inherit',
       ]"
       @click="selectedSeries('mid')"
       class="mr-10"
@@ -142,7 +142,7 @@ const filteredSeries = computed(() => {
     <p
       :class="[
         'px-2 rounded-[20px] cursor-pointer',
-        series === 'long' ? 'bg-[#227CBF]' : 'bg-inherit',
+        series === 'long' ? 'bg-[#227CBF] text-white' : 'bg-inherit',
       ]"
       @click="selectedSeries('long')"
       class="mr-10"

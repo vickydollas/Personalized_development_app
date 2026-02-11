@@ -1,9 +1,9 @@
 <script setup>
 import NavMenu from '@/components/navbar/NavMenu.vue'
 import TopHeader from '../components/navbar/TopHeader.vue'
-import { onMounted, ref, reactive } from 'vue'
+import { onMounted, ref, reactive, computed } from 'vue'
 import axios from 'axios'
-import BodyOption from '@/components/navbar/BodyOption.vue'
+// import BodyOption from '@/components/navbar/BodyOption.vue'
 import GraphDisplay from '../components/body/GraphDisplay.vue'
 import FormPop from '../components/body/FormPop.vue'
 import { useStore } from '../stores/formPop'
@@ -35,12 +35,13 @@ const menuItems = ref([
 // API call
 const isLoading = ref(false)
 const error = ref(null)
-const goal = ref([])
+const goal = ref({})
+// console.log(goal.value)
 async function getGoals() {
   isLoading.value = true
   error.value = null
   try {
-    const response = await axios.get('./goals.json')
+    const response = await axios.get('./goals2.json')
     if (!response) {
       throw new Error('could not fetch link')
     }
@@ -55,14 +56,16 @@ async function getGoals() {
 onMounted(() => {
   getGoals()
 })
+const fetchGoal = computed(() => {
+  return goal.value.plans
+})
 </script>
 <template>
   <div class="bg-[#EEEEEE] pb-7">
     <TopHeader />
     <NavMenu />
-    <div>
-      <BodyOption />
-      <div class="py-5 px-4 bg-[#ffffff] rounded-[6px] mx-20">
+    <div class="my-5">
+      <div class="py-1 px-4 bg-[#ffffff] rounded-[6px] mx-20">
         <div class="flex items-center justify-between py-5 border-b-2 border-[#808080]">
           <h2 class="text-[1.5rem] font-[600]">Development Plan</h2>
           <button
@@ -145,11 +148,11 @@ onMounted(() => {
             </div>
             <div
               class="flex items-center hover:bg-[#EEEEEE] border-b-2 px-3 border-[#EAEAEA]"
-              v-for="goals in goal"
+              v-for="goals in fetchGoal"
               :key="goals.id"
             >
               <router-link to="/feedback" class="txt1 py-4 text-[#808080] text-[0.8rem]">{{
-                goals.id
+                goals.short_term.label
               }}</router-link>
               <router-link to="/feedback" class="txt2 py-4 text-[#808080] text-[0.8rem]">{{
                 goals.goal

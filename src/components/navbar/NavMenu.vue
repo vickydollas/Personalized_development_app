@@ -1,26 +1,37 @@
 <script setup>
+import { ref } from 'vue'
 import { useRoute } from 'vue-router'
 
 const route = useRoute()
 const isActive = (routePath) => {
   return route.path === routePath
 }
+const navMenu = ref([
+  { name: 'Development Plan', path: '/' },
+  { name: 'Skill Assessment', path: '/assessment' },
+  { name: 'Training Schedule', path: '/schedule' },
+  { name: 'All Training Schedule', path: '/all-schedule' },
+  { name: 'Task/Deliverables', path: '/deliverables' },
+])
 </script>
 <template>
-  <div class="flex items-center border-b-2 border-[#808080] mx-20 py-3">
-    <router-link to="/">Development Plan</router-link>
-    <router-link to="/assessment">Skill Assessment</router-link>
-    <router-link to="/schedule">Admin</router-link>
-    <router-link to="/all-schedule">All Training Schedule</router-link>
-    <router-link to="/deliverables">Task/Deliverables</router-link>
+  <div class="flex items-center border-b-2 border-[#808080] mx-20">
+    <router-link
+      :class="[
+        'text-[#808080] py-3 mr-5',
+        isActive(item.path) ? 'border-b-4 border-[#227CBF]' : 'border-[#808080]',
+      ]"
+      v-for="item in navMenu"
+      :key="item"
+      :to="item.path"
+      >{{ item.name }}</router-link
+    >
   </div>
 </template>
 
 <style scoped>
 a {
   font-family: var(--roboto-mono);
-  padding-right: 20px;
-  color: #808080;
   font-size: 1rem;
 }
 .active {

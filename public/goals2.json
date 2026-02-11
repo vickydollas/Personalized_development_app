@@ -1,0 +1,127 @@
+{
+  "plans": {
+    "short_term": {
+      "label": "Short term goal (3-6 months)",
+      "sections": {
+        "career_goals": [
+          {
+            "id": 1,
+            "topic": "Improve content writing skill",
+            "status": "completed",
+            "width": "20%"
+          },
+          { "id": 2, "topic": "Master SEO basics", "status": "completed", "width": "20%" },
+          {
+            "id": 16,
+            "topic": "AP Style Guide Certification",
+            "status": "ongoing",
+            "width": "20%"
+          },
+          { "id": 17, "topic": "Social Media Copy Audit", "status": "not started", "width": "20%" },
+          { "id": 30, "topic": "Basic HTML/CSS for Editors", "status": "ongoing", "width": "20%" },
+          {
+            "id": 33,
+            "topic": "Internal Link Architecture",
+            "status": "not started",
+            "width": "20%"
+          }
+        ],
+        "area_of_interest": [
+          { "id": 3, "name": "Professional copywriting", "rating": 4 },
+          { "id": 4, "name": "Personal portfolio development", "rating": 2 },
+          { "id": 18, "name": "A/B Testing Headlines", "rating": 3 },
+          { "id": 19, "name": "AI-Assisted Drafting", "rating": 5 }
+        ],
+        "mentorship": [
+          { "id": 5, "skill": "Creative storytelling", "mentor": "Lead Content Strategist" },
+          { "id": 6, "skill": "Graphic design", "mentor": "Senior Designer" },
+          { "id": 20, "skill": "CMS Management", "mentor": "Webmaster" }
+        ]
+      }
+    },
+    "mid_term": {
+      "label": "Mid term goal (7-12 months)",
+      "sections": {
+        "career_goals": [
+          {
+            "id": 7,
+            "topic": "Improve typing speed (80 WPM)",
+            "status": "completed",
+            "width": "20%"
+          },
+          {
+            "id": 8,
+            "topic": "Write 10 guest blog posts",
+            "status": "not started",
+            "width": "20%"
+          },
+          {
+            "id": 34,
+            "topic": "Video Scripting & Storyboarding",
+            "status": "not started",
+            "width": "20%"
+          },
+          {
+            "id": 45,
+            "topic": "Crisis Communication Planning",
+            "status": "ongoing",
+            "width": "20%"
+          },
+          {
+            "id": 66,
+            "topic": "Brand Voice Documentation",
+            "status": "not started",
+            "width": "20%"
+          }
+        ],
+        "area_of_interest": [
+          { "id": 10, "name": "Weekly newsletter launch", "rating": 3 },
+          { "id": 11, "name": "Keyword research tools", "rating": 5 },
+          { "id": 35, "name": "Data Visualization", "rating": 4 },
+          { "id": 50, "name": "User Persona Research", "rating": 4 }
+        ],
+        "mentorship": [
+          { "id": 12, "skill": "Industry Networking", "mentor": "Dept Head" },
+          { "id": 36, "skill": "Budget Management", "mentor": "Finance Manager" },
+          { "id": 55, "skill": "Public Relations", "mentor": "Communications Director" }
+        ]
+      }
+    },
+    "long_term": {
+      "label": "Long term goal (13-24 months)",
+      "sections": {
+        "career_goals": [
+          {
+            "id": 13,
+            "topic": "Headline drafting techniques",
+            "status": "completed",
+            "width": "20%"
+          },
+          { "id": 67, "topic": "Global Content Strategy", "status": "not started", "width": "20%" },
+          {
+            "id": 80,
+            "topic": "Omnichannel Marketing Lead",
+            "status": "not started",
+            "width": "20%"
+          },
+          {
+            "id": 100,
+            "topic": "Chief Content Officer Roadmap",
+            "status": "not started",
+            "width": "20%"
+          }
+        ],
+        "area_of_interest": [
+          { "id": 14, "name": "3-month content calendar", "rating": 4 },
+          { "id": 70, "name": "Product Marketing Integration", "rating": 3 },
+          { "id": 99, "name": "Executive Leadership", "rating": 5 }
+        ],
+        "mentorship": [
+          { "id": 15, "skill": "Website copy audit", "mentor": "SEO Lead" },
+          { "id": 75, "skill": "Strategic Partnership", "mentor": "CEO" },
+          { "id": 90, "skill": "Change Management", "mentor": "HR Director" }
+        ]
+      }
+    }
+  }
+}
