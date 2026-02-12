@@ -152,7 +152,7 @@ const fetchGoal = computed(() => {
               :key="goals.id"
             >
               <router-link to="/feedback" class="txt1 py-4 text-[#808080] text-[0.8rem]">{{
-                goals.short_term.label
+                goals.short
               }}</router-link>
               <router-link to="/feedback" class="txt2 py-4 text-[#808080] text-[0.8rem]">{{
                 goals.goal
