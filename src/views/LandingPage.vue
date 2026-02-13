@@ -57,7 +57,7 @@ onMounted(() => {
   getGoals()
 })
 const fetchGoal = computed(() => {
-  return goal.value.plans
+  return goal.value
 })
 </script>
 <template>
