@@ -46,7 +46,6 @@ async function getGoals() {
       throw new Error('could not fetch link')
     }
     goal.value = response.data
-    // console.log(goal.value)
   } catch (error) {
     console.error(error)
   } finally {
