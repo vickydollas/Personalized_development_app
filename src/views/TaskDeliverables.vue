@@ -2,7 +2,7 @@
 import NavMenu from '@/components/navbar/NavMenu.vue'
 import TopHeader from '../components/navbar/TopHeader.vue'
 import { computed, ref } from 'vue'
-import BodyOption from '@/components/navbar/BodyOption.vue'
+// import BodyOption from '@/components/navbar/BodyOption.vue'
 import { useStore } from '../stores/formPop'
 
 const store = useStore()
@@ -29,8 +29,8 @@ const isStatus = (status) => {
     <TopHeader />
     <NavMenu />
     <div>
-      <BodyOption />
-      <div class="rounded-[7px] py-5 px-4 bg-[#ffffff] mx-20">
+      <!-- <BodyOption /> -->
+      <div class="rounded-[7px] py-5 px-4 bg-[#ffffff] my-3 mx-20">
         <div class="flex items-center border-b-2 border-[#EEEEEE] py-1">
           <p class="txt1 text-[0.9rem]">S/N</p>
           <p class="txt2 text-[0.9rem]">Task/Deliverables</p>

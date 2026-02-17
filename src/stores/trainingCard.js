@@ -217,8 +217,18 @@ export const useTrainingCard = defineStore('training', () => {
   const setRating = (task, newRating) => {
     task.rating = newRating
   }
+  const selectedId = ref(null)
+  const activeGoal = ref(null)
+  const handleSubmit = (line) => {
+    activeGoal.value = line
+    selectedId.value = line.id
+    console.log(selectedId.value)
+  }
   return {
     menuItems,
     setRating,
+    selectedId,
+    activeGoal,
+    handleSubmit,
   }
 })

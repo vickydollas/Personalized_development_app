@@ -1,21 +1,20 @@
 <script setup>
 import TopHeader from '../components/navbar/TopHeader.vue'
 import NavMenu from '../components/navbar/NavMenu.vue'
-import BodyOption from '@/components/navbar/BodyOption.vue'
+// import BodyOption from '@/components/navbar/BodyOption.vue'
 import FormPop from '../components/body/FormPop.vue'
 import { ref } from 'vue'
 import { useStore } from '../stores/formPop'
 
 // menuitems to document the detail of your plan
 const menuItems = ref([
-  { id: 1, name: 'Goals', key: 'textarea', path: '/' },
-  { id: 2, name: 'Current State', key: 'select', path: ['Expert', 'Begineer', 'Intermediate'] },
-  { id: 3, name: 'Gap', key: 'textarea', path: '/portfolio' },
-  { id: 4, name: 'Desired State', key: 'select', path: ['Expert', 'Professional'] },
-  { id: 5, name: 'Initiatives', key: 'textarea', path: '/contact' },
-  { id: 6, name: 'Status', key: 'select', path: ['completed', 'On going', 'Not started'] },
-  { id: 7, name: 'Feedback', key: 'textarea', path: '/contact' },
-  { id: 8, name: 'Evidence', key: 'file', path: '/contact' },
+  { id: 1, name: 'Goals', key: 'goal', path: '/' },
+  { id: 2, name: 'Current State', key: 'state', path: ['Expert', 'Begineer', 'Intermediate'] },
+  { id: 4, name: 'Desired State', key: 'desired', path: ['Expert', 'Professional'] },
+  { id: 5, name: 'Initiatives', key: 'initiatives', path: '/contact' },
+  { id: 6, name: 'Status', key: 'status', path: ['completed', 'On going', 'Not started'] },
+  { id: 7, name: 'Feedback', key: 'feedback', path: '/contact' },
+  { id: 8, name: 'Evidence', key: 'evidence', path: '/contact' },
 ])
 // menuitems for form pop up
 const popUp = ref([
@@ -187,14 +186,21 @@ const chartOptions = ref({
     show: true, // Hiding legend as requested
   },
 })
+// submit handling
+const activeGoal = ref(null)
+const selectedId = ref(null)
+const handleSubmit = (line) => {
+  activeGoal.value = line
+  selectedId.value = line.id[0].num
+}
 </script>
 <template>
   <div class="bg-[#EEEEEE] pb-7">
     <TopHeader />
     <NavMenu />
     <div class="bg-[#EEEEEE]">
-      <BodyOption />
-      <div class="py-2 px-4 bg-[#ffffff] mx-20 rounded-[7px]">
+      <!-- <BodyOption /> -->
+      <div class="py-2 px-4 bg-[#ffffff] my-3 mx-20 rounded-[7px]">
         <div class="rounded-[7px] px-2 py-4 my-10 shadow-[0_0_15px_rgba(0,0,0,0.2)] pl-3">
           <div class="flex items-center px-5 justify-between">
             <h3 class="text-[1.5rem] font-[600]">Skill Assessment</h3>
@@ -258,18 +264,21 @@ const chartOptions = ref({
               <p class="txt6 text-[0.9rem]">Feedback</p>
             </div>
             <div
-              class="flex items-center hover:bg-[#EEEEEE] border-b-2 px-3 border-[#EAEAEA]"
+              :class="[
+                'flex items-center hover:bg-[#EEEEEE] cursor-pointer border-b-2 px-3 border-[#EAEAEA]',
+                selectedId === goals.id[0].num ? 'bg-[#EEEEEE]' : 'inherit',
+              ]"
               v-for="goals in goal"
               :key="goals.id"
+              @click="handleSubmit(goals)"
             >
-              <router-link
-                to="/feedback"
+              <p
                 v-for="(opt, key) in goals"
                 :key="key"
                 :class="['py-4 text-[#808080] text-[0.8rem]', opt[0].size]"
               >
                 {{ opt[0].num }}
-              </router-link>
+              </p>
             </div>
           </div>
           <div class="col-span-4 px-2 py-4 bg-[#EEEEEE]">
@@ -287,25 +296,22 @@ const chartOptions = ref({
                   ]"
                 ></i>
               </div>
-              <div class="bg-[#ffffff] px-2">
-                <textarea
-                  v-if="store.fieldDisplay === item.id && item.key === 'textarea'"
-                  class="w-full mb-1 shadow-[0_0_15px_rgba(0,0,0,0.2)] rounded-[8px]"
-                  cols="40"
-                  rows="4"
-                ></textarea>
-                <input
-                  class="w-full py-1 px-2 shadow-[0_0_15px_rgba(0,0,0,0.2)] mb-2"
-                  type="file"
-                  v-else-if="store.fieldDisplay === item.id && item.key === 'file'"
-                />
-                <select
-                  name=""
-                  v-else-if="store.fieldDisplay === item.id && item.key === 'select'"
-                  class="w-full py-1 px-2 shadow-[0_0_15px_rgba(0,0,0,0.2)] mb-2"
-                >
-                  <option value="" v-for="opt in item.path" :key="opt">{{ opt }}</option>
-                </select>
+              <div v-if="store.fieldDisplay === item.id" class="px-2">
+                <p v-show="item.key === 'goal'" class="py-2 rounded-[8px]">
+                  {{ activeGoal?.skill[0]?.num }}
+                </p>
+                <p v-show="item.key === 'status'" class="py-2 rounded-[8px]">
+                  {{ activeGoal?.status[0]?.num }}
+                </p>
+                <p v-show="item.key === 'feedback'" class="py-2 rounded-[8px]">
+                  {{ activeGoal?.feedback[0]?.num }}
+                </p>
+                <p v-show="item.key === 'desired'" class="py-2 rounded-[8px]">
+                  {{ activeGoal?.desired_state[0]?.num }}
+                </p>
+                <p v-show="item.key === 'state'" class="py-2 rounded-[8px]">
+                  {{ activeGoal?.current_state[0]?.num }}
+                </p>
               </div>
             </div>
             <div class="flex justify-end">

@@ -3,7 +3,7 @@ import NavMenu from '@/components/navbar/NavMenu.vue'
 import TopHeader from '../components/navbar/TopHeader.vue'
 import { ref } from 'vue'
 import TrainingCard from '../components/training/TrainingCard.vue'
-import BodyOption from '@/components/navbar/BodyOption.vue'
+// import BodyOption from '@/components/navbar/BodyOption.vue'
 import GraphDisplay from '../components/body/GraphDisplay.vue'
 // text area display functionality
 const textDisplay = ref(null)
@@ -17,8 +17,8 @@ const toggleText = (id) => {
     <TopHeader />
     <NavMenu />
     <div>
-      <BodyOption />
-      <div class="py-5 px-4 bg-[#ffffff] mx-20 rounded-[7px]">
+      <!-- <BodyOption /> -->
+      <div class="py-5 px-4 bg-[#ffffff] my-3 mx-20 rounded-[7px]">
         <h2 class="text-[1.5rem] text-[500]">All Training Schedule</h2>
         <GraphDisplay :showLast="true" />
         <TrainingCard :show="true" />

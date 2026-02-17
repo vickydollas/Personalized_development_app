@@ -3,22 +3,25 @@ import NavMenu from '@/components/navbar/NavMenu.vue'
 import TopHeader from '../components/navbar/TopHeader.vue'
 import { ref } from 'vue'
 import TrainingCard from '../components/training/TrainingCard.vue'
-import BodyOption from '@/components/navbar/BodyOption.vue'
+// import BodyOption from '@/components/navbar/BodyOption.vue'
 import GraphDisplay from '../components/body/GraphDisplay.vue'
 import FormPop from '../components/body/FormPop.vue'
 import { useStore } from '../stores/formPop'
+import { useTrainingCard } from '../stores/trainingCard'
 
 const store = useStore()
+const stores = useTrainingCard()
+// console.log(stores.activeGoal?.month)
 // menuitems to document the detail of your plan
 const menuItems = ref([
-  { id: 1, name: 'Month', path: '/' },
-  { id: 2, name: 'Training Topic', path: '/goals' },
-  { id: 3, name: 'Learning Outcome', path: '/portfolio' },
-  { id: 4, name: 'Training Method', path: '/writing' },
-  { id: 5, name: 'Training Initiator', path: '/contact' },
-  { id: 5, name: 'Skill Metric Mapping', path: '/contact' },
-  { id: 5, name: 'Status', path: '/contact' },
-  { id: 5, name: 'Evidence', path: '/contact' },
+  { id: 1, name: 'Month', key: 'month', path: '/' },
+  { id: 2, name: 'Training Topic', key: 'topic', path: '/goals' },
+  { id: 3, name: 'Learning Outcome', key: 'outcome', path: '/portfolio' },
+  { id: 4, name: 'Training Method', key: 'method', path: '/writing' },
+  { id: 5, name: 'Training Initiator', key: 'initiator', path: '/contact' },
+  { id: 6, name: 'Skill Metric Mapping', key: 'mapping', path: '/contact' },
+  { id: 7, name: 'Status', key: 'status', path: '/contact' },
+  { id: 8, name: 'Evidence', key: 'evidence', path: '/contact' },
 ])
 // menuitems for form pop up
 const popUp = ref([
@@ -35,8 +38,8 @@ const popUp = ref([
     <TopHeader />
     <NavMenu />
     <div>
-      <BodyOption />
-      <div class="py-5 px-4 bg-[#ffffff] mx-20 rounded-[7px]">
+      <!-- <BodyOption /> -->
+      <div class="py-5 px-4 bg-[#ffffff] my-3 mx-20 rounded-[7px]">
         <div class="flex items-center px-5 justify-between">
           <h2 class="text-[1.5rem] text-[500]">Training Schedule</h2>
           <button
@@ -46,7 +49,7 @@ const popUp = ref([
             Skill Request
           </button>
         </div>
-        <FormPop :layOut="true" title="Skill Request Form" :isModalActive="store.isModalActive">
+        <FormPop :layOut="true" title="Skill Request Form">
           <div class="p-5 my-5 rounded-[8px]">
             <div v-for="item in popUp" :key="item.key" class="mx-auto py-2 mb-1 px-6 rounded-[9px]">
               <p class="w-110 mb-1 rounded-[8px]">{{ item.name }}</p>
@@ -78,9 +81,7 @@ const popUp = ref([
           <div class="col-span-4">
             <h3 class="pl-3 mt-5 text-[1.4rem] font-[600]">Details</h3>
             <div v-for="item in menuItems" :key="item.id" class="my-1 px-3">
-              <div
-                class="flex bg-[#ffffff] justify-between items-center px-3 py-3 shadow-[0_0_15px_rgba(0,0,0,0.2)]"
-              >
+              <div class="flex bg-[#eeeeee] justify-between items-center px-3 py-3">
                 <p>{{ item.name }}</p>
                 <i
                   @click.stop="store.toggleButton(item.id)"
@@ -88,8 +89,13 @@ const popUp = ref([
                   class="pi pi-angle-down text-[1.4rem]"
                 ></i>
               </div>
-              <div v-show="store.fieldDisplay === item.id" class="bg-[#ffffff] py-7 px-4">
-                <textarea class="w-full" cols="40" rows="4"></textarea>
+              <div v-if="store.fieldDisplay === item.id" class="py-3 px-4">
+                <p v-show="item.key === 'month'">{{ stores.activeGoal?.month }}</p>
+                <p v-show="item.key === 'status'">{{ stores.activeGoal?.status }}</p>
+                <p v-show="item.key === 'topic'">{{ stores.activeGoal?.topic }}</p>
+                <p v-show="item.key === 'outcome'">{{ stores.activeGoal?.outcome }}</p>
+                <p v-show="item.key === 'method'">{{ stores.activeGoal?.method }}</p>
+                <p v-show="item.key === 'mapping'">{{ stores.activeGoal?.skillsMapping }}</p>
               </div>
             </div>
           </div>

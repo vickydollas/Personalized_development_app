@@ -9,24 +9,33 @@ import FormPop from '../components/body/FormPop.vue'
 import { useStore } from '../stores/formPop'
 
 // form parameters
-const formData = reactive({
-  name: '',
-  achievements: '',
-  resources: '',
-  success: '',
+const formData = ref({
+  goal: '',
+  work_rate: '',
+  completion_date: '',
+  challenges: '',
+  objectives: '',
+  feedback: '',
 })
+const formSubmit = async () => {
+  try {
+    const response = await axios.post('./goals2.json', JSON.stringify(formData.value))
+    if (response.ok) {
+      console.log('successfully updated')
+    }
+  } catch (error) {
+    console.error(error)
+  }
+}
 // items for the modal form
 const store = useStore()
 // menuitems to document the detail of your plan
 const menuItems = ref([
   { id: 1, name: 'Goals', key: 'goal', type: 'textarea' },
   { id: 2, name: 'What i will do to achieve this', key: 'achieve', type: 'textarea' },
-  { id: 3, name: 'Resources and Support Needed', key: 'resourse', type: 'textarea' },
   { id: 4, name: 'What does Success looks like', key: 'success', type: 'textarea' },
   { id: 5, name: 'Target Date for Completion', key: 'target', type: 'date' },
   { id: 6, name: 'Potential Challenges', key: 'challenges', type: 'textarea' },
-  { id: 7, name: 'Solution', key: 'solution', type: 'textarea' },
-  { id: 8, name: 'Progress Metrics', key: 'progress', type: 'textarea' },
   { id: 9, name: 'Status', key: 'status', type: 'radio' },
   { id: 10, name: 'Feedback', key: 'feedback', type: 'textarea' },
   { id: 11, name: 'Evidence', key: 'evidence', type: 'file' },
@@ -35,7 +44,7 @@ const menuItems = ref([
 // API call
 const isLoading = ref(false)
 const error = ref(null)
-const goal = ref({})
+const goal = ref(null)
 // console.log(goal.value)
 async function getGoals() {
   isLoading.value = true
@@ -55,9 +64,18 @@ async function getGoals() {
 onMounted(() => {
   getGoals()
 })
+const filtering = ref('career_goals')
 const fetchGoal = computed(() => {
-  return goal.value
+  if (!goal.value) return {}
+  return goal.value[filtering.value]
 })
+
+const activeGoal = ref({})
+const selectedId = ref(null)
+const handleSubmit = (line) => {
+  activeGoal.value = line
+  selectedId.value = line.id
+}
 </script>
 <template>
   <div class="bg-[#EEEEEE] pb-7">
@@ -75,64 +93,71 @@ const fetchGoal = computed(() => {
           </button>
         </div>
         <FormPop>
-          <div class="justify-items-center">
-            <div class="block my-1" for="" v-for="item in store.inputItems.first" :key="item">
-              <p class="my-4 py-2 border-b-2 border-[#EEEEEE] font-[600]">
-                {{ item.name }}
-              </p>
-              <textarea
-                v-if="item.key === 'textarea'"
-                class="block w-90 shadow-[0_0_15px_rgba(0,0,0,0.2)] bg-[#EEEEEE] rounded-[7px]"
-                name=""
-                id=""
-                rows="3"
-              ></textarea>
-              <input
-                class="block w-90 bg-[#EEEEEE] shadow-[0_0_15px_rgba(0,0,0,0.2)] rounded-[7px] py-2 px-2"
-                v-else-if="item.key === 'date'"
-                type="date"
-              />
-              <select
-                v-else
-                class="w-90 bg-[#EEEEEE] shadow-[0_0_15px_rgba(0,0,0,0.2)] p-2 rounded-[7px]"
-                name=""
-                id=""
-              >
-                <option value="">Completed</option>
-                <option value="">On going</option>
-                <option value="">Not Started</option>
-              </select>
+          <form @submit.prevent="formSubmit">
+            <div class="justify-items-center">
+              <div class="block my-1" for="" v-for="item in store.inputItems.first" :key="item">
+                <p class="my-4 py-2 border-b-2 border-[#EEEEEE] font-[600]">
+                  {{ item.name }}
+                </p>
+                <textarea
+                  v-if="item.key === 'textarea'"
+                  v-model="formData[item.field]"
+                  class="block w-90 shadow-[0_0_15px_rgba(0,0,0,0.2)] bg-[#EEEEEE] rounded-[7px]"
+                  name=""
+                  id=""
+                  rows="3"
+                ></textarea>
+                <input
+                  v-model="formData[item.field]"
+                  class="block w-90 bg-[#EEEEEE] shadow-[0_0_15px_rgba(0,0,0,0.2)] rounded-[7px] py-2 px-2"
+                  v-else-if="item.key === 'date'"
+                  type="date"
+                />
+                <select
+                  v-model="formData[item.field]"
+                  v-else
+                  class="w-90 bg-[#EEEEEE] shadow-[0_0_15px_rgba(0,0,0,0.2)] p-2 rounded-[7px]"
+                  name=""
+                  id=""
+                >
+                  <option value="">Career Goals and Aspiration</option>
+                  <option value="">Area of Interest</option>
+                  <option value="">Mentorship and Skill Building</option>
+                </select>
+              </div>
             </div>
-          </div>
-          <!-- second form  -->
-          <div class="justify-items-center">
-            <div class="block my-1" for="" v-for="item in store.inputItems.second" :key="item">
-              <p class="my-4 py-2 border-b-2 border-[#EEEEEE]">{{ item.name }}</p>
-              <textarea
-                v-if="item.key === 'textarea'"
-                class="block w-90 shadow-[0_0_15px_rgba(0,0,0,0.2)] bg-[#EEEEEE] rounded-[7px]"
-                name=""
-                id=""
-                rows="3"
-              ></textarea>
+            <!-- second form  -->
+            <div class="justify-items-center">
+              <div class="block my-1" for="" v-for="item in store.inputItems.second" :key="item">
+                <p class="my-4 py-2 border-b-2 border-[#EEEEEE]">{{ item.name }}</p>
+                <textarea
+                  v-model="formData[item.field]"
+                  v-if="item.key === 'textarea'"
+                  class="block w-90 shadow-[0_0_15px_rgba(0,0,0,0.2)] bg-[#EEEEEE] rounded-[7px]"
+                  name=""
+                  id=""
+                  rows="3"
+                ></textarea>
+              </div>
+              <div class="justify-self-end mt-30 mr-5">
+                <button
+                  type="submit"
+                  class="text-white shadow-[0_0_15px_rgba(0,0,0,0.2)] py-2 px-15 rounded-[8px] bg-[#47B65C]"
+                >
+                  Submit Request
+                </button>
+              </div>
             </div>
-            <div class="justify-self-end mt-30 mr-5">
-              <button
-                class="text-white shadow-[0_0_15px_rgba(0,0,0,0.2)] py-2 px-15 rounded-[8px] bg-[#47B65C]"
-              >
-                Submit Request
-              </button>
-            </div>
-          </div>
+          </form>
         </FormPop>
         <GraphDisplay />
         <div class="mt-5">
           <label for="" class="border-1 border-[#EEEEEE] p-3 rounded-[5px]"
             >Development Plan:
-            <select class="development text-[#47B65C]" name="" id="">
-              <option value="">Career Goals and Aspiration</option>
-              <option value="">Area Of Interest</option>
-              <option value="">Mentorship and Skill building</option>
+            <select class="development text-[#47B65C]" v-model="filtering" name="" id="">
+              <option value="career_goals">Career Goals and Aspiration</option>
+              <option value="areas_of_interest">Area Of Interest</option>
+              <option value="mentorship">Mentorship and Skill building</option>
             </select>
           </label>
         </div>
@@ -146,25 +171,17 @@ const fetchGoal = computed(() => {
               <p class="txt5 text-[0.9rem]">Feedback</p>
             </div>
             <div
-              class="flex items-center hover:bg-[#EEEEEE] border-b-2 px-3 border-[#EAEAEA]"
-              v-for="goals in fetchGoal"
-              :key="goals.id"
+              class="flex items-center hover:bg-[#EEEEEE] cursor-pointer border-b-2 px-3 border-[#EAEAEA]"
+              :class="[selectedId === item.id ? 'bg-[#EEEEEE]' : 'inherit']"
+              v-for="(item, index) in fetchGoal"
+              :key="item"
+              @click="handleSubmit(item)"
             >
-              <router-link to="/feedback" class="txt1 py-4 text-[#808080] text-[0.8rem]">{{
-                goals.short
-              }}</router-link>
-              <router-link to="/feedback" class="txt2 py-4 text-[#808080] text-[0.8rem]">{{
-                goals.goal
-              }}</router-link>
-              <router-link to="/feedback" class="txt3 py-4 text-[#808080] text-[0.8rem]">{{
-                goals.completion_date
-              }}</router-link>
-              <router-link to="/feedback" class="txt4 py-4 text-[#808080] text-[0.8rem]">{{
-                goals.status
-              }}</router-link>
-              <router-link to="/feedback" class="txt5 py-4 text-[#808080] text-[0.8rem]">{{
-                goals.feedback
-              }}</router-link>
+              <p class="txt1 py-4 text-[#808080] text-[0.8rem]">{{ index + 1 }}</p>
+              <p class="txt2 py-4 text-[#808080] text-[0.8rem]">{{ item.goal }}</p>
+              <p class="txt3 py-4 text-[#808080] text-[0.8rem]">{{ item.completion_date }}</p>
+              <p class="txt4 py-4 text-[#808080] text-[0.8rem]">{{ item.status }}</p>
+              <p class="txt5 py-4 text-[#808080] text-[0.8rem]">{{ item.feedback }}</p>
             </div>
           </div>
           <div class="col-span-4 px-2 py-4 bg-[#EEEEEE]">
@@ -182,46 +199,19 @@ const fetchGoal = computed(() => {
                   ]"
                 ></i>
               </div>
-              <div
-                v-if="item.type === 'textarea' && store.fieldDisplay === item.key"
-                class="bg-[#ffffff] py-3 px-4"
-              >
-                <textarea
-                  v-model="formData.name"
-                  class="w-full rounded-[7px]"
-                  cols="40"
-                  rows="4"
-                ></textarea>
-              </div>
-              <div
-                class="bg-[#ffffff] py-2 px-4"
-                v-else-if="item.type === 'date' && store.fieldDisplay === item.key"
-              >
-                <input
-                  class="w-full shadow-[0_0_15px_rgba(0,0,0,0.2)] rounded-[7px] p-2"
-                  type="date"
-                />
-              </div>
-              <div
-                class="bg-[#ffffff] py-2 px-4"
-                v-else-if="item.type === 'file' && store.fieldDisplay === item.key"
-              >
-                <input
-                  class="w-full text-[0.7rem] shadow-[0_0_15px_rgba(0,0,0,0.2)] rounded-[7px] p-2 cursor-pointer"
-                  type="file"
-                  name=""
-                  id=""
-                />
-              </div>
-              <div
-                class="bg-[#ffffff] py-2 px-4"
-                v-else-if="item.type === 'radio' && store.fieldDisplay === item.key"
-              >
-                <select class="shadow-[0_0_15px_rgba(0,0,0,0.2)] py-1 w-full" name="" id="">
-                  <option value="">Completed</option>
-                  <option value="">On going</option>
-                  <option value="">Not Started</option>
-                </select>
+              <div v-if="store.fieldDisplay === item.key">
+                <p class="py-2 pl-2" v-show="item.key === 'goal'">{{ activeGoal.goal }}</p>
+                <p class="py-2 pl-2" v-show="item.key === 'status'">{{ activeGoal.status }}</p>
+                <p class="py-2 pl-2" v-show="item.key === 'feedback'">{{ activeGoal.feedback }}</p>
+                <p class="py-2 pl-2" v-show="item.key === 'target'">
+                  {{ activeGoal.completion_date }}
+                </p>
+                <p class="py-2 pl-2" v-show="item.key === 'achieve'">
+                  {{ activeGoal.work_rate }}
+                </p>
+                <p class="py-2 pl-2" v-show="item.key === 'challenges'">
+                  {{ activeGoal.challenges }}
+                </p>
               </div>
             </form>
             <div class="flex justify-end">
