@@ -75,6 +75,7 @@ const getOptions = (item) => {
     chart: {
       type: 'donut',
     },
+    labels: item.labels,
     legend: {
       show: false,
     },
