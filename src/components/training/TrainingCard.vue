@@ -18,6 +18,7 @@ const selectedId = ref(null)
 const searchQuery = ref('')
 const store = useTrainingCard()
 const menu = store.menuItems
+// console.log(store.selectedId)
 const selectiveItems = computed(() => {
   const search = searchQuery.value.toLowerCase()
   if (!search) return menu
@@ -25,6 +26,7 @@ const selectiveItems = computed(() => {
     return item.employee?.toLowerCase().includes(search)
   })
 })
+// console.log(selectiveItems.value[2].id)
 // const handleSubmit = (line) => {
 //   selectedId.value = line.id
 //   console.log(selectedId.value)
@@ -75,7 +77,7 @@ const selectiveItems = computed(() => {
         :key="item.id"
         @click="store.handleSubmit(item)"
         class="flex hover:bg-[#EEEEEE] cursor-pointer items-center"
-        :class="[store.selectedId === item.id ? '#eeeeee' : 'inherit']"
+        :class="[store.selectedId === item.id ? 'bg-[#eeeeee]' : 'bg-inherit']"
       >
         <p
           :class="[props.show ? 'flex-[0_0_10%]' : 'flex-[0_0_5%]']"

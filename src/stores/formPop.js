@@ -6,7 +6,7 @@ export const useStore = defineStore('counter', () => {
     first: [
       { id: 1, name: 'Development Plan Type', key: 'select', field: 'objectives' },
       { id: 2, name: 'Goals', key: 'textarea', field: 'goal' },
-      { id: 3, name: 'Resources and Support Needed?', key: 'textarea' },
+      { id: 3, name: 'Resources and Support Needed?', key: 'textarea', field: 'resource' },
       { id: 4, name: 'Potential Challenges', key: 'textarea', field: 'challenges' },
       { id: 5, name: 'Target Date for Completion', key: 'date', field: 'completion_date' },
     ],

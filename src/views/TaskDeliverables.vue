@@ -45,7 +45,7 @@ const isStatus = (status) => {
           :key="task.id"
           class="flex items-center py-2 border-b-2 border-[#EEEEEE]"
         >
-          <p class="txt1 text-[0.9rem] py-3 text-[#808080]">{{ index }}</p>
+          <p class="txt1 text-[0.9rem] py-3 text-[#808080]">{{ index + 1 }}</p>
           <p class="txt2 text-[0.9rem] py-3 text-[#808080]">{{ task.task }}</p>
           <p class="txt3 text-[0.9rem] py-3 text-[#808080]">
             <span

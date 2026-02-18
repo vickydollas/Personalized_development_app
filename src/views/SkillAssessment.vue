@@ -236,7 +236,7 @@ const handleSubmit = (line) => {
                 </select>
               </div>
             </div>
-            <button class="bg-[#47B65C] px-7 py-2 rounded-[7px]">Submit</button>
+            <button class="bg-[#47B65C] ml-3 px-7 py-2 rounded-[7px]">Submit</button>
           </FormPop>
           <apexchart width="420" type="bar" :options="chartOptions" :series="series"></apexchart>
         </div>
@@ -285,11 +285,11 @@ const handleSubmit = (line) => {
             <h3 class="pl-3 text-[1.4rem] font-[600]">Details</h3>
             <div v-for="item in menuItems" :key="item.id" class="my-[2px] px-3">
               <div
+                @click="store.toggleButton(item.id)"
                 class="flex bg-[#ffffff] justify-between items-center px-3 py-3 shadow-[0_0_15px_rgba(0,0,0,0.2)]"
               >
                 <p>{{ item.name }}</p>
                 <i
-                  @click="store.toggleButton(item.id)"
                   :class="[
                     'pi text-[1.4rem]',
                     store.fieldDisplay === item.id ? 'pi-angle-up' : 'pi-angle-down',

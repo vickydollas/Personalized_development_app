@@ -81,10 +81,12 @@ const popUp = ref([
           <div class="col-span-4">
             <h3 class="pl-3 mt-5 text-[1.4rem] font-[600]">Details</h3>
             <div v-for="item in menuItems" :key="item.id" class="my-1 px-3">
-              <div class="flex bg-[#eeeeee] justify-between items-center px-3 py-3">
+              <div
+                @click.stop="store.toggleButton(item.id)"
+                class="flex bg-[#eeeeee] justify-between items-center px-3 py-3"
+              >
                 <p>{{ item.name }}</p>
                 <i
-                  @click.stop="store.toggleButton(item.id)"
                   :class="[store.fieldDisplay !== item.id ? 'pi-angle-down' : 'pi-angle-up']"
                   class="pi pi-angle-down text-[1.4rem]"
                 ></i>

@@ -25,11 +25,11 @@ const props = defineProps({
     >
       <div
         v-if="store.isModalActive"
-        class="w-full min-h-[100vh] backdrop-blur-[1px] absolute shadow-[0_0_15px_rgba(0,0,0,0.2)] left-0 top-0 rounded-[8px]"
+        class="w-full min-h-[100vh] backdrop-blur-[1px] fixed shadow-[0_0_15px_rgba(0,0,0,0.2)] left-0 top-0 rounded-[8px]"
       >
         <div
           :class="[
-            'bg-[#EEEEEE] p-1 my-3 relative rounded-[8px] mx-auto',
+            'bg-[#EEEEEE] p-1 my-1 relative rounded-[8px] mx-auto',
             props.layOut ? 'w-[40%]' : 'w-[60%]',
           ]"
         >
@@ -38,10 +38,7 @@ const props = defineProps({
             <i @click="store.toggleModal" class="pi pi-times cursor-pointer"></i>
           </div>
           <div
-            :class="[
-              'shadow-[0_0_15px_rgba(0,0,0,0.2)] pb-10 my-2 mx-10 rounded-[7px]',
-              props.layOut ? 'flex flex-col items-center justify-center' : 'grid grid-cols-2 gap-5',
-            ]"
+            :class="['shadow-[0_0_15px_rgba(0,0,0,0.2)] pb-10 my-2 mx-10 rounded-[7px]']"
             action=""
           >
             <!-- first form -->

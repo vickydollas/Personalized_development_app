@@ -1,7 +1,7 @@
 <script setup>
 import NavMenu from '@/components/navbar/NavMenu.vue'
 import TopHeader from '../components/navbar/TopHeader.vue'
-import { onMounted, ref, reactive, computed } from 'vue'
+import { onMounted, ref, reactive, computed, watch } from 'vue'
 import axios from 'axios'
 // import BodyOption from '@/components/navbar/BodyOption.vue'
 import GraphDisplay from '../components/body/GraphDisplay.vue'
@@ -16,15 +16,31 @@ const formData = ref({
   challenges: '',
   objectives: '',
   feedback: '',
+  status: 'Not Started',
 })
-const formSubmit = async () => {
+async function formSubmit() {
+  const filterFormData = {
+    goal: formData.value.goal,
+    work_rate: formData.value.work_rate,
+    completion_date: formData.value.completion_date,
+    challenges: formData.value.challenges,
+    feedback: formData.value.feedback,
+    status: formData.value.status,
+  }
+  const postingLink = formData.value.objectives
   try {
-    const response = await axios.post('./goals2.json', JSON.stringify(formData.value))
+    const url = `https://6995880fb081bc23e9c39067.mockapi.io/api/v1/${postingLink}`
+    if (!url) {
+      console.log('wrong link')
+    }
+    const response = await axios.post(url, filterFormData)
     if (response.ok) {
       console.log('successfully updated')
     }
   } catch (error) {
     console.error(error)
+  } finally {
+    console.log('done')
   }
 }
 // items for the modal form
@@ -42,17 +58,19 @@ const menuItems = ref([
 ])
 
 // API call
+const filtering = ref('career_goals')
 const isLoading = ref(false)
 const error = ref(null)
 const goal = ref(null)
-// console.log(goal.value)
 async function getGoals() {
   isLoading.value = true
   error.value = null
   try {
-    const response = await axios.get('./goals2.json')
+    const response = await axios.get(
+      `https://6995880fb081bc23e9c39067.mockapi.io/api/v1/${filtering.value}`
+    )
     if (!response) {
-      throw new Error('could not fetch link')
+      console.log('could not fetch link')
     }
     goal.value = response.data
   } catch (error) {
@@ -64,10 +82,12 @@ async function getGoals() {
 onMounted(() => {
   getGoals()
 })
-const filtering = ref('career_goals')
+watch(filtering, () => {
+  getGoals()
+})
 const fetchGoal = computed(() => {
   if (!goal.value) return {}
-  return goal.value[filtering.value]
+  return goal.value
 })
 
 const activeGoal = ref({})
@@ -93,8 +113,8 @@ const handleSubmit = (line) => {
           </button>
         </div>
         <FormPop>
-          <form @submit.prevent="formSubmit">
-            <div class="justify-items-center">
+          <form @submit.prevent="formSubmit" class="flex justify-between px-3">
+            <div class="">
               <div class="block my-1" for="" v-for="item in store.inputItems.first" :key="item">
                 <p class="my-4 py-2 border-b-2 border-[#EEEEEE] font-[600]">
                   {{ item.name }}
@@ -120,14 +140,14 @@ const handleSubmit = (line) => {
                   name=""
                   id=""
                 >
-                  <option value="">Career Goals and Aspiration</option>
-                  <option value="">Area of Interest</option>
-                  <option value="">Mentorship and Skill Building</option>
+                  <option value="career_goals">Career Goals and Aspiration</option>
+                  <option value="areas_of_interest">Area of Interest</option>
+                  <option value="mentorship">Mentorship and Skill Building</option>
                 </select>
               </div>
             </div>
             <!-- second form  -->
-            <div class="justify-items-center">
+            <div class="">
               <div class="block my-1" for="" v-for="item in store.inputItems.second" :key="item">
                 <p class="my-4 py-2 border-b-2 border-[#EEEEEE]">{{ item.name }}</p>
                 <textarea
@@ -188,11 +208,11 @@ const handleSubmit = (line) => {
             <h3 class="pl-3 text-[1.4rem] font-[600]">Details</h3>
             <form @submit="formData" v-for="item in menuItems" :key="item.id" class="my-1 px-3">
               <div
+                @click.stop="store.toggleButton(item.key)"
                 class="flex bg-[#ffffff] rounded-[7px] justify-between items-center px-3 py-3 shadow-[0_0_15px_rgba(0,0,0,0.2)]"
               >
                 <p>{{ item.name }}</p>
                 <i
-                  @click.stop="store.toggleButton(item.key)"
                   :class="[
                     'pi text-[1.4rem]',
                     store.fieldDisplay !== item.key ? 'pi-angle-down' : 'pi-angle-up',
