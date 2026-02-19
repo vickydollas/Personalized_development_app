@@ -202,7 +202,7 @@ const handleSubmit = (line) => {
       <!-- <BodyOption /> -->
       <div class="py-2 px-4 bg-[#ffffff] my-3 mx-20 rounded-[7px]">
         <div class="rounded-[7px] px-2 py-4 my-10 shadow-[0_0_15px_rgba(0,0,0,0.2)] pl-3">
-          <div class="flex items-center px-5 justify-between">
+          <div class="flex items-center my-3 border-b border-[#000000] p-5 justify-between">
             <h3 class="text-[1.5rem] font-[600]">Skill Assessment</h3>
             <button
               @click="store.toggleModal"
