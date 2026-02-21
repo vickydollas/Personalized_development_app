@@ -7,7 +7,16 @@ import axios from 'axios'
 import GraphDisplay from '../components/body/GraphDisplay.vue'
 import FormPop from '../components/body/FormPop.vue'
 import { useStore } from '../stores/formPop'
+import { useTrainingCard } from '../stores/trainingCard'
 
+// items for the modal form
+const store = useStore()
+const library = useTrainingCard()
+const filtering = ref('career_goals')
+const filterLibrary = computed(() => {
+  const filtered = filtering.value
+  return library.goal[filtered]
+})
 // form parameters
 const formData = ref({
   goal: '',
@@ -18,8 +27,8 @@ const formData = ref({
   feedback: '',
   status: 'Not Started',
 })
-async function formSubmit() {
-  const filterFormData = {
+const filterFormData = computed(() => {
+  return {
     goal: formData.value.goal,
     work_rate: formData.value.work_rate,
     completion_date: formData.value.completion_date,
@@ -27,24 +36,16 @@ async function formSubmit() {
     feedback: formData.value.feedback,
     status: formData.value.status,
   }
-  const postingLink = formData.value.objectives
-  try {
-    const url = `https://6995880fb081bc23e9c39067.mockapi.io/api/v1/${postingLink}`
-    if (!url) {
-      console.log('wrong link')
-    }
-    const response = await axios.post(url, filterFormData)
-    if (response.ok) {
-      console.log('successfully updated')
-    }
-  } catch (error) {
-    console.error(error)
-  } finally {
-    console.log('done')
-  }
+})
+const selectedSection = computed(() => {
+  return formData.value.objectives
+})
+const buttonSubmit = () => {
+  library.addItems(filterFormData.value, selectedSection.value)
 }
-// items for the modal form
-const store = useStore()
+const deleteItem = () => {
+  library.deleteItems(library.indexing, filtering.value)
+}
 // menuitems to document the detail of your plan
 const menuItems = ref([
   { id: 1, name: 'Goals', key: 'goal', type: 'textarea' },
@@ -56,46 +57,6 @@ const menuItems = ref([
   { id: 10, name: 'Feedback', key: 'feedback', type: 'textarea' },
   { id: 11, name: 'Evidence', key: 'evidence', type: 'file' },
 ])
-
-// API call
-const filtering = ref('career_goals')
-const isLoading = ref(false)
-const error = ref(null)
-const goal = ref(null)
-async function getGoals() {
-  isLoading.value = true
-  error.value = null
-  try {
-    const response = await axios.get(
-      `https://6995880fb081bc23e9c39067.mockapi.io/api/v1/${filtering.value}`
-    )
-    if (!response) {
-      console.log('could not fetch link')
-    }
-    goal.value = response.data
-  } catch (error) {
-    console.error(error)
-  } finally {
-    isLoading.value = false
-  }
-}
-onMounted(() => {
-  getGoals()
-})
-watch(filtering, () => {
-  getGoals()
-})
-const fetchGoal = computed(() => {
-  if (!goal.value) return {}
-  return goal.value
-})
-
-const activeGoal = ref({})
-const selectedId = ref(null)
-const handleSubmit = (line) => {
-  activeGoal.value = line
-  selectedId.value = line.id
-}
 </script>
 <template>
   <div class="bg-[#EEEEEE] pb-7">
@@ -161,6 +122,7 @@ const handleSubmit = (line) => {
               </div>
               <div class="justify-self-end mt-30 mr-5">
                 <button
+                  @click="buttonSubmit"
                   type="submit"
                   class="text-white shadow-[0_0_15px_rgba(0,0,0,0.2)] py-2 px-15 rounded-[8px] bg-[#47B65C]"
                 >
@@ -192,10 +154,10 @@ const handleSubmit = (line) => {
             </div>
             <div
               class="flex items-center hover:bg-[#EEEEEE] cursor-pointer border-b-2 px-3 border-[#EAEAEA]"
-              :class="[selectedId === item.id ? 'bg-[#EEEEEE]' : 'inherit']"
-              v-for="(item, index) in fetchGoal"
-              :key="item"
-              @click="handleSubmit(item)"
+              :class="[library.selectedId === item.id ? 'bg-[#EEEEEE]' : 'inherit']"
+              v-for="(item, index) in filterLibrary"
+              :key="item.id"
+              @click="library.handleSubmit(item, index)"
             >
               <p class="txt1 py-4 text-[#808080] text-[0.8rem]">{{ index + 1 }}</p>
               <p class="txt2 py-4 text-[#808080] text-[0.8rem]">{{ item.goal }}</p>
@@ -220,22 +182,29 @@ const handleSubmit = (line) => {
                 ></i>
               </div>
               <div v-if="store.fieldDisplay === item.key">
-                <p class="py-2 pl-2" v-show="item.key === 'goal'">{{ activeGoal.goal }}</p>
-                <p class="py-2 pl-2" v-show="item.key === 'status'">{{ activeGoal.status }}</p>
-                <p class="py-2 pl-2" v-show="item.key === 'feedback'">{{ activeGoal.feedback }}</p>
+                <p class="py-2 pl-2" v-show="item.key === 'goal'">{{ library.activeGoal.goal }}</p>
+                <p class="py-2 pl-2" v-show="item.key === 'status'">
+                  {{ library.activeGoal.status }}
+                </p>
+                <p class="py-2 pl-2" v-show="item.key === 'feedback'">
+                  {{ library.activeGoal.feedback }}
+                </p>
                 <p class="py-2 pl-2" v-show="item.key === 'target'">
-                  {{ activeGoal.completion_date }}
+                  {{ library.activeGoal.completion_date }}
                 </p>
                 <p class="py-2 pl-2" v-show="item.key === 'achieve'">
-                  {{ activeGoal.work_rate }}
+                  {{ library.activeGoal.work_rate }}
                 </p>
                 <p class="py-2 pl-2" v-show="item.key === 'challenges'">
-                  {{ activeGoal.challenges }}
+                  {{ library.activeGoal.challenges }}
                 </p>
               </div>
             </form>
             <div class="flex justify-end">
-              <button class="mx-3 my-2 py-2 px-8 rounded-[7px] bg-[#FF0000] text-white">
+              <button
+                @click="deleteItem"
+                class="mx-3 my-2 py-2 px-8 rounded-[7px] bg-[#FF0000] text-white"
+              >
                 Delete
               </button>
             </div>

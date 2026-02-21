@@ -5,6 +5,7 @@ import NavMenu from '../components/navbar/NavMenu.vue'
 import FormPop from '../components/body/FormPop.vue'
 import { ref } from 'vue'
 import { useStore } from '../stores/formPop'
+import { useTrainingCard } from '../stores/trainingCard'
 
 // menuitems to document the detail of your plan
 const menuItems = ref([
@@ -26,106 +27,11 @@ const popUp = ref([
 ])
 // modal activeness
 const store = useStore()
-
-const goal = ref([
-  {
-    id: [{ num: 1, size: 'flex-[0_0_10%]' }],
-    skill: [{ num: 'Public Speaking', size: 'flex-[0_0_20%]' }],
-    current_state: [{ num: 'Begineer', size: 'flex-[0_0_15%]' }],
-    desired_state: [{ num: 'Expert', size: 'flex-[0_0_15%]' }],
-    status: [{ num: 'On going', size: 'flex-[0_0_15%]' }],
-    feedback: [{ num: 'satisfactory', size: 'flex-[0_0_15%]' }],
-  },
-  {
-    id: [{ num: 2, size: 'flex-[0_0_10%]' }],
-    skill: [{ num: 'Public Speaking', size: 'flex-[0_0_20%]' }],
-    current_state: [{ num: 'Intermediate', size: 'flex-[0_0_15%]' }],
-    desired_state: [{ num: 'Expert', size: 'flex-[0_0_15%]' }],
-    status: [{ num: 'Completed', size: 'flex-[0_0_15%]' }],
-    feedback: [{ num: 'Satisfactory', size: 'flex-[0_0_15%]' }],
-  },
-  {
-    id: [{ num: 3, size: 'flex-[0_0_10%]' }],
-    skill: [{ num: 'Public Speaking', size: 'flex-[0_0_20%]' }],
-    current_state: [{ num: 'Beginner', size: 'flex-[0_0_15%]' }],
-    desired_state: [{ num: 'Expert', size: 'flex-[0_0_15%]' }],
-    status: [{ num: 'Not started', size: 'flex-[0_0_15%]' }],
-    feedback: [{ num: 'Satisfactory', size: 'flex-[0_0_15%]' }],
-  },
-  {
-    id: [{ num: 4, size: 'flex-[0_0_10%]' }],
-    skill: [{ num: 'Public Speaking', size: 'flex-[0_0_20%]' }],
-    current_state: [{ num: 'Intermediate', size: 'flex-[0_0_15%]' }],
-    desired_state: [{ num: 'Expert', size: 'flex-[0_0_15%]' }],
-    status: [{ num: 'On going', size: 'flex-[0_0_15%]' }],
-    feedback: [{ num: 'Satisfactory', size: 'flex-[0_0_15%]' }],
-  },
-  {
-    id: [{ num: 5, size: 'flex-[0_0_10%]' }],
-    skill: [{ num: 'Public Speaking', size: 'flex-[0_0_20%]' }],
-    current_state: [{ num: 'Beginner', size: 'flex-[0_0_15%]' }],
-    desired_state: [{ num: 'Expert', size: 'flex-[0_0_15%]' }],
-    status: [{ num: 'Completed', size: 'flex-[0_0_15%]' }],
-    feedback: [{ num: 'Satisfactory', size: 'flex-[0_0_15%]' }],
-  },
-  {
-    id: [{ num: 6, size: 'flex-[0_0_10%]' }],
-    skill: [{ num: 'Public Speaking', size: 'flex-[0_0_20%]' }],
-    current_state: [{ num: 'Intermediate', size: 'flex-[0_0_15%]' }],
-    desired_state: [{ num: 'Expert', size: 'flex-[0_0_15%]' }],
-    status: [{ num: 'Not started', size: 'flex-[0_0_15%]' }],
-    feedback: [{ num: 'Satisfactory', size: 'flex-[0_0_15%]' }],
-  },
-  {
-    id: [{ num: 7, size: 'flex-[0_0_10%]' }],
-    skill: [{ num: 'Public Speaking', size: 'flex-[0_0_20%]' }],
-    current_state: [{ num: 'Beginner', size: 'flex-[0_0_15%]' }],
-    desired_state: [{ num: 'Expert', size: 'flex-[0_0_15%]' }],
-    status: [{ num: 'On going', size: 'flex-[0_0_15%]' }],
-    feedback: [{ num: 'Satisfactory', size: 'flex-[0_0_15%]' }],
-  },
-  {
-    id: [{ num: 8, size: 'flex-[0_0_10%]' }],
-    skill: [{ num: 'Public Speaking', size: 'flex-[0_0_20%]' }],
-    current_state: [{ num: 'Intermediate', size: 'flex-[0_0_15%]' }],
-    desired_state: [{ num: 'Expert', size: 'flex-[0_0_15%]' }],
-    status: [{ num: 'Completed', size: 'flex-[0_0_15%]' }],
-    feedback: [{ num: 'Satisfactory', size: 'flex-[0_0_15%]' }],
-  },
-  {
-    id: [{ num: 9, size: 'flex-[0_0_10%]' }],
-    skill: [{ num: 'Public Speaking', size: 'flex-[0_0_20%]' }],
-    current_state: [{ num: 'Beginner', size: 'flex-[0_0_15%]' }],
-    desired_state: [{ num: 'Expert', size: 'flex-[0_0_15%]' }],
-    status: [{ num: 'Not started', size: 'flex-[0_0_15%]' }],
-    feedback: [{ num: 'Satisfactory', size: 'flex-[0_0_15%]' }],
-  },
-  {
-    id: [{ num: 10, size: 'flex-[0_0_10%]' }],
-    skill: [{ num: 'Public Speaking', size: 'flex-[0_0_20%]' }],
-    current_state: [{ num: 'Intermediate', size: 'flex-[0_0_15%]' }],
-    desired_state: [{ num: 'Expert', size: 'flex-[0_0_15%]' }],
-    status: [{ num: 'On going', size: 'flex-[0_0_15%]' }],
-    feedback: [{ num: 'Satisfactory', size: 'flex-[0_0_15%]' }],
-  },
-  {
-    id: [{ num: 11, size: 'flex-[0_0_10%]' }],
-    skill: [{ num: 'Public Speaking', size: 'flex-[0_0_20%]' }],
-    current_state: [{ num: 'Beginner', size: 'flex-[0_0_15%]' }],
-    desired_state: [{ num: 'Expert', size: 'flex-[0_0_15%]' }],
-    status: [{ num: 'Completed', size: 'flex-[0_0_15%]' }],
-    feedback: [{ num: 'Satisfactory', size: 'flex-[0_0_15%]' }],
-  },
-  {
-    id: [{ num: 12, size: 'flex-[0_0_10%]' }],
-    skill: [{ num: 'Public Speaking', size: 'flex-[0_0_20%]' }],
-    current_state: [{ num: 'Intermediate', size: 'flex-[0_0_15%]' }],
-    desired_state: [{ num: 'Expert', size: 'flex-[0_0_15%]' }],
-    status: [{ num: 'Not started', size: 'flex-[0_0_15%]' }],
-    feedback: [{ num: 'Satisfactory', size: 'flex-[0_0_15%]' }],
-  },
-])
-
+const library = useTrainingCard()
+const deleteItem = () => {
+  library.deleteItems(library.indexing)
+  // console.log(library.indexing)
+}
 const series = ref([
   {
     name: 'Current State',
@@ -186,13 +92,6 @@ const chartOptions = ref({
     show: true, // Hiding legend as requested
   },
 })
-// submit handling
-const activeGoal = ref(null)
-const selectedId = ref(null)
-const handleSubmit = (line) => {
-  activeGoal.value = line
-  selectedId.value = line.id[0].num
-}
 </script>
 <template>
   <div class="bg-[#EEEEEE] pb-7">
@@ -266,11 +165,11 @@ const handleSubmit = (line) => {
             <div
               :class="[
                 'flex items-center hover:bg-[#EEEEEE] cursor-pointer border-b-2 px-3 border-[#EAEAEA]',
-                selectedId === goals.id[0].num ? 'bg-[#EEEEEE]' : 'inherit',
+                library.selectedId === goals.id[0].num ? 'bg-[#EEEEEE]' : 'inherit',
               ]"
-              v-for="goals in goal"
+              v-for="(goals, index) in library.skill"
               :key="goals.id"
-              @click="handleSubmit(goals)"
+              @click="library.handleSubmit(goals, index)"
             >
               <p
                 v-for="(opt, key) in goals"
@@ -298,23 +197,23 @@ const handleSubmit = (line) => {
               </div>
               <div v-if="store.fieldDisplay === item.id" class="px-2">
                 <p v-show="item.key === 'goal'" class="py-2 rounded-[8px]">
-                  {{ activeGoal?.skill[0]?.num }}
+                  {{ library.activeGoal?.skill[0]?.num }}
                 </p>
                 <p v-show="item.key === 'status'" class="py-2 rounded-[8px]">
-                  {{ activeGoal?.status[0]?.num }}
+                  {{ library.activeGoal?.status[0]?.num }}
                 </p>
                 <p v-show="item.key === 'feedback'" class="py-2 rounded-[8px]">
-                  {{ activeGoal?.feedback[0]?.num }}
+                  {{ library.activeGoal?.feedback[0]?.num }}
                 </p>
                 <p v-show="item.key === 'desired'" class="py-2 rounded-[8px]">
-                  {{ activeGoal?.desired_state[0]?.num }}
+                  {{ library.activeGoal?.desired_state[0]?.num }}
                 </p>
                 <p v-show="item.key === 'state'" class="py-2 rounded-[8px]">
-                  {{ activeGoal?.current_state[0]?.num }}
+                  {{ library.activeGoal?.current_state[0]?.num }}
                 </p>
               </div>
             </div>
-            <div class="flex justify-end">
+            <div @click="deleteItem" class="flex justify-end">
               <button class="mx-3 my-2 py-2 px-8 rounded-[7px] bg-[#FF0000] text-white">
                 Delete
               </button>
