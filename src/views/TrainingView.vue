@@ -77,7 +77,7 @@ const popUp = ref([
         </FormPop>
         <GraphDisplay :showLast="true" />
         <div class="grid grid-cols-12">
-          <!-- <TrainingCard class="col-span-8" :show="true" /> -->
+          <TrainingCard class="col-span-8" :show="true" />
           <div class="col-span-4">
             <h3 class="pl-3 mt-5 text-[1.4rem] font-[600]">Details</h3>
             <div v-for="item in menuItems" :key="item.id" class="my-1 px-3">

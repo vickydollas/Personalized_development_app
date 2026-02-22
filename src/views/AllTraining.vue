@@ -21,7 +21,7 @@ const toggleText = (id) => {
       <div class="py-5 px-4 bg-[#ffffff] my-3 mx-20 rounded-[7px]">
         <h2 class="text-[1.5rem] text-[500]">All Training Schedule</h2>
         <GraphDisplay :showLast="true" />
-        <!-- <TrainingCard :show="true" /> -->
+        <TrainingCard :show="true" />
       </div>
     </div>
   </div>

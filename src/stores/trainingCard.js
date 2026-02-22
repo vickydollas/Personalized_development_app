@@ -222,7 +222,7 @@ export const useTrainingCard = defineStore('training', () => {
   const indexing = ref(null)
   const handleSubmit = (line, index, filtering) => {
     activeGoal.value = line
-    selectedId.value = line.id || line.id[0].num
+    selectedId.value = line.id
     indexing.value = index
     console.log(index)
   }
@@ -848,7 +848,7 @@ export const useTrainingCard = defineStore('training', () => {
   const deleteItems = (selected, filtering) => {
     // console.log(skill)
     // console.log(skill.value)
-    return goal.value[filtering].splice(selected, 1) || skill.value.splice(selected, 1)
+    goal.value[filtering].splice(selected, 1)
     // console.log(goal2.value)
   }
   return {

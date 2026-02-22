@@ -28,8 +28,16 @@ const popUp = ref([
 // modal activeness
 const store = useStore()
 const library = useTrainingCard()
+const selectedId = ref(null)
+const activeGoal = ref(null)
+const indexing = ref(null)
+const handleSubmit = (line, index, filtering) => {
+  activeGoal.value = line
+  selectedId.value = line.id[0].num
+  indexing.value = index
+}
 const deleteItem = () => {
-  library.deleteItems(library.indexing)
+  library.skill.splice(indexing.value, 1)
   // console.log(library.indexing)
 }
 const series = ref([
@@ -165,18 +173,18 @@ const chartOptions = ref({
             <div
               :class="[
                 'flex items-center hover:bg-[#EEEEEE] cursor-pointer border-b-2 px-3 border-[#EAEAEA]',
-                library.selectedId === goals.id[0].num ? 'bg-[#EEEEEE]' : 'inherit',
+                selectedId === goals.id[0].num ? 'bg-[#EEEEEE]' : 'bg-inherit',
               ]"
               v-for="(goals, index) in library.skill"
               :key="goals.id"
-              @click="library.handleSubmit(goals, index)"
+              @click="handleSubmit(goals, index)"
             >
               <p
                 v-for="(opt, key) in goals"
                 :key="key"
                 :class="['py-4 text-[#808080] text-[0.8rem]', opt[0].size]"
               >
-                {{ opt[0].num }}
+                {{ key === 'id' ? index + 1 : opt[0].num }}
               </p>
             </div>
           </div>
@@ -197,19 +205,19 @@ const chartOptions = ref({
               </div>
               <div v-if="store.fieldDisplay === item.id" class="px-2">
                 <p v-show="item.key === 'goal'" class="py-2 rounded-[8px]">
-                  {{ library.activeGoal?.skill[0]?.num }}
+                  {{ activeGoal?.skill[0]?.num }}
                 </p>
                 <p v-show="item.key === 'status'" class="py-2 rounded-[8px]">
-                  {{ library.activeGoal?.status[0]?.num }}
+                  {{ activeGoal?.status[0]?.num }}
                 </p>
                 <p v-show="item.key === 'feedback'" class="py-2 rounded-[8px]">
-                  {{ library.activeGoal?.feedback[0]?.num }}
+                  {{ activeGoal?.feedback[0]?.num }}
                 </p>
                 <p v-show="item.key === 'desired'" class="py-2 rounded-[8px]">
-                  {{ library.activeGoal?.desired_state[0]?.num }}
+                  {{ activeGoal?.desired_state[0]?.num }}
                 </p>
                 <p v-show="item.key === 'state'" class="py-2 rounded-[8px]">
-                  {{ library.activeGoal?.current_state[0]?.num }}
+                  {{ activeGoal?.current_state[0]?.num }}
                 </p>
               </div>
             </div>
