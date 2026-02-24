@@ -13,8 +13,6 @@ const props = defineProps({
     default: 5,
   },
 })
-const selectedId = ref(null)
-// const activeGoal = ref(null)
 const searchQuery = ref('')
 const store = useTrainingCard()
 const menu = store.menuItems
@@ -26,11 +24,6 @@ const selectiveItems = computed(() => {
     return item.employee?.toLowerCase().includes(search)
   })
 })
-// console.log(selectiveItems.value[2].id)
-// const handleSubmit = (line) => {
-//   selectedId.value = line.id
-//   console.log(selectedId.value)
-// }
 </script>
 <template>
   <!-- <GraphDisplay /> -->

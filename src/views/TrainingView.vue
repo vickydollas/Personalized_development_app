@@ -3,7 +3,7 @@ import NavMenu from '@/components/navbar/NavMenu.vue'
 import TopHeader from '../components/navbar/TopHeader.vue'
 import { ref } from 'vue'
 import TrainingCard from '../components/training/TrainingCard.vue'
-// import BodyOption from '@/components/navbar/BodyOption.vue'
+import BodyOption from '@/components/navbar/BodyOption.vue'
 import GraphDisplay from '../components/body/GraphDisplay.vue'
 import FormPop from '../components/body/FormPop.vue'
 import { useStore } from '../stores/formPop'
@@ -38,7 +38,7 @@ const popUp = ref([
     <TopHeader />
     <NavMenu />
     <div>
-      <!-- <BodyOption /> -->
+      <BodyOption />
       <div class="py-5 px-4 bg-[#ffffff] my-3 mx-20 rounded-[7px]">
         <div class="flex items-center px-5 justify-between">
           <h2 class="text-[1.5rem] text-[500]">Training Schedule</h2>

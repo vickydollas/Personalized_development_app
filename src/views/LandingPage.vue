@@ -3,13 +3,24 @@ import NavMenu from '@/components/navbar/NavMenu.vue'
 import TopHeader from '../components/navbar/TopHeader.vue'
 import { onMounted, ref, reactive, computed, watch } from 'vue'
 import axios from 'axios'
-// import BodyOption from '@/components/navbar/BodyOption.vue'
+import BodyOption from '@/components/navbar/BodyOption.vue'
 import GraphDisplay from '../components/body/GraphDisplay.vue'
 import FormPop from '../components/body/FormPop.vue'
 import { useStore } from '../stores/formPop'
 import { useTrainingCard } from '../stores/trainingCard'
 
-// items for the modal form
+// menuitems to document the detail of your plan
+const menuItems = ref([
+  { id: 1, name: 'Goals', key: 'goal', type: 'textarea' },
+  { id: 2, name: 'Department', key: 'department', type: 'textarea' },
+  { id: 4, name: 'Level', key: 'level', type: 'textarea' },
+  { id: 5, name: 'Target Date for Completion', key: 'target', type: 'date' },
+  { id: 6, name: 'Potential Challenges', key: 'challenges', type: 'textarea' },
+  { id: 9, name: 'Status', key: 'status', type: 'radio' },
+  { id: 10, name: 'Feedback', key: 'feedback', type: 'textarea' },
+  { id: 11, name: 'Evidence', key: 'evidence', type: 'file' },
+])
+// data manipulationa and filtering
 const store = useStore()
 const library = useTrainingCard()
 const filtering = ref('career_goals')
@@ -17,6 +28,29 @@ const filterLibrary = computed(() => {
   const filtered = filtering.value
   return library.goal[filtered]
 })
+const filterData = computed(() => {
+  const { quarter, year, level, department } = exportedQuarter.value
+  if (!quarter && !year && !level && !department) return filterLibrary.value
+  return filterLibrary.value.filter((item) => {
+    // console.log(item.department.toLowerCase().replaceAll(' ', ''))
+    const setQuarter = library.handleQuarterType(item.completion_date)
+    const matchQuarter = !quarter || setQuarter.calcQuarter === quarter
+    const matchYear = !year || setQuarter.year === year
+    const matchLevel =
+      !level ||
+      item.level.toLowerCase().replaceAll(' ', '') === level.toLowerCase().replaceAll(' ', '')
+    const matchDepartment =
+      !department ||
+      item.department.toLowerCase().replaceAll(' ', '') ===
+        department.toLowerCase().replaceAll(' ', '')
+    return matchQuarter && matchYear && matchLevel && matchDepartment
+  })
+})
+// ecxported function through emit to help filter
+const exportedQuarter = ref('')
+const handleQuarterchange = (val) => {
+  exportedQuarter.value = val
+}
 // form parameters
 const formData = ref({
   goal: '',
@@ -40,29 +74,26 @@ const filterFormData = computed(() => {
 const selectedSection = computed(() => {
   return formData.value.objectives
 })
+// updating the form to the
 const buttonSubmit = () => {
-  library.addItems(filterFormData.value, selectedSection.value)
+  library.addItems(filterFormData.value, 'development', selectedSection.value)
 }
 const deleteItem = () => {
   library.deleteItems(library.indexing, filtering.value)
 }
-// menuitems to document the detail of your plan
-const menuItems = ref([
-  { id: 1, name: 'Goals', key: 'goal', type: 'textarea' },
-  { id: 2, name: 'What i will do to achieve this', key: 'achieve', type: 'textarea' },
-  { id: 4, name: 'What does Success looks like', key: 'success', type: 'textarea' },
-  { id: 5, name: 'Target Date for Completion', key: 'target', type: 'date' },
-  { id: 6, name: 'Potential Challenges', key: 'challenges', type: 'textarea' },
-  { id: 9, name: 'Status', key: 'status', type: 'radio' },
-  { id: 10, name: 'Feedback', key: 'feedback', type: 'textarea' },
-  { id: 11, name: 'Evidence', key: 'evidence', type: 'file' },
-])
+const saveEdit = (index) => {
+  filterData.value[index] = { ...library.editBuffer }
+
+  library.editingId = null
+  library.editBuffer = {}
+}
 </script>
 <template>
   <div class="bg-[#EEEEEE] pb-7">
     <TopHeader />
     <NavMenu />
-    <div class="my-5">
+    <BodyOption @quarterExpo="handleQuarterchange" />
+    <div class="">
       <div class="py-1 px-4 bg-[#ffffff] rounded-[6px] mx-20">
         <div class="flex items-center justify-between py-5 border-b-2 border-[#808080]">
           <h2 class="text-[1.5rem] font-[600]">Development Plan</h2>
@@ -155,12 +186,23 @@ const menuItems = ref([
             <div
               class="flex items-center hover:bg-[#EEEEEE] cursor-pointer border-b-2 px-3 border-[#EAEAEA]"
               :class="[library.selectedId === item.id ? 'bg-[#EEEEEE]' : 'inherit']"
-              v-for="(item, index) in filterLibrary"
+              v-for="(item, index) in filterData"
               :key="item.id"
               @click="library.handleSubmit(item, index)"
+              @dblclick="library.startEditing(item)"
             >
               <p class="txt1 py-4 text-[#808080] text-[0.8rem]">{{ index + 1 }}</p>
-              <p class="txt2 py-4 text-[#808080] text-[0.8rem]">{{ item.goal }}</p>
+              <div class="txt2 py-4 text-[#808080] text-[0.8rem]">
+                <input
+                  v-model="library.editBuffer.goal"
+                  class="w-80 py-1 bg-white rounded-[7px]"
+                  v-if="library.editingId === item.id"
+                  @keyup.enter="saveEdit(index)"
+                  @keyup.esc="library.cancelEdit"
+                  type="text"
+                />
+                <p v-else class="txt2">{{ item.goal }}</p>
+              </div>
               <p class="txt3 py-4 text-[#808080] text-[0.8rem]">{{ item.completion_date }}</p>
               <p class="txt4 py-4 text-[#808080] text-[0.8rem]">{{ item.status }}</p>
               <p class="txt5 py-4 text-[#808080] text-[0.8rem]">{{ item.feedback }}</p>
@@ -197,6 +239,12 @@ const menuItems = ref([
                 </p>
                 <p class="py-2 pl-2" v-show="item.key === 'challenges'">
                   {{ library.activeGoal.challenges }}
+                </p>
+                <p class="py-2 pl-2" v-show="item.key === 'department'">
+                  {{ library.activeGoal.department }}
+                </p>
+                <p class="py-2 pl-2" v-show="item.key === 'level'">
+                  {{ library.activeGoal.level }}
                 </p>
               </div>
             </form>

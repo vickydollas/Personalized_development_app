@@ -1,9 +1,9 @@
 <script setup>
 import TopHeader from '../components/navbar/TopHeader.vue'
 import NavMenu from '../components/navbar/NavMenu.vue'
-// import BodyOption from '@/components/navbar/BodyOption.vue'
+import BodyOption from '@/components/navbar/BodyOption.vue'
 import FormPop from '../components/body/FormPop.vue'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { useStore } from '../stores/formPop'
 import { useTrainingCard } from '../stores/trainingCard'
 
@@ -19,27 +19,25 @@ const menuItems = ref([
 ])
 // menuitems for form pop up
 const popUp = ref([
-  { name: 'Skills', key: 'textarea' },
-  { name: 'Current State', key: 'select' },
-  { name: 'Gap', key: 'textarea' },
-  { name: 'Desired State', key: 'select' },
-  { name: 'Initiatives', key: 'textarea' },
+  { name: 'Skills', key: 'textarea', field: 'name' },
+  { name: 'Current State', key: 'select', field: 'current_state' },
+  { name: 'Gap', key: 'textarea', field: 'gap' },
+  { name: 'Desired State', key: 'select', field: 'desired_state' },
+  { name: 'Initiatives', key: 'textarea', field: 'initiatives' },
 ])
+const submitForm = () => {
+  library.addItems(formData.value, 'assessment')
+}
 // modal activeness
 const store = useStore()
 const library = useTrainingCard()
-const selectedId = ref(null)
-const activeGoal = ref(null)
-const indexing = ref(null)
-const handleSubmit = (line, index, filtering) => {
-  activeGoal.value = line
-  selectedId.value = line.id[0].num
-  indexing.value = index
-}
-const deleteItem = () => {
-  library.skill.splice(indexing.value, 1)
-  // console.log(library.indexing)
-}
+const formData = ref({
+  name: '',
+  current_state: '',
+  desired_state: '',
+  status: 'Not Started',
+  feedback: 'Not satisfactory',
+})
 const series = ref([
   {
     name: 'Current State',
@@ -100,13 +98,37 @@ const chartOptions = ref({
     show: true, // Hiding legend as requested
   },
 })
+// data manipulation and filtering
+const exportedQuarter = ref('')
+const handleQuarterchange = (val) => {
+  exportedQuarter.value = val
+}
+const filterData = computed(() => {
+  const { quarter, year, department, level } = exportedQuarter.value
+  const data = library.skill
+  if (!quarter && !year && !department && !level) return data
+  // console.log(quarter, year)
+  return data.filter((item) => {
+    const setQuarter = library.handleQuarterType(item.date)
+    const matchQuarter = !quarter || setQuarter.calcQuarter === quarter
+    const matchYear = !year || setQuarter.year === year
+    const matchDepartment =
+      !department ||
+      item.department.toLowerCase().replaceAll(' ', '') ===
+        department.toLowerCase().replaceAll(' ', '')
+    const matchLevel =
+      !level ||
+      item.level.toLowerCase().replaceAll(' ', '') === level.toLowerCase().replaceAll(' ', '')
+    return matchQuarter && matchYear && matchLevel && matchDepartment
+  })
+})
 </script>
 <template>
   <div class="bg-[#EEEEEE] pb-7">
     <TopHeader />
     <NavMenu />
     <div class="bg-[#EEEEEE]">
-      <!-- <BodyOption /> -->
+      <BodyOption @quarterExpo="handleQuarterchange" />
       <div class="py-2 px-4 bg-[#ffffff] my-3 mx-20 rounded-[7px]">
         <div class="rounded-[7px] px-2 py-4 my-10 shadow-[0_0_15px_rgba(0,0,0,0.2)] pl-3">
           <div class="flex items-center my-3 border-b border-[#000000] p-5 justify-between">
@@ -120,6 +142,7 @@ const chartOptions = ref({
           </div>
           <FormPop :layOut="true" title="Skill Request Form">
             <div class="p-5 my-5 rounded-[8px]">
+              <p>{{ formData.name }}</p>
               <div
                 v-for="item in popUp"
                 :key="item.key"
@@ -128,22 +151,26 @@ const chartOptions = ref({
                 <p class="w-110 mb-1 rounded-[8px]">{{ item.name }}</p>
                 <textarea
                   v-if="item.key === 'textarea'"
+                  v-model="formData[item.field]"
                   class="w-110 rounded-[8px] shadow-[0_0_15px_rgba(0,0,0,0.2)]"
                   rows="3"
                 ></textarea>
                 <select
+                  v-model="formData[item.field]"
                   class="w-110 rounded-[8px] shadow-[0_0_15px_rgba(0,0,0,0.2)] py-1 px-3"
                   v-else
                   name=""
                   id=""
                 >
-                  <option value="">Begineer</option>
-                  <option value="">Intermediate</option>
-                  <option value="">Expert</option>
+                  <option value="Begineer">Begineer</option>
+                  <option value="Intermediate">Intermediate</option>
+                  <option value="Expert">Expert</option>
                 </select>
               </div>
             </div>
-            <button class="bg-[#47B65C] ml-3 px-7 py-2 rounded-[7px]">Submit</button>
+            <button @click="submitForm" class="bg-[#47B65C] ml-3 px-7 py-2 rounded-[7px]">
+              Submit
+            </button>
           </FormPop>
           <apexchart width="420" type="bar" :options="chartOptions" :series="series"></apexchart>
         </div>
@@ -163,28 +190,25 @@ const chartOptions = ref({
         <div class="header grid grid-cols-12 mt-5 border border-[#EAEAEA] rounded-[7px]">
           <div class="col-span-8">
             <div class="flex items-center py-4 px-3 border-b-2 border-[#EAEAEA]">
-              <p class="txt1 text-[0.9rem]">S/N</p>
-              <p class="txt2 text-[0.9rem]">Skills</p>
-              <p class="txt3 text-[0.9rem]">Current State</p>
-              <p class="txt4 text-[0.9rem]">Desired State</p>
-              <p class="txt5 text-[0.9rem]">Status</p>
-              <p class="txt6 text-[0.9rem]">Feedback</p>
+              <p v-for="col in library.tableColumns" :key="col.key" :class="col.size">
+                {{ col.label }}
+              </p>
             </div>
             <div
+              v-for="(row, index) in filterData"
+              :key="row.id"
+              @click="library.handleSubmit(row, index)"
               :class="[
                 'flex items-center hover:bg-[#EEEEEE] cursor-pointer border-b-2 px-3 border-[#EAEAEA]',
-                selectedId === goals.id[0].num ? 'bg-[#EEEEEE]' : 'bg-inherit',
+                library.selectedId === row.id ? 'bg-[#EEEEEE]' : 'bg-inherit',
               ]"
-              v-for="(goals, index) in library.skill"
-              :key="goals.id"
-              @click="handleSubmit(goals, index)"
             >
               <p
-                v-for="(opt, key) in goals"
-                :key="key"
-                :class="['py-4 text-[#808080] text-[0.8rem]', opt[0].size]"
+                v-for="col in library.tableColumns"
+                :key="col"
+                :class="['py-4 text-[#808080] text-[0.8rem]', col.size]"
               >
-                {{ key === 'id' ? index + 1 : opt[0].num }}
+                {{ col === 'id' ? index + 1 : row[col.key] }}
               </p>
             </div>
           </div>
@@ -205,23 +229,23 @@ const chartOptions = ref({
               </div>
               <div v-if="store.fieldDisplay === item.id" class="px-2">
                 <p v-show="item.key === 'goal'" class="py-2 rounded-[8px]">
-                  {{ activeGoal?.skill[0]?.num }}
+                  {{ library.activeGoal.name }}
                 </p>
                 <p v-show="item.key === 'status'" class="py-2 rounded-[8px]">
-                  {{ activeGoal?.status[0]?.num }}
+                  {{ library.activeGoal.status }}
                 </p>
                 <p v-show="item.key === 'feedback'" class="py-2 rounded-[8px]">
-                  {{ activeGoal?.feedback[0]?.num }}
+                  {{ library.activeGoal?.feedback }}
                 </p>
                 <p v-show="item.key === 'desired'" class="py-2 rounded-[8px]">
-                  {{ activeGoal?.desired_state[0]?.num }}
+                  {{ library.activeGoal?.desired_state }}
                 </p>
                 <p v-show="item.key === 'state'" class="py-2 rounded-[8px]">
-                  {{ activeGoal?.current_state[0]?.num }}
+                  {{ library.activeGoal?.current_state }}
                 </p>
               </div>
             </div>
-            <div @click="deleteItem" class="flex justify-end">
+            <div @click="library.skill.splice(indexing.value, 1)" class="flex justify-end">
               <button class="mx-3 my-2 py-2 px-8 rounded-[7px] bg-[#FF0000] text-white">
                 Delete
               </button>
