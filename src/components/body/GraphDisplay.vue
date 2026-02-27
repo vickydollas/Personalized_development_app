@@ -12,9 +12,11 @@ const props = defineProps({
     default: false,
   },
 })
+const emit = defineEmits(['exportSeries'])
 const series = ref('short')
 const selectedSeries = (item) => {
   series.value = item
+  emit('exportSeries', series.value)
 }
 const getSeries = {
   short: [
@@ -148,7 +150,7 @@ const filteredSeries = computed(() => {
       @click="selectedSeries('long')"
       class="mr-10"
     >
-      Short term goal (13-24 months)
+      Long term goal (13-24 months)
     </p>
   </div>
   <div

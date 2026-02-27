@@ -122,6 +122,12 @@ const filterData = computed(() => {
     return matchQuarter && matchYear && matchLevel && matchDepartment
   })
 })
+const saveEdit = (index) => {
+  filterData.value[index] = { ...library.editBuffer }
+
+  library.editingId = null
+  library.editBuffer = {}
+}
 </script>
 <template>
   <div class="bg-[#EEEEEE] pb-7">
@@ -198,17 +204,33 @@ const filterData = computed(() => {
               v-for="(row, index) in filterData"
               :key="row.id"
               @click="library.handleSubmit(row, index)"
+              @dblclick="library.startEditing(row)"
               :class="[
                 'flex items-center hover:bg-[#EEEEEE] cursor-pointer border-b-2 px-3 border-[#EAEAEA]',
                 library.selectedId === row.id ? 'bg-[#EEEEEE]' : 'bg-inherit',
               ]"
             >
-              <p
-                v-for="col in library.tableColumns"
-                :key="col"
-                :class="['py-4 text-[#808080] text-[0.8rem]', col.size]"
-              >
-                {{ col === 'id' ? index + 1 : row[col.key] }}
+              <p :class="['py-4 text-[#808080] text-[0.8rem] flex-[0_0_10%]']">{{ index + 1 }}</p>
+              <div :class="['py-2 text-[#808080] text-[0.8rem] flex-[0_0_20%]']">
+                <input
+                  v-model="library.editBuffer.name"
+                  v-if="library.editingId === row.id"
+                  @keyup.enter="saveEdit(index)"
+                  @keyup.esc="library.cancelEdit"
+                  type="text"
+                  class="bg-white py-1 rounded-[7px]"
+                />
+                <p v-else>{{ row.name }}</p>
+              </div>
+              <p :class="['py-4 text-[#808080] text-[0.8rem] flex-[0_0_15%]']">
+                {{ row.current_state }}
+              </p>
+              <p :class="['py-4 text-[#808080] text-[0.8rem] flex-[0_0_15%]']">
+                {{ row.desired_state }}
+              </p>
+              <p :class="['py-4 text-[#808080] text-[0.8rem] flex-[0_0_15%]']">{{ row.status }}</p>
+              <p :class="['py-4 text-[#808080] text-[0.8rem] flex-[0_0_25%]']">
+                {{ row.feedback }}
               </p>
             </div>
           </div>

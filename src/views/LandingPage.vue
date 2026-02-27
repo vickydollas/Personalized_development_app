@@ -23,10 +23,11 @@ const menuItems = ref([
 // data manipulationa and filtering
 const store = useStore()
 const library = useTrainingCard()
-const filtering = ref('career_goals')
+// console.log(Object.values(library.goal).flat())
+const filtering = ref('')
 const filterLibrary = computed(() => {
-  const filtered = filtering.value
-  return library.goal[filtered]
+  // if (!filtering.value) return library.goal['career_goals']
+  return library.goal[filtering.value]
 })
 const filterData = computed(() => {
   const { quarter, year, level, department } = exportedQuarter.value
@@ -46,11 +47,35 @@ const filterData = computed(() => {
     return matchQuarter && matchYear && matchLevel && matchDepartment
   })
 })
+const getPercentage = (dataArray) => {
+  const data = dataArray
+  const counts = data.reduce(
+    (acc, item) => {
+      const status = item.status.toLowerCase()
+      if (status === 'not started') acc.notStarted++
+      if (status === 'completed') acc.completed++
+      if (status === 'on going') acc.onGoing++
+      return acc
+    },
+    { completed: 0, notStarted: 0, onGoing: 0 }
+  )
+  const total = counts.completed + counts.onGoing + counts.notStarted
+  // console.log(total)
+  return {
+    completed: Math.round((counts.completed * 100) / total),
+    ongoing: Math.round((counts.onGoing * 100) / total),
+    notstarted: Math.round((counts.notStarted * 100) / total),
+  }
+}
+
 // ecxported function through emit to help filter
 const exportedQuarter = ref('')
 const handleQuarterchange = (val) => {
   exportedQuarter.value = val
 }
+watch(filterData, (newValue) => {
+  console.log(newValue)
+})
 // form parameters
 const formData = ref({
   goal: '',
@@ -87,11 +112,20 @@ const saveEdit = (index) => {
   library.editingId = null
   library.editBuffer = {}
 }
+const handleSerieschange = (val) => {
+  console.log(val)
+}
 </script>
 <template>
   <div class="bg-[#EEEEEE] pb-7">
     <TopHeader />
     <NavMenu />
+    <button
+      @click="getPercentage"
+      class="bg-[#47B65C] text-white cursor-pointer px-3 py-2 rounded-[5px]"
+    >
+      Development
+    </button>
     <BodyOption @quarterExpo="handleQuarterchange" />
     <div class="">
       <div class="py-1 px-4 bg-[#ffffff] rounded-[6px] mx-20">
@@ -163,11 +197,12 @@ const saveEdit = (index) => {
             </div>
           </form>
         </FormPop>
-        <GraphDisplay />
+        <GraphDisplay @exportSeries="handleSerieschange" />
         <div class="mt-5">
           <label for="" class="border-1 border-[#EEEEEE] p-3 rounded-[5px]"
             >Development Plan:
             <select class="development text-[#47B65C]" v-model="filtering" name="" id="">
+              <option value="">Select Plan</option>
               <option value="career_goals">Career Goals and Aspiration</option>
               <option value="areas_of_interest">Area Of Interest</option>
               <option value="mentorship">Mentorship and Skill building</option>
