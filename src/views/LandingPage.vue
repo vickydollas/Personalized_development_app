@@ -23,31 +23,44 @@ const menuItems = ref([
 // data manipulationa and filtering
 const store = useStore()
 const library = useTrainingCard()
-// console.log(Object.values(library.goal).flat())
 const filtering = ref('')
-const filterLibrary = computed(() => {
-  // if (!filtering.value) return library.goal['career_goals']
-  return library.goal[filtering.value]
-})
+const exportedQuarter = ref('')
+const handleQuarterchange = (val) => {
+  exportedQuarter.value = val
+}
 const filterData = computed(() => {
   const { quarter, year, level, department } = exportedQuarter.value
-  if (!quarter && !year && !level && !department) return filterLibrary.value
-  return filterLibrary.value.filter((item) => {
-    // console.log(item.department.toLowerCase().replaceAll(' ', ''))
-    const setQuarter = library.handleQuarterType(item.completion_date)
-    const matchQuarter = !quarter || setQuarter.calcQuarter === quarter
-    const matchYear = !year || setQuarter.year === year
-    const matchLevel =
-      !level ||
-      item.level.toLowerCase().replaceAll(' ', '') === level.toLowerCase().replaceAll(' ', '')
-    const matchDepartment =
-      !department ||
-      item.department.toLowerCase().replaceAll(' ', '') ===
-        department.toLowerCase().replaceAll(' ', '')
-    return matchQuarter && matchYear && matchLevel && matchDepartment
-  })
+  // if (!quarter && !year && !level && !department) return Object.values(library.goal).flat()
+  const applyFilter = (filters) => {
+    return filters.filter((item) => {
+      const setQuarter = library.handleQuarterType(item.completion_date)
+      const matchQuarter = !quarter || setQuarter.calcQuarter === quarter
+      const matchYear = !year || setQuarter.year === year
+      const matchLevel =
+        !level ||
+        item.level.toLowerCase().replaceAll(' ', '') === level.toLowerCase().replaceAll(' ', '')
+      const matchDepartment =
+        !department ||
+        item.department.toLowerCase().replaceAll(' ', '') ===
+          department.toLowerCase().replaceAll(' ', '')
+      return matchQuarter && matchYear && matchLevel && matchDepartment
+    })
+  }
+  if (!filtering.value) return Object.values(library.goal).flat()
+  return applyFilter(library.goal[filtering.value])
 })
+const careerGoalsStats = computed(() => {
+  return {
+    careerGoal: getPercentage(library.goal['career_goals']),
+    areaOfInterest: getPercentage(library.goal['areas_of_interest']),
+    mentorship: getPercentage(library.goal['mentorship']),
+  }
+})
+// console.log(careerGoalsStats.value)
 const getPercentage = (dataArray) => {
+  if (!Array.isArray(dataArray)) {
+    throw new Error('error')
+  }
   const data = dataArray
   const counts = data.reduce(
     (acc, item) => {
@@ -60,22 +73,15 @@ const getPercentage = (dataArray) => {
     { completed: 0, notStarted: 0, onGoing: 0 }
   )
   const total = counts.completed + counts.onGoing + counts.notStarted
-  // console.log(total)
+  console.log(total)
   return {
     completed: Math.round((counts.completed * 100) / total),
     ongoing: Math.round((counts.onGoing * 100) / total),
     notstarted: Math.round((counts.notStarted * 100) / total),
   }
 }
-
 // ecxported function through emit to help filter
-const exportedQuarter = ref('')
-const handleQuarterchange = (val) => {
-  exportedQuarter.value = val
-}
-watch(filterData, (newValue) => {
-  console.log(newValue)
-})
+console.log(careerGoalsStats.value)
 // form parameters
 const formData = ref({
   goal: '',
