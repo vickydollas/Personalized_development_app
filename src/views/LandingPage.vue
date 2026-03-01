@@ -19,6 +19,7 @@ const menuItems = ref([
   { id: 9, name: 'Status', key: 'status', type: 'radio' },
   { id: 10, name: 'Feedback', key: 'feedback', type: 'textarea' },
   { id: 11, name: 'Evidence', key: 'evidence', type: 'file' },
+  { id: 12, name: 'finance' },
 ])
 // data manipulationa and filtering
 const store = useStore()
