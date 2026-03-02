@@ -25,9 +25,20 @@ const menuItems = ref([
 const store = useStore()
 const library = useTrainingCard()
 const filtering = ref('')
+const validation = ref(false)
+const sendValidation = () => {
+  if (filtering.value.length) {
+    validation.value = true
+    console.log(validation.value)
+  }
+}
 const exportedQuarter = ref('')
+const termChange = ref('short')
 const handleQuarterchange = (val) => {
   exportedQuarter.value = val
+}
+const handleTermchange = (val) => {
+  termChange.value = val
 }
 const filterData = computed(() => {
   const { quarter, year, level, department } = exportedQuarter.value
@@ -50,13 +61,6 @@ const filterData = computed(() => {
   if (!filtering.value) return Object.values(library.goal).flat()
   return applyFilter(library.goal[filtering.value])
 })
-const careerGoalsStats = computed(() => {
-  return {
-    careerGoal: getPercentage(library.goal['career_goals']),
-    areaOfInterest: getPercentage(library.goal['areas_of_interest']),
-    mentorship: getPercentage(library.goal['mentorship']),
-  }
-})
 // console.log(careerGoalsStats.value)
 const getPercentage = (dataArray) => {
   if (!Array.isArray(dataArray)) {
@@ -74,15 +78,31 @@ const getPercentage = (dataArray) => {
     { completed: 0, notStarted: 0, onGoing: 0 }
   )
   const total = counts.completed + counts.onGoing + counts.notStarted
-  console.log(total)
+  // console.log(total)
   return {
     completed: Math.round((counts.completed * 100) / total),
     ongoing: Math.round((counts.onGoing * 100) / total),
     notstarted: Math.round((counts.notStarted * 100) / total),
   }
 }
+const careerGoalsStats = computed(() => {
+  const currentFilter = filtering.value
+  const filter = termChange.value
+  const getTerm = (dataArray) => {
+    if (!dataArray) return []
+    return dataArray.filter((item) => item.timeline === filter)
+  }
+
+  return {
+    overAll: {
+      careerGoal: Object.values(getPercentage(library.goal['career_goals'])),
+      areaOfInterest: Object.values(getPercentage(library.goal['areas_of_interest'])),
+      mentorship: Object.values(getPercentage(library.goal['mentorship'])),
+    },
+    filteredSeries: Object.values(getPercentage(getTerm(library.goal[currentFilter]))),
+  }
+})
 // ecxported function through emit to help filter
-console.log(careerGoalsStats.value)
 // form parameters
 const formData = ref({
   goal: '',
@@ -119,9 +139,6 @@ const saveEdit = (index) => {
   library.editingId = null
   library.editBuffer = {}
 }
-const handleSerieschange = (val) => {
-  console.log(val)
-}
 </script>
 <template>
   <div class="bg-[#EEEEEE] pb-7">
@@ -131,7 +148,7 @@ const handleSerieschange = (val) => {
       @click="getPercentage"
       class="bg-[#47B65C] text-white cursor-pointer px-3 py-2 rounded-[5px]"
     >
-      Development
+      {{ careerGoalsStats }} {{ termChange }}
     </button>
     <BodyOption @quarterExpo="handleQuarterchange" />
     <div class="">
@@ -204,11 +221,21 @@ const handleSerieschange = (val) => {
             </div>
           </form>
         </FormPop>
-        <GraphDisplay @exportSeries="handleSerieschange" />
+        <GraphDisplay
+          @exportSeries="handleTermchange"
+          :display="validation"
+          :graphData="careerGoalsStats"
+        />
         <div class="mt-5">
           <label for="" class="border-1 border-[#EEEEEE] p-3 rounded-[5px]"
             >Development Plan:
-            <select class="development text-[#47B65C]" v-model="filtering" name="" id="">
+            <select
+              class="development text-[#47B65C]"
+              v-model="filtering"
+              @change="sendValidation"
+              name=""
+              id=""
+            >
               <option value="">Select Plan</option>
               <option value="career_goals">Career Goals and Aspiration</option>
               <option value="areas_of_interest">Area Of Interest</option>

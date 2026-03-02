@@ -239,6 +239,7 @@ export const useTrainingCard = defineStore('training', () => {
         challenges: 'Lack of Mentorship',
         department: 'Customer service',
         level: 'user',
+        timeline: 'short',
       },
       {
         id: '2',
@@ -250,6 +251,7 @@ export const useTrainingCard = defineStore('training', () => {
         challenges: 'Lack of Mentorship',
         department: 'IT',
         level: 'IT',
+        timeline: 'mid',
       },
       {
         id: '3',
@@ -261,6 +263,7 @@ export const useTrainingCard = defineStore('training', () => {
         challenges: 'Lack of Mentorship',
         department: 'operation',
         level: 'manager',
+        timeline: 'long',
       },
       {
         id: '4',
@@ -270,6 +273,7 @@ export const useTrainingCard = defineStore('training', () => {
         feedback: 'N/A',
         department: 'IT',
         level: 'IT',
+        timeline: 'short',
       },
       {
         id: '5',
@@ -279,6 +283,7 @@ export const useTrainingCard = defineStore('training', () => {
         feedback: 'Positive',
         department: 'finance',
         level: 'manager',
+        timeline: 'mid',
       },
       {
         id: '6',
@@ -288,6 +293,7 @@ export const useTrainingCard = defineStore('training', () => {
         feedback: 'N/A',
         department: 'operation',
         level: 'HOD',
+        timeline: 'short',
       },
       {
         id: '7',
@@ -297,6 +303,7 @@ export const useTrainingCard = defineStore('training', () => {
         feedback: 'Excellent',
         department: 'finance',
         level: 'user',
+        timeline: 'long',
       },
       {
         id: '8',
@@ -306,6 +313,7 @@ export const useTrainingCard = defineStore('training', () => {
         feedback: 'Steady',
         department: 'IT',
         level: 'knowledge manager',
+        timeline: 'mid',
       },
       {
         id: '9',
@@ -315,6 +323,7 @@ export const useTrainingCard = defineStore('training', () => {
         feedback: 'N/A',
         department: 'Customer service',
         level: 'manager',
+        timeline: 'short',
       },
       {
         id: '10',
@@ -324,6 +333,7 @@ export const useTrainingCard = defineStore('training', () => {
         feedback: 'Good',
         department: 'operation',
         level: 'user',
+        timeline: 'mid',
       },
       {
         id: '11',
@@ -333,6 +343,7 @@ export const useTrainingCard = defineStore('training', () => {
         feedback: 'N/A',
         department: 'finance',
         level: 'manager',
+        timeline: 'long',
       },
       {
         id: '12',
@@ -342,6 +353,7 @@ export const useTrainingCard = defineStore('training', () => {
         feedback: 'On track',
         department: 'operation',
         level: 'HOD',
+        timeline: 'short',
       },
       {
         id: '13',
@@ -351,6 +363,7 @@ export const useTrainingCard = defineStore('training', () => {
         feedback: 'Satisfactory',
         department: 'finance',
         level: 'user',
+        timeline: 'mid',
       },
       {
         id: '14',
@@ -360,6 +373,7 @@ export const useTrainingCard = defineStore('training', () => {
         feedback: 'N/A',
         department: 'finance',
         level: 'manager',
+        timeline: 'long',
       },
       {
         id: '15',
@@ -369,6 +383,7 @@ export const useTrainingCard = defineStore('training', () => {
         feedback: 'Good',
         department: 'Customer service',
         level: 'knowledge manager',
+        timeline: 'mid',
       },
       {
         id: '16',
@@ -378,6 +393,7 @@ export const useTrainingCard = defineStore('training', () => {
         feedback: 'N/A',
         department: 'IT',
         level: 'IT',
+        timeline: 'short',
       },
       {
         id: '17',
@@ -387,6 +403,7 @@ export const useTrainingCard = defineStore('training', () => {
         feedback: 'Positive',
         department: 'operation',
         level: 'manager',
+        timeline: 'mid',
       },
       {
         id: '18',
@@ -396,6 +413,7 @@ export const useTrainingCard = defineStore('training', () => {
         feedback: 'N/A',
         department: 'Customer service',
         level: 'user',
+        timeline: 'long',
       },
       {
         id: '19',
@@ -405,6 +423,7 @@ export const useTrainingCard = defineStore('training', () => {
         feedback: 'N/A',
         department: 'Customer service',
         level: 'user',
+        timeline: 'short',
       },
       {
         id: '20',
@@ -414,6 +433,7 @@ export const useTrainingCard = defineStore('training', () => {
         feedback: 'Excellent',
         department: 'IT',
         level: 'user',
+        timeline: 'mid',
       },
       {
         id: '21',
@@ -423,6 +443,7 @@ export const useTrainingCard = defineStore('training', () => {
         feedback: 'Steady',
         department: 'Customer service',
         level: 'knowledge manager',
+        timeline: 'short',
       },
       {
         id: '22',
@@ -432,6 +453,7 @@ export const useTrainingCard = defineStore('training', () => {
         feedback: 'N/A',
         department: 'operation',
         level: 'manager',
+        timeline: 'long',
       },
       {
         id: '23',
@@ -441,6 +463,7 @@ export const useTrainingCard = defineStore('training', () => {
         feedback: 'Satisfactory',
         department: 'IT',
         level: 'HOD',
+        timeline: 'mid',
       },
       {
         id: '24',
@@ -450,6 +473,7 @@ export const useTrainingCard = defineStore('training', () => {
         feedback: 'N/A',
         department: 'operation',
         level: 'manager',
+        timeline: 'short',
       },
     ],
     areas_of_interest: [
@@ -463,6 +487,7 @@ export const useTrainingCard = defineStore('training', () => {
         challenges: 'Lack of Mentorship',
         department: 'finance',
         level: 'knowledge manager',
+        timeline: 'mid',
       },
       {
         id: '26',
@@ -474,6 +499,7 @@ export const useTrainingCard = defineStore('training', () => {
         challenges: 'Lack of Mentorship',
         department: 'IT',
         level: 'user',
+        timeline: 'long',
       },
       {
         id: '27',
@@ -485,6 +511,7 @@ export const useTrainingCard = defineStore('training', () => {
         challenges: 'Lack of Mentorship',
         department: 'IT',
         level: 'IT',
+        timeline: 'short',
       },
       {
         id: '28',
@@ -494,6 +521,7 @@ export const useTrainingCard = defineStore('training', () => {
         feedback: 'Satisfactory',
         department: 'IT',
         level: 'user',
+        timeline: 'mid',
       },
       {
         id: '29',
@@ -503,6 +531,7 @@ export const useTrainingCard = defineStore('training', () => {
         feedback: 'N/A',
         department: 'finance',
         level: 'knowledge manager',
+        timeline: 'long',
       },
       {
         id: '30',
@@ -512,6 +541,7 @@ export const useTrainingCard = defineStore('training', () => {
         feedback: 'Strong',
         department: 'operation',
         level: 'manager',
+        timeline: 'short',
       },
       {
         id: '31',
@@ -521,6 +551,7 @@ export const useTrainingCard = defineStore('training', () => {
         feedback: 'N/A',
         department: 'IT',
         level: 'user',
+        timeline: 'mid',
       },
       {
         id: '32',
@@ -530,6 +561,7 @@ export const useTrainingCard = defineStore('training', () => {
         feedback: 'N/A',
         department: 'finance',
         level: 'manager',
+        timeline: 'short',
       },
       {
         id: '33',
@@ -539,6 +571,7 @@ export const useTrainingCard = defineStore('training', () => {
         feedback: 'N/A',
         department: 'IT',
         level: 'user',
+        timeline: 'long',
       },
       {
         id: '34',
@@ -548,6 +581,7 @@ export const useTrainingCard = defineStore('training', () => {
         feedback: 'Good',
         department: 'IT',
         level: 'IT',
+        timeline: 'mid',
       },
       {
         id: '35',
@@ -557,6 +591,7 @@ export const useTrainingCard = defineStore('training', () => {
         feedback: 'N/A',
         department: 'Customer service',
         level: 'manager',
+        timeline: 'short',
       },
       {
         id: '36',
@@ -566,6 +601,7 @@ export const useTrainingCard = defineStore('training', () => {
         feedback: 'Great',
         department: 'Customer service',
         level: 'knowledge manager',
+        timeline: 'long',
       },
       {
         id: '37',
@@ -575,6 +611,7 @@ export const useTrainingCard = defineStore('training', () => {
         feedback: 'N/A',
         department: 'IT',
         level: 'IT',
+        timeline: 'mid',
       },
       {
         id: '38',
@@ -584,6 +621,7 @@ export const useTrainingCard = defineStore('training', () => {
         feedback: 'Satisfactory',
         department: 'operation',
         level: 'knowledge manager',
+        timeline: 'short',
       },
       {
         id: '39',
@@ -593,6 +631,7 @@ export const useTrainingCard = defineStore('training', () => {
         feedback: 'N/A',
         department: 'Customer service',
         level: 'user',
+        timeline: 'mid',
       },
       {
         id: '40',
@@ -602,6 +641,7 @@ export const useTrainingCard = defineStore('training', () => {
         feedback: 'Positive',
         department: 'IT',
         level: 'IT',
+        timeline: 'long',
       },
       {
         id: '41',
@@ -611,6 +651,7 @@ export const useTrainingCard = defineStore('training', () => {
         feedback: 'N/A',
         department: 'IT',
         level: 'IT',
+        timeline: 'short',
       },
       {
         id: '42',
@@ -620,6 +661,7 @@ export const useTrainingCard = defineStore('training', () => {
         feedback: 'N/A',
         department: 'IT',
         level: 'IT',
+        timeline: 'mid',
       },
       {
         id: '43',
@@ -629,6 +671,7 @@ export const useTrainingCard = defineStore('training', () => {
         feedback: 'Good',
         department: 'IT',
         level: 'user',
+        timeline: 'long',
       },
       {
         id: '44',
@@ -638,6 +681,7 @@ export const useTrainingCard = defineStore('training', () => {
         feedback: 'Excellent',
         department: 'IT',
         level: 'knowledge manager',
+        timeline: 'short',
       },
       {
         id: '45',
@@ -647,6 +691,7 @@ export const useTrainingCard = defineStore('training', () => {
         feedback: 'N/A',
         department: 'IT',
         level: 'user',
+        timeline: 'mid',
       },
       {
         id: '46',
@@ -656,6 +701,7 @@ export const useTrainingCard = defineStore('training', () => {
         feedback: 'N/A',
         department: 'IT',
         level: 'knowledge manager',
+        timeline: 'long',
       },
       {
         id: '47',
@@ -665,6 +711,7 @@ export const useTrainingCard = defineStore('training', () => {
         feedback: 'Good',
         department: 'Customer service',
         level: 'manager',
+        timeline: 'short',
       },
     ],
     mentorship: [
@@ -678,6 +725,7 @@ export const useTrainingCard = defineStore('training', () => {
         challenges: 'Lack of Mentorship',
         department: 'IT',
         level: 'user',
+        timeline: 'mid',
       },
       {
         id: '49',
@@ -689,6 +737,7 @@ export const useTrainingCard = defineStore('training', () => {
         challenges: 'Lack of Mentorship',
         department: 'Customer service',
         level: 'manager',
+        timeline: 'long',
       },
       {
         id: '50',
@@ -700,6 +749,7 @@ export const useTrainingCard = defineStore('training', () => {
         challenges: 'Lack of Mentorship',
         department: 'operation',
         level: 'user',
+        timeline: 'short',
       },
       {
         id: '51',
@@ -709,6 +759,7 @@ export const useTrainingCard = defineStore('training', () => {
         feedback: 'N/A',
         department: 'operation',
         level: 'HOD',
+        timeline: 'mid',
       },
       {
         id: '52',
@@ -718,6 +769,7 @@ export const useTrainingCard = defineStore('training', () => {
         feedback: 'Helpful',
         department: 'Customer service',
         level: 'user',
+        timeline: 'long',
       },
       {
         id: '53',
@@ -727,6 +779,7 @@ export const useTrainingCard = defineStore('training', () => {
         feedback: 'N/A',
         department: 'operation',
         level: 'manager',
+        timeline: 'short',
       },
       {
         id: '54',
@@ -736,6 +789,7 @@ export const useTrainingCard = defineStore('training', () => {
         feedback: 'Helpful',
         department: 'IT',
         level: 'IT',
+        timeline: 'mid',
       },
       {
         id: '55',
@@ -745,6 +799,7 @@ export const useTrainingCard = defineStore('training', () => {
         feedback: 'Insightful',
         department: 'finance',
         level: 'knowledge manager',
+        timeline: 'long',
       },
       {
         id: '56',
@@ -754,6 +809,7 @@ export const useTrainingCard = defineStore('training', () => {
         feedback: 'N/A',
         department: 'IT',
         level: 'IT',
+        timeline: 'short',
       },
       {
         id: '57',
@@ -763,6 +819,7 @@ export const useTrainingCard = defineStore('training', () => {
         feedback: 'Excellent',
         department: 'Customer service',
         level: 'HOD',
+        timeline: 'mid',
       },
       {
         id: '58',
@@ -772,6 +829,7 @@ export const useTrainingCard = defineStore('training', () => {
         feedback: 'Strong',
         department: 'operation',
         level: 'manager',
+        timeline: 'long',
       },
       {
         id: '59',
@@ -781,6 +839,7 @@ export const useTrainingCard = defineStore('training', () => {
         feedback: 'N/A',
         department: 'IT',
         level: 'user',
+        timeline: 'short',
       },
       {
         id: '60',
@@ -790,6 +849,7 @@ export const useTrainingCard = defineStore('training', () => {
         feedback: 'Good',
         department: 'Customer service',
         level: 'manager',
+        timeline: 'mid',
       },
       {
         id: '61',
@@ -799,6 +859,7 @@ export const useTrainingCard = defineStore('training', () => {
         feedback: 'N/A',
         department: 'Customer service',
         level: 'manager',
+        timeline: 'long',
       },
       {
         id: '62',
@@ -808,6 +869,7 @@ export const useTrainingCard = defineStore('training', () => {
         feedback: 'Positive',
         department: 'operation',
         level: 'HOD',
+        timeline: 'short',
       },
       {
         id: '63',
@@ -817,6 +879,7 @@ export const useTrainingCard = defineStore('training', () => {
         feedback: 'N/A',
         department: 'operation',
         level: 'knowledge manager',
+        timeline: 'mid',
       },
       {
         id: '64',
@@ -826,6 +889,7 @@ export const useTrainingCard = defineStore('training', () => {
         feedback: 'Useful',
         department: 'finance',
         level: 'user',
+        timeline: 'long',
       },
       {
         id: '65',
@@ -835,6 +899,7 @@ export const useTrainingCard = defineStore('training', () => {
         feedback: 'N/A',
         department: 'operation',
         level: 'HOD',
+        timeline: 'short',
       },
       {
         id: '66',
@@ -844,6 +909,7 @@ export const useTrainingCard = defineStore('training', () => {
         feedback: 'Steady',
         department: 'IT',
         level: 'IT',
+        timeline: 'mid',
       },
       {
         id: '67',
@@ -853,6 +919,7 @@ export const useTrainingCard = defineStore('training', () => {
         feedback: 'Satisfactory',
         department: 'operation',
         level: 'manager',
+        timeline: 'long',
       },
       {
         id: '68',
@@ -862,6 +929,7 @@ export const useTrainingCard = defineStore('training', () => {
         feedback: 'N/A',
         department: 'Customer service',
         level: 'user',
+        timeline: 'short',
       },
       {
         id: '69',
@@ -871,6 +939,7 @@ export const useTrainingCard = defineStore('training', () => {
         feedback: 'Good',
         department: 'operation',
         level: 'knowledge manager',
+        timeline: 'mid',
       },
       {
         id: '70',
@@ -880,6 +949,7 @@ export const useTrainingCard = defineStore('training', () => {
         feedback: 'N/A',
         department: 'operation',
         level: 'HOD',
+        timeline: 'long',
       },
     ],
   })
