@@ -1,4 +1,4 @@
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { defineStore } from 'pinia'
 
 export const useTrainingCard = defineStore('training', () => {
@@ -227,6 +227,12 @@ export const useTrainingCard = defineStore('training', () => {
     // console.log(index)
   }
   // landing page
+  // onMounted(() => {
+  //   const retrieveData = localStorage.getItem('myList')
+  //   if (retrieveData) {
+  //     goal.value = JSON.parse(retrieveData)
+  //   }
+  // })
   const goal = ref({
     career_goals: [
       {
@@ -1734,15 +1740,18 @@ export const useTrainingCard = defineStore('training', () => {
     { key: 'status', label: 'Status', size: 'flex-[0_0_15%]' },
     { key: 'feedback', label: 'Feedback', size: 'flex-[0_0_25%]' },
   ]
-  const addItems = (item, type, selected = null) => {
+  const addItems = async (item, type, selected = null) => {
     if (type === 'development') {
       goal.value[selected].push(item)
+      localStorage.setItem('myList', JSON.stringify(goal.value))
+      console.log(goal.value)
     } else if (type === 'assessment') {
       skill.value.push(item)
     }
   }
   const deleteItems = (selected, filtering) => {
-    goal.value[filtering].splice(selected, 1)
+    const getFilter = filtering === '' ? 'career_goals' : filtering
+    goal.value[getFilter].splice(selected, 1)
   }
   // function to choose between Q1, Q2, Q3, Q4
   const handleQuarterType = (dateString) => {

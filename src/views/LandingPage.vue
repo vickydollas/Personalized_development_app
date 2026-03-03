@@ -27,10 +27,9 @@ const library = useTrainingCard()
 const filtering = ref('')
 const validation = ref(false)
 const sendValidation = () => {
-  if (filtering.value.length) {
+  if (filtering.value !== '') {
     validation.value = true
-    console.log(validation.value)
-  }
+  } else validation.value = false
 }
 const exportedQuarter = ref('')
 const termChange = ref('short')
@@ -111,6 +110,8 @@ const formData = ref({
   challenges: '',
   objectives: '',
   feedback: '',
+  level: '',
+  timeline: '',
   status: 'Not Started',
 })
 const filterFormData = computed(() => {
@@ -121,13 +122,17 @@ const filterFormData = computed(() => {
     challenges: formData.value.challenges,
     feedback: formData.value.feedback,
     status: formData.value.status,
+    level: formData.value.level,
+    timeline: formData.value.timeline,
   }
 })
 const selectedSection = computed(() => {
-  return formData.value.objectives
+  const formatting = formData.value.objectives.toLowerCase().replaceAll(' ', '_')
+  return formatting
 })
 // updating the form to the
 const buttonSubmit = () => {
+  console.log(filterFormData.value, selectedSection.value)
   library.addItems(filterFormData.value, 'development', selectedSection.value)
 }
 const deleteItem = () => {
@@ -144,12 +149,6 @@ const saveEdit = (index) => {
   <div class="bg-[#EEEEEE] pb-7">
     <TopHeader />
     <NavMenu />
-    <button
-      @click="getPercentage"
-      class="bg-[#47B65C] text-white cursor-pointer px-3 py-2 rounded-[5px]"
-    >
-      {{ careerGoalsStats }} {{ termChange }}
-    </button>
     <BodyOption @quarterExpo="handleQuarterchange" />
     <div class="">
       <div class="py-1 px-4 bg-[#ffffff] rounded-[6px] mx-20">
@@ -190,9 +189,9 @@ const saveEdit = (index) => {
                   name=""
                   id=""
                 >
-                  <option value="career_goals">Career Goals and Aspiration</option>
-                  <option value="areas_of_interest">Area of Interest</option>
-                  <option value="mentorship">Mentorship and Skill Building</option>
+                  <option v-for="opt in item.option" :key="opt" :value="opt">
+                    {{ opt }}
+                  </option>
                 </select>
               </div>
             </div>
@@ -208,6 +207,17 @@ const saveEdit = (index) => {
                   id=""
                   rows="3"
                 ></textarea>
+                <select
+                  v-model="formData[item.field]"
+                  v-else
+                  class="w-90 bg-[#EEEEEE] shadow-[0_0_15px_rgba(0,0,0,0.2)] p-2 rounded-[7px]"
+                  name=""
+                  id=""
+                >
+                  <option v-for="opt in item.option" :key="opt" :value="opt">
+                    {{ opt }}
+                  </option>
+                </select>
               </div>
               <div class="justify-self-end mt-30 mr-5">
                 <button
@@ -223,7 +233,7 @@ const saveEdit = (index) => {
         </FormPop>
         <GraphDisplay
           @exportSeries="handleTermchange"
-          :display="validation"
+          :validation="validation"
           :graphData="careerGoalsStats"
         />
         <div class="mt-5">

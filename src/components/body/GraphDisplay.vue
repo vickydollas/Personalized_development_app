@@ -16,14 +16,13 @@ const props = defineProps({
   },
   validation: {
     type: Boolean,
-    default: false,
   },
 })
 const emit = defineEmits(['exportSeries'])
-const validation = props.validation
-computed(() => {
-  return (props.validation = validation.value)
+const validation = computed(() => {
+  return props.validation
 })
+// console.log(validation.value)
 const series = ref('short')
 const selectedSeries = (item) => {
   series.value = item
@@ -166,7 +165,6 @@ const filteredDynamic = computed(() => {
       ]"
     >
       <div>
-        {{ dynamicSeries.series }}
         <apexchart
           width="420"
           type="donut"

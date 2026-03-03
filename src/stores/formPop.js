@@ -4,16 +4,34 @@ import { defineStore } from 'pinia'
 export const useStore = defineStore('counter', () => {
   const inputItems = ref({
     first: [
-      { id: 1, name: 'Development Plan Type', key: 'select', field: 'objectives' },
+      {
+        id: 1,
+        name: 'Development Plan Type',
+        option: ['Career Goals', 'Area of Interest', 'Mentorship'],
+        key: 'select',
+        field: 'objectives',
+      },
       { id: 2, name: 'Goals', key: 'textarea', field: 'goal' },
-      { id: 3, name: 'Resources and Support Needed?', key: 'textarea', field: 'resource' },
+      {
+        id: 3,
+        name: 'Timeline - Short/Long/Mid',
+        option: ['Long', 'Mid', 'Short'],
+        key: 'select',
+        field: 'timeline',
+      },
       { id: 4, name: 'Potential Challenges', key: 'textarea', field: 'challenges' },
       { id: 5, name: 'Target Date for Completion', key: 'date', field: 'completion_date' },
     ],
     second: [
       { id: 1, name: 'What i will do to achieve this', key: 'textarea', field: 'work_rate' },
       { id: 2, name: 'What does success look like?', key: 'textarea', field: 'feedback' },
-      { id: 3, name: 'Solution', key: 'textarea' },
+      {
+        id: 3,
+        name: 'Level',
+        key: 'select',
+        field: 'level',
+        option: ['', 'IT', 'user', 'Manager', 'HOD', 'Knowledge Manager'],
+      },
     ],
     assessment: [],
   })
