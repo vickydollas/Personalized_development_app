@@ -30,17 +30,17 @@ const selectedSeries = (item) => {
 }
 const getSeries = [
   {
-    series: props.graphData.overAll.careerGoal,
+    series: [30, 20, 50],
     labels: ['Completed', 'On going', 'Not Started'],
     text: 'Career goals and inspiration',
   },
   {
-    series: props.graphData.overAll.areaOfInterest,
+    series: [30, 20, 50],
     labels: ['Completed', 'On going', 'Not Started'],
     text: 'Area Of Interest',
   },
   {
-    series: props.graphData.overAll.mentorship,
+    series: [30, 20, 50],
     labels: ['Completed', 'On going', 'Not Started'],
     text: 'Mentorship and Skill building',
   },

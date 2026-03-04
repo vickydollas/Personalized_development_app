@@ -61,29 +61,6 @@ const filterData = computed(() => {
   return applyFilter(library.goal[filtering.value])
 })
 // console.log(careerGoalsStats.value)
-const getPercentage = (dataArray) => {
-  if (!Array.isArray(dataArray)) {
-    throw new Error('error')
-  }
-  const data = dataArray
-  const counts = data.reduce(
-    (acc, item) => {
-      const status = item.status.toLowerCase()
-      if (status === 'not started') acc.notStarted++
-      if (status === 'completed') acc.completed++
-      if (status === 'on going') acc.onGoing++
-      return acc
-    },
-    { completed: 0, notStarted: 0, onGoing: 0 }
-  )
-  const total = counts.completed + counts.onGoing + counts.notStarted
-  // console.log(total)
-  return {
-    completed: Math.round((counts.completed * 100) / total),
-    ongoing: Math.round((counts.onGoing * 100) / total),
-    notstarted: Math.round((counts.notStarted * 100) / total),
-  }
-}
 const careerGoalsStats = computed(() => {
   const currentFilter = filtering.value
   const filter = termChange.value
@@ -94,11 +71,11 @@ const careerGoalsStats = computed(() => {
 
   return {
     overAll: {
-      careerGoal: Object.values(getPercentage(library.goal['career_goals'])),
-      areaOfInterest: Object.values(getPercentage(library.goal['areas_of_interest'])),
-      mentorship: Object.values(getPercentage(library.goal['mentorship'])),
+      careerGoal: Object.values(library.getPercentage(library.goal['career_goals'])),
+      areaOfInterest: Object.values(library.getPercentage(library.goal['areas_of_interest'])),
+      mentorship: Object.values(library.getPercentage(library.goal['mentorship'])),
     },
-    filteredSeries: Object.values(getPercentage(getTerm(library.goal[currentFilter]))),
+    filteredSeries: Object.values(library.getPercentage(getTerm(library.goal[currentFilter]))),
   }
 })
 // ecxported function through emit to help filter

@@ -1775,6 +1775,30 @@ export const useTrainingCard = defineStore('training', () => {
   const cancelEdit = () => {
     editingId.value = null
   }
+  // function to calculate the graph parameters
+  const getPercentage = (dataArray) => {
+    if (!Array.isArray(dataArray)) {
+      throw new Error('error')
+    }
+    const data = dataArray
+    const counts = data.reduce(
+      (acc, item) => {
+        const status = item.status.toLowerCase()
+        if (status === 'not started') acc.notStarted++
+        if (status === 'completed') acc.completed++
+        if (status === 'on going') acc.onGoing++
+        return acc
+      },
+      { completed: 0, notStarted: 0, onGoing: 0 },
+    )
+    const total = counts.completed + counts.onGoing + counts.notStarted
+    // console.log(total)
+    return {
+      completed: Math.round((counts.completed * 100) / total),
+      ongoing: Math.round((counts.onGoing * 100) / total),
+      notstarted: Math.round((counts.notStarted * 100) / total),
+    }
+  }
   return {
     menuItems,
     setRating,
@@ -1792,5 +1816,6 @@ export const useTrainingCard = defineStore('training', () => {
     editingId,
     startEditing,
     cancelEdit,
+    getPercentage,
   }
 })
