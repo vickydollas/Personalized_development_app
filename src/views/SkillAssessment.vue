@@ -128,6 +128,9 @@ const saveEdit = (index) => {
   library.editingId = null
   library.editBuffer = {}
 }
+const deleteItem = () => {
+  library.deleteItems(library.indexing, 'assessment')
+}
 </script>
 <template>
   <div class="bg-[#EEEEEE] pb-7">
@@ -267,7 +270,7 @@ const saveEdit = (index) => {
                 </p>
               </div>
             </div>
-            <div @click="library.skill.splice(indexing.value, 1)" class="flex justify-end">
+            <div @click="deleteItem" class="flex justify-end">
               <button class="mx-3 my-2 py-2 px-8 rounded-[7px] bg-[#FF0000] text-white">
                 Delete
               </button>

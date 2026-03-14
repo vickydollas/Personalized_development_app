@@ -78,7 +78,6 @@ const careerGoalsStats = computed(() => {
     filteredSeries: Object.values(library.getPercentage(getTerm(library.goal[currentFilter]))),
   }
 })
-// ecxported function through emit to help filter
 // form parameters
 const formData = ref({
   goal: '',
@@ -113,7 +112,7 @@ const buttonSubmit = () => {
   library.addItems(filterFormData.value, 'development', selectedSection.value)
 }
 const deleteItem = () => {
-  library.deleteItems(library.indexing, filtering.value)
+  library.deleteItems(library.indexing, 'landing', filtering.value)
 }
 const saveEdit = (index) => {
   filterData.value[index] = { ...library.editBuffer }

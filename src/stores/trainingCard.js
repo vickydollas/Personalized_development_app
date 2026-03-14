@@ -1749,9 +1749,13 @@ export const useTrainingCard = defineStore('training', () => {
       skill.value.push(item)
     }
   }
-  const deleteItems = (selected, filtering) => {
+  const deleteItems = (selected, id, filtering) => {
     const getFilter = filtering === '' ? 'career_goals' : filtering
-    goal.value[getFilter].splice(selected, 1)
+    if (id === 'landing') {
+      goal.value[getFilter].splice(selected, 1)
+    } else if (id === 'assessment') {
+      skill.value.splice(selected, 1)
+    }
   }
   // function to choose between Q1, Q2, Q3, Q4
   const handleQuarterType = (dateString) => {
