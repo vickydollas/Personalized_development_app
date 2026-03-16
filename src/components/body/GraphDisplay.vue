@@ -18,6 +18,7 @@ const props = defineProps({
     type: Boolean,
   },
 })
+// console.log(props.graphData.filteredName)
 const emit = defineEmits(['exportSeries'])
 const validation = computed(() => {
   return props.validation
@@ -45,14 +46,11 @@ const getSeries = [
     text: 'Mentorship and Skill building',
   },
 ]
-const updateDynamic = computed(() => {
-  return props.graphData.filteredSeries
-})
-const dynamicSeries = {
-  series: updateDynamic,
+const dynamicSeries = computed(() => ({
+  series: props.graphData.filteredSeries,
   labels: ['Completed', 'On going', 'Not Started'],
-  text: 'Mentorship and Skill building',
-}
+  text: props.graphData.filteredName,
+}))
 const getOptions = (item) => {
   // console.log(item.labels )
   return {
@@ -169,7 +167,7 @@ const filteredDynamic = computed(() => {
           width="420"
           type="donut"
           :options="getOptions(dynamicSeries)"
-          :series="updateDynamic"
+          :series="props.graphData.filteredSeries"
         ></apexchart>
       </div>
     </div>

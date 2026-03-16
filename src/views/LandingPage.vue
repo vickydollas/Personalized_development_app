@@ -19,7 +19,8 @@ const menuItems = ref([
   { id: 9, name: 'Status', key: 'status', type: 'radio' },
   { id: 10, name: 'Feedback', key: 'feedback', type: 'textarea' },
   { id: 11, name: 'Evidence', key: 'evidence', type: 'file' },
-  { id: 12, name: 'finance' },
+  { id: 12, name: 'Finance', key: 'finance', type: 'textarea' },
+  { id: 13, name: 'Term', key: 'term', type: 'textarea' },
 ])
 // data manipulationa and filtering
 const store = useStore()
@@ -60,8 +61,15 @@ const filterData = computed(() => {
   if (!filtering.value) return Object.values(library.goal).flat()
   return applyFilter(library.goal[filtering.value])
 })
-// console.log(careerGoalsStats.value)
+const filteredName = computed(() => {
+  return filtering.value
+    .split('_')
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ')
+})
+
 const careerGoalsStats = computed(() => {
+  const title = filteredName
   const currentFilter = filtering.value
   const filter = termChange.value
   const getTerm = (dataArray) => {
@@ -76,6 +84,7 @@ const careerGoalsStats = computed(() => {
       mentorship: Object.values(library.getPercentage(library.goal['mentorship'])),
     },
     filteredSeries: Object.values(library.getPercentage(getTerm(library.goal[currentFilter]))),
+    filteredName: filteredName.value,
   }
 })
 // form parameters
@@ -108,8 +117,15 @@ const selectedSection = computed(() => {
 })
 // updating the form to the
 const buttonSubmit = () => {
-  console.log(filterFormData.value, selectedSection.value)
-  library.addItems(filterFormData.value, 'development', selectedSection.value)
+  const allCategory = Object.values(library.goal).flat()
+  const allId = allCategory.map((item) => Number(item.id))
+  const maxId = allId.length > 0 ? Math.max(...allId) : 0
+  const newId = (maxId + 1).toString()
+  const payload = {
+    id: newId,
+    ...filterFormData.value,
+  }
+  library.addItems(payload, 'development', selectedSection.value)
 }
 const deleteItem = () => {
   library.deleteItems(library.indexing, 'landing', filtering.value)
@@ -246,7 +262,7 @@ const saveEdit = (index) => {
               @click="library.handleSubmit(item, index)"
               @dblclick="library.startEditing(item)"
             >
-              <p class="txt1 py-4 text-[#808080] text-[0.8rem]">{{ index + 1 }}</p>
+              <p class="txt1 py-4 text-[#808080] text-[0.8rem]">{{ item.id }}</p>
               <div class="txt2 py-4 text-[#808080] text-[0.8rem]">
                 <input
                   v-model="library.editBuffer.goal"
@@ -300,6 +316,12 @@ const saveEdit = (index) => {
                 </p>
                 <p class="py-2 pl-2" v-show="item.key === 'level'">
                   {{ library.activeGoal.level }}
+                </p>
+                <p class="py-2 pl-2" v-show="item.key === 'finance'">
+                  {{ library.activeGoal.level }}
+                </p>
+                <p class="py-2 pl-2" v-show="item.key === 'term'">
+                  {{ library.activeGoal.timeline }}
                 </p>
               </div>
             </form>

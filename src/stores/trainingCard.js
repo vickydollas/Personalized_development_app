@@ -227,12 +227,6 @@ export const useTrainingCard = defineStore('training', () => {
     // console.log(index)
   }
   // landing page
-  // onMounted(() => {
-  //   const retrieveData = localStorage.getItem('myList')
-  //   if (retrieveData) {
-  //     goal.value = JSON.parse(retrieveData)
-  //   }
-  // })
   const goal = ref({
     career_goals: [
       {
@@ -959,6 +953,12 @@ export const useTrainingCard = defineStore('training', () => {
       },
     ],
   })
+  // onMounted(() => {
+  //   const retrieveData = localStorage.getItem('myList')
+  //   if (retrieveData) {
+  //     goal.value = JSON.parse(retrieveData)
+  //   }
+  // })
   // skills assessment
   const skill = ref([
     {
@@ -1753,6 +1753,7 @@ export const useTrainingCard = defineStore('training', () => {
     const getFilter = filtering === '' ? 'career_goals' : filtering
     if (id === 'landing') {
       goal.value[getFilter].splice(selected, 1)
+      localStorage.removeItem('myList')
     } else if (id === 'assessment') {
       skill.value.splice(selected, 1)
     }
