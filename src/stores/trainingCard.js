@@ -1,7 +1,9 @@
 import { onMounted, ref } from 'vue'
 import { defineStore } from 'pinia'
+import { useStore } from './formPop'
 
 export const useTrainingCard = defineStore('training', () => {
+  const store = useStore()
   const menuItems = ref([
     {
       id: 1,
@@ -232,7 +234,7 @@ export const useTrainingCard = defineStore('training', () => {
       {
         id: '1',
         goal: 'Improve content writing skill',
-        completion_date: '12/10/2023',
+        completion_date: '12-10-2023',
         status: 'On going',
         feedback: 'Satisfactory',
         work_rate: 'Work',
@@ -244,7 +246,7 @@ export const useTrainingCard = defineStore('training', () => {
       {
         id: '2',
         goal: 'Obtain AWS Cloud Cert',
-        completion_date: '15/01/2024',
+        completion_date: '15-01-2024',
         status: 'Not Started',
         feedback: 'N/A',
         work_rate: 'Work',
@@ -256,7 +258,7 @@ export const useTrainingCard = defineStore('training', () => {
       {
         id: '3',
         goal: 'Master Public Speaking',
-        completion_date: '20/11/2023',
+        completion_date: '20-11-2023',
         status: 'On going',
         feedback: 'Improving',
         work_rate: 'Work',
@@ -268,7 +270,7 @@ export const useTrainingCard = defineStore('training', () => {
       {
         id: '4',
         goal: 'Learn Python Automation',
-        completion_date: '01/02/2024',
+        completion_date: '01-02-2024',
         status: 'Not Started',
         feedback: 'N/A',
         department: 'IT',
@@ -278,7 +280,7 @@ export const useTrainingCard = defineStore('training', () => {
       {
         id: '5',
         goal: 'Emotional Intelligence Training',
-        completion_date: '30/12/2023',
+        completion_date: '30-12-2023',
         status: 'On going',
         feedback: 'Positive',
         department: 'finance',
@@ -288,7 +290,7 @@ export const useTrainingCard = defineStore('training', () => {
       {
         id: '6',
         goal: 'Strategic Planning Workshop',
-        completion_date: '15/03/2024',
+        completion_date: '15-03-2024',
         status: 'Not Started',
         feedback: 'N/A',
         department: 'operation',
@@ -298,7 +300,7 @@ export const useTrainingCard = defineStore('training', () => {
       {
         id: '7',
         goal: 'Advanced Excel Cert',
-        completion_date: '10/11/2023',
+        completion_date: '10-11-2023',
         status: 'Completed',
         feedback: 'Excellent',
         department: 'finance',
@@ -308,7 +310,7 @@ export const useTrainingCard = defineStore('training', () => {
       {
         id: '8',
         goal: 'SQL for Data Analysis',
-        completion_date: '25/01/2025',
+        completion_date: '25-01-2025',
         status: 'On going',
         feedback: 'Steady',
         department: 'IT',
@@ -318,7 +320,7 @@ export const useTrainingCard = defineStore('training', () => {
       {
         id: '9',
         goal: 'Leadership Foundation Course',
-        completion_date: '14/04/2025',
+        completion_date: '14-04-2025',
         status: 'Not Started',
         feedback: 'N/A',
         department: 'Customer service',
@@ -328,7 +330,7 @@ export const useTrainingCard = defineStore('training', () => {
       {
         id: '10',
         goal: 'Time Management Mastery',
-        completion_date: '05/12/2023',
+        completion_date: '05-12-2023',
         status: 'Completed',
         feedback: 'Good',
         department: 'operation',
@@ -338,7 +340,7 @@ export const useTrainingCard = defineStore('training', () => {
       {
         id: '11',
         goal: 'Negotiation Skills Training',
-        completion_date: '18/02/2026',
+        completion_date: '18-02-2026',
         status: 'Not Started',
         feedback: 'N/A',
         department: 'finance',
@@ -348,7 +350,7 @@ export const useTrainingCard = defineStore('training', () => {
       {
         id: '12',
         goal: 'Project Management Prof.',
-        completion_date: '22/05/2026',
+        completion_date: '22-05-2026',
         status: 'On going',
         feedback: 'On track',
         department: 'operation',
@@ -358,7 +360,7 @@ export const useTrainingCard = defineStore('training', () => {
       {
         id: '13',
         goal: 'Business Ethics Seminar',
-        completion_date: '09/11/2023',
+        completion_date: '09-11-2023',
         status: 'Completed',
         feedback: 'Satisfactory',
         department: 'finance',
@@ -368,7 +370,7 @@ export const useTrainingCard = defineStore('training', () => {
       {
         id: '14',
         goal: 'Financial Literacy for Managers',
-        completion_date: '30/03/2024',
+        completion_date: '30-03-2024',
         status: 'Not Started',
         feedback: 'N/A',
         department: 'finance',
@@ -378,7 +380,7 @@ export const useTrainingCard = defineStore('training', () => {
       {
         id: '15',
         goal: 'Conflict Resolution Cert',
-        completion_date: '12/01/2024',
+        completion_date: '12-01-2024',
         status: 'On going',
         feedback: 'Good',
         department: 'Customer service',
@@ -388,7 +390,7 @@ export const useTrainingCard = defineStore('training', () => {
       {
         id: '16',
         goal: 'Technical Documentation Skill',
-        completion_date: '05/04/2025',
+        completion_date: '05-04-2025',
         status: 'Not Started',
         feedback: 'N/A',
         department: 'IT',
@@ -398,7 +400,7 @@ export const useTrainingCard = defineStore('training', () => {
       {
         id: '17',
         goal: 'Global Team Collaboration',
-        completion_date: '20/12/2023',
+        completion_date: '20-12-2023',
         status: 'On going',
         feedback: 'Positive',
         department: 'operation',
@@ -408,7 +410,7 @@ export const useTrainingCard = defineStore('training', () => {
       {
         id: '18',
         goal: 'Market Research Basics',
-        completion_date: '15/02/2024',
+        completion_date: '15-02-2024',
         status: 'Not Started',
         feedback: 'N/A',
         department: 'Customer service',
@@ -418,7 +420,7 @@ export const useTrainingCard = defineStore('training', () => {
       {
         id: '19',
         goal: 'Sales Prospecting Mastery',
-        completion_date: '10/05/2026',
+        completion_date: '10-05-2026',
         status: 'Not Started',
         feedback: 'N/A',
         department: 'Customer service',
@@ -428,7 +430,7 @@ export const useTrainingCard = defineStore('training', () => {
       {
         id: '20',
         goal: 'Cybersecurity Awareness',
-        completion_date: '01/11/2023',
+        completion_date: '01-11-2023',
         status: 'Completed',
         feedback: 'Excellent',
         department: 'IT',
@@ -438,7 +440,7 @@ export const useTrainingCard = defineStore('training', () => {
       {
         id: '21',
         goal: 'CRM Software Proficiency',
-        completion_date: '15/03/2024',
+        completion_date: '15-03-2024',
         status: 'On going',
         feedback: 'Steady',
         department: 'Customer service',
@@ -448,7 +450,7 @@ export const useTrainingCard = defineStore('training', () => {
       {
         id: '22',
         goal: 'Brand Voice Development',
-        completion_date: '28/02/2026',
+        completion_date: '28-02-2026',
         status: 'Not Started',
         feedback: 'N/A',
         department: 'operation',
@@ -458,7 +460,7 @@ export const useTrainingCard = defineStore('training', () => {
       {
         id: '23',
         goal: 'Data Privacy Compliance',
-        completion_date: '10/12/2023',
+        completion_date: '10-12-2023',
         status: 'Completed',
         feedback: 'Satisfactory',
         department: 'IT',
@@ -468,7 +470,7 @@ export const useTrainingCard = defineStore('training', () => {
       {
         id: '24',
         goal: 'Change Management Training',
-        completion_date: '20/04/2024',
+        completion_date: '20-04-2024',
         status: 'Not Started',
         feedback: 'N/A',
         department: 'operation',
@@ -480,7 +482,7 @@ export const useTrainingCard = defineStore('training', () => {
       {
         id: '25',
         goal: 'Master Data Visualization',
-        completion_date: '05/01/2024',
+        completion_date: '05-01-2024',
         status: 'Not Started',
         feedback: 'N/A',
         work_rate: 'Work',
@@ -492,7 +494,7 @@ export const useTrainingCard = defineStore('training', () => {
       {
         id: '26',
         goal: 'Explore UX Research',
-        completion_date: '14/02/2024',
+        completion_date: '14-02-2024',
         status: 'Not Started',
         feedback: 'N/A',
         work_rate: 'Work',
@@ -504,7 +506,7 @@ export const useTrainingCard = defineStore('training', () => {
       {
         id: '27',
         goal: 'Blockchain Basics',
-        completion_date: '12/12/2023',
+        completion_date: '12-12-2023',
         status: 'On going',
         feedback: 'Good',
         work_rate: 'Work',
@@ -516,7 +518,7 @@ export const useTrainingCard = defineStore('training', () => {
       {
         id: '28',
         goal: 'Figma for Prototyping',
-        completion_date: '10/01/2024',
+        completion_date: '10-01-2024',
         status: 'On going',
         feedback: 'Satisfactory',
         department: 'IT',
@@ -526,7 +528,7 @@ export const useTrainingCard = defineStore('training', () => {
       {
         id: '29',
         goal: 'Behavioral Economics',
-        completion_date: '20/03/2024',
+        completion_date: '20-03-2024',
         status: 'Not Started',
         feedback: 'N/A',
         department: 'finance',
@@ -536,7 +538,7 @@ export const useTrainingCard = defineStore('training', () => {
       {
         id: '30',
         goal: 'Agile Methodologies',
-        completion_date: '05/11/2023',
+        completion_date: '05-11-2023',
         status: 'Completed',
         feedback: 'Strong',
         department: 'operation',
@@ -546,7 +548,7 @@ export const useTrainingCard = defineStore('training', () => {
       {
         id: '31',
         goal: 'Generative AI Art',
-        completion_date: '30/11/2023',
+        completion_date: '30-11-2023',
         status: 'On going',
         feedback: 'N/A',
         department: 'IT',
@@ -556,7 +558,7 @@ export const useTrainingCard = defineStore('training', () => {
       {
         id: '32',
         goal: 'Financial Modeling',
-        completion_date: '15/04/2024',
+        completion_date: '15-04-2024',
         status: 'Not Started',
         feedback: 'N/A',
         department: 'finance',
@@ -566,7 +568,7 @@ export const useTrainingCard = defineStore('training', () => {
       {
         id: '33',
         goal: 'Mobile App Design',
-        completion_date: '12/05/2024',
+        completion_date: '12-05-2024',
         status: 'Not Started',
         feedback: 'N/A',
         department: 'IT',
@@ -576,7 +578,7 @@ export const useTrainingCard = defineStore('training', () => {
       {
         id: '34',
         goal: 'Cloud Computing Trends',
-        completion_date: '01/01/2024',
+        completion_date: '01-01-2024',
         status: 'On going',
         feedback: 'Good',
         department: 'IT',
@@ -586,7 +588,7 @@ export const useTrainingCard = defineStore('training', () => {
       {
         id: '35',
         goal: 'Digital Marketing Strategy',
-        completion_date: '15/02/2024',
+        completion_date: '15-02-2024',
         status: 'Not Started',
         feedback: 'N/A',
         department: 'Customer service',
@@ -596,7 +598,7 @@ export const useTrainingCard = defineStore('training', () => {
       {
         id: '36',
         goal: 'Social Media Algorithms',
-        completion_date: '20/11/2023',
+        completion_date: '20-11-2023',
         status: 'Completed',
         feedback: 'Great',
         department: 'Customer service',
@@ -606,7 +608,7 @@ export const useTrainingCard = defineStore('training', () => {
       {
         id: '37',
         goal: 'VR/AR Development',
-        completion_date: '30/06/2024',
+        completion_date: '30-06-2024',
         status: 'Not Started',
         feedback: 'N/A',
         department: 'IT',
@@ -616,7 +618,7 @@ export const useTrainingCard = defineStore('training', () => {
       {
         id: '38',
         goal: 'Sustainable Engineering',
-        completion_date: '15/03/2024',
+        completion_date: '15-03-2024',
         status: 'On going',
         feedback: 'Satisfactory',
         department: 'operation',
@@ -626,7 +628,7 @@ export const useTrainingCard = defineStore('training', () => {
       {
         id: '39',
         goal: 'Neuroscience in Marketing',
-        completion_date: '10/04/2024',
+        completion_date: '10-04-2024',
         status: 'Not Started',
         feedback: 'N/A',
         department: 'Customer service',
@@ -636,7 +638,7 @@ export const useTrainingCard = defineStore('training', () => {
       {
         id: '40',
         goal: 'API Economy Concepts',
-        completion_date: '05/01/2024',
+        completion_date: '05-01-2024',
         status: 'On going',
         feedback: 'Positive',
         department: 'IT',
@@ -646,7 +648,7 @@ export const useTrainingCard = defineStore('training', () => {
       {
         id: '41',
         goal: 'Ethical Hacking Basics',
-        completion_date: '22/02/2024',
+        completion_date: '22-02-2024',
         status: 'Not Started',
         feedback: 'N/A',
         department: 'IT',
@@ -656,7 +658,7 @@ export const useTrainingCard = defineStore('training', () => {
       {
         id: '42',
         goal: 'Microservices Architecture',
-        completion_date: '15/05/2024',
+        completion_date: '15-05-2024',
         status: 'Not Started',
         feedback: 'N/A',
         department: 'IT',
@@ -666,7 +668,7 @@ export const useTrainingCard = defineStore('training', () => {
       {
         id: '43',
         goal: 'Game Design Fundamentals',
-        completion_date: '01/03/2024',
+        completion_date: '01-03-2024',
         status: 'On going',
         feedback: 'Good',
         department: 'IT',
@@ -676,7 +678,7 @@ export const useTrainingCard = defineStore('training', () => {
       {
         id: '44',
         goal: 'Voice User Interface',
-        completion_date: '12/12/2023',
+        completion_date: '12-12-2023',
         status: 'Completed',
         feedback: 'Excellent',
         department: 'IT',
@@ -686,7 +688,7 @@ export const useTrainingCard = defineStore('training', () => {
       {
         id: '45',
         goal: 'Bioinformatics Intro',
-        completion_date: '30/04/2024',
+        completion_date: '30-04-2024',
         status: 'Not Started',
         feedback: 'N/A',
         department: 'IT',
@@ -696,7 +698,7 @@ export const useTrainingCard = defineStore('training', () => {
       {
         id: '46',
         goal: 'Quantum Computing 101',
-        completion_date: '20/06/2024',
+        completion_date: '20-06-2024',
         status: 'Not Started',
         feedback: 'N/A',
         department: 'IT',
@@ -706,7 +708,7 @@ export const useTrainingCard = defineStore('training', () => {
       {
         id: '47',
         goal: 'E-commerce Optimization',
-        completion_date: '15/11/2023',
+        completion_date: '15-11-2023',
         status: 'Completed',
         feedback: 'Good',
         department: 'Customer service',
@@ -718,7 +720,7 @@ export const useTrainingCard = defineStore('training', () => {
       {
         id: '48',
         goal: 'Find Senior Design Mentor',
-        completion_date: '15/12/2023',
+        completion_date: '15-12-2023',
         status: 'Completed',
         feedback: 'Satisfactory',
         work_rate: 'Work',
@@ -730,7 +732,7 @@ export const useTrainingCard = defineStore('training', () => {
       {
         id: '49',
         goal: 'Mentor Junior Copywriter',
-        completion_date: '01/05/2024',
+        completion_date: '01-05-2024',
         status: 'On going',
         feedback: 'Positive',
         work_rate: 'Work',
@@ -742,7 +744,7 @@ export const useTrainingCard = defineStore('training', () => {
       {
         id: '50',
         goal: 'Shadow Project Manager',
-        completion_date: '15/11/2023',
+        completion_date: '15-11-2023',
         status: 'On going',
         feedback: 'Great',
         work_rate: 'Work',
@@ -754,7 +756,7 @@ export const useTrainingCard = defineStore('training', () => {
       {
         id: '51',
         goal: 'Industry Leader Interview',
-        completion_date: '10/01/2024',
+        completion_date: '10-01-2024',
         status: 'Not Started',
         feedback: 'N/A',
         department: 'operation',
@@ -764,7 +766,7 @@ export const useTrainingCard = defineStore('training', () => {
       {
         id: '52',
         goal: 'Peer Mentorship Program',
-        completion_date: '01/12/2023',
+        completion_date: '01-12-2023',
         status: 'Completed',
         feedback: 'Helpful',
         department: 'Customer service',
@@ -774,7 +776,7 @@ export const useTrainingCard = defineStore('training', () => {
       {
         id: '53',
         goal: 'Executive Shadowing',
-        completion_date: '30/06/2024',
+        completion_date: '30-06-2024',
         status: 'Not Started',
         feedback: 'N/A',
         department: 'operation',
@@ -784,7 +786,7 @@ export const useTrainingCard = defineStore('training', () => {
       {
         id: '54',
         goal: 'Code Review Volunteering',
-        completion_date: '15/02/2024',
+        completion_date: '15-02-2024',
         status: 'On going',
         feedback: 'Helpful',
         department: 'IT',
@@ -794,7 +796,7 @@ export const useTrainingCard = defineStore('training', () => {
       {
         id: '55',
         goal: 'Reverse Mentorship Session',
-        completion_date: '20/12/2023',
+        completion_date: '20-12-2023',
         status: 'On going',
         feedback: 'Insightful',
         department: 'finance',
@@ -804,7 +806,7 @@ export const useTrainingCard = defineStore('training', () => {
       {
         id: '56',
         goal: 'Community Tech Mentoring',
-        completion_date: '01/04/2024',
+        completion_date: '01-04-2024',
         status: 'Not Started',
         feedback: 'N/A',
         department: 'IT',
@@ -814,7 +816,7 @@ export const useTrainingCard = defineStore('training', () => {
       {
         id: '57',
         goal: 'Internal Growth Coaching',
-        completion_date: '10/11/2023',
+        completion_date: '10-11-2023',
         status: 'Completed',
         feedback: 'Excellent',
         department: 'Customer service',
@@ -824,7 +826,7 @@ export const useTrainingCard = defineStore('training', () => {
       {
         id: '58',
         goal: 'Diversity Advocacy Mentoring',
-        completion_date: '15/03/2024',
+        completion_date: '15-03-2024',
         status: 'On going',
         feedback: 'Strong',
         department: 'operation',
@@ -834,7 +836,7 @@ export const useTrainingCard = defineStore('training', () => {
       {
         id: '59',
         goal: 'UX Portfolio Feedback',
-        completion_date: '05/02/2024',
+        completion_date: '05-02-2024',
         status: 'Not Started',
         feedback: 'N/A',
         department: 'IT',
@@ -844,7 +846,7 @@ export const useTrainingCard = defineStore('training', () => {
       {
         id: '60',
         goal: 'Public Relations Mentorship',
-        completion_date: '12/12/2023',
+        completion_date: '12-12-2023',
         status: 'Completed',
         feedback: 'Good',
         department: 'Customer service',
@@ -854,7 +856,7 @@ export const useTrainingCard = defineStore('training', () => {
       {
         id: '61',
         goal: 'Sales Strategy Coaching',
-        completion_date: '22/04/2024',
+        completion_date: '22-04-2024',
         status: 'Not Started',
         feedback: 'N/A',
         department: 'Customer service',
@@ -864,7 +866,7 @@ export const useTrainingCard = defineStore('training', () => {
       {
         id: '62',
         goal: 'Product Roadmap Review',
-        completion_date: '15/01/2024',
+        completion_date: '15-01-2024',
         status: 'On going',
         feedback: 'Positive',
         department: 'operation',
@@ -874,7 +876,7 @@ export const useTrainingCard = defineStore('training', () => {
       {
         id: '63',
         goal: 'Agile Coaching',
-        completion_date: '01/03/2024',
+        completion_date: '01-03-2024',
         status: 'Not Started',
         feedback: 'N/A',
         department: 'operation',
@@ -884,7 +886,7 @@ export const useTrainingCard = defineStore('training', () => {
       {
         id: '64',
         goal: 'Resume Review Session',
-        completion_date: '10/11/2023',
+        completion_date: '10-11-2023',
         status: 'Completed',
         feedback: 'Useful',
         department: 'finance',
@@ -894,7 +896,7 @@ export const useTrainingCard = defineStore('training', () => {
       {
         id: '65',
         goal: 'Startup Founder Mentoring',
-        completion_date: '30/05/2024',
+        completion_date: '30-05-2024',
         status: 'Not Started',
         feedback: 'N/A',
         department: 'operation',
@@ -904,7 +906,7 @@ export const useTrainingCard = defineStore('training', () => {
       {
         id: '66',
         goal: 'Data Science Mentorship',
-        completion_date: '20/02/2024',
+        completion_date: '20-02-2024',
         status: 'On going',
         feedback: 'Steady',
         department: 'IT',
@@ -914,7 +916,7 @@ export const useTrainingCard = defineStore('training', () => {
       {
         id: '67',
         goal: 'Creative Direction Advice',
-        completion_date: '15/12/2023',
+        completion_date: '15-12-2023',
         status: 'Completed',
         feedback: 'Satisfactory',
         department: 'operation',
@@ -924,7 +926,7 @@ export const useTrainingCard = defineStore('training', () => {
       {
         id: '68',
         goal: 'Networking Skills Coaching',
-        completion_date: '05/04/2024',
+        completion_date: '05-04-2024',
         status: 'Not Started',
         feedback: 'N/A',
         department: 'Customer service',
@@ -934,7 +936,7 @@ export const useTrainingCard = defineStore('training', () => {
       {
         id: '69',
         goal: 'HR Policy Mentorship',
-        completion_date: '12/03/2024',
+        completion_date: '12-03-2024',
         status: 'On going',
         feedback: 'Good',
         department: 'operation',
@@ -944,7 +946,7 @@ export const useTrainingCard = defineStore('training', () => {
       {
         id: '70',
         goal: 'Cross-Functional Leadership',
-        completion_date: '25/06/2024',
+        completion_date: '25-06-2024',
         status: 'Not Started',
         feedback: 'N/A',
         department: 'operation',
@@ -953,12 +955,14 @@ export const useTrainingCard = defineStore('training', () => {
       },
     ],
   })
-  // onMounted(() => {
-  //   const retrieveData = localStorage.getItem('myList')
-  //   if (retrieveData) {
-  //     goal.value = JSON.parse(retrieveData)
-  //   }
-  // })
+  onMounted(() => {
+    const retrieveData = localStorage.getItem('myList')
+    if (retrieveData) {
+      Object.assign(goal.value, JSON.parse(retrieveData))
+      // goal.value = JSON.parse(retrieveData)
+      // console.log(goal.value)
+    }
+  })
   // skills assessment
   const skill = ref([
     {
@@ -968,7 +972,7 @@ export const useTrainingCard = defineStore('training', () => {
       desired_state: 'Expert',
       status: 'On going',
       feedback: 'Satisfactory',
-      date: '15/01/2024',
+      date: '15-01-2024',
       department: 'IT',
       level: 'User',
     },
@@ -979,7 +983,7 @@ export const useTrainingCard = defineStore('training', () => {
       desired_state: 'Expert',
       status: 'Completed',
       feedback: 'Satisfactory',
-      date: '22/01/2024',
+      date: '22-01-2024',
       department: 'Finance',
       level: 'Manager',
     },
@@ -990,7 +994,7 @@ export const useTrainingCard = defineStore('training', () => {
       desired_state: 'Expert',
       status: 'Not started',
       feedback: 'Satisfactory',
-      date: '05/02/2024',
+      date: '05-02-2024',
       department: 'Accounting',
       level: 'IT',
     },
@@ -1001,7 +1005,7 @@ export const useTrainingCard = defineStore('training', () => {
       desired_state: 'Expert',
       status: 'On going',
       feedback: 'Satisfactory',
-      date: '12/02/2024',
+      date: '12-02-2024',
       department: 'Operation',
       level: 'HOD',
     },
@@ -1012,7 +1016,7 @@ export const useTrainingCard = defineStore('training', () => {
       desired_state: 'Expert',
       status: 'Completed',
       feedback: 'Satisfactory',
-      date: '28/02/2024',
+      date: '28-02-2024',
       department: 'Customer service',
       level: 'Knowledge Manager',
     },
@@ -1023,7 +1027,7 @@ export const useTrainingCard = defineStore('training', () => {
       desired_state: 'Expert',
       status: 'Not started',
       feedback: 'Satisfactory',
-      date: '10/03/2024',
+      date: '10-03-2024',
       department: 'IT',
       level: 'User',
     },
@@ -1034,7 +1038,7 @@ export const useTrainingCard = defineStore('training', () => {
       desired_state: 'Expert',
       status: 'On going',
       feedback: 'Satisfactory',
-      date: '25/03/2024',
+      date: '25-03-2024',
       department: 'Finance',
       level: 'IT',
     },
@@ -1045,7 +1049,7 @@ export const useTrainingCard = defineStore('training', () => {
       desired_state: 'Expert',
       status: 'Completed',
       feedback: 'Satisfactory',
-      date: '04/04/2024',
+      date: '04-04-2024',
       department: 'Accounting',
       level: 'Manager',
     },
@@ -1056,7 +1060,7 @@ export const useTrainingCard = defineStore('training', () => {
       desired_state: 'Expert',
       status: 'Not started',
       feedback: 'Satisfactory',
-      date: '18/04/2024',
+      date: '18-04-2024',
       department: 'Operation',
       level: 'Knowledge Manager',
     },
@@ -1067,7 +1071,7 @@ export const useTrainingCard = defineStore('training', () => {
       desired_state: 'Expert',
       status: 'On going',
       feedback: 'Satisfactory',
-      date: '30/04/2024',
+      date: '30-04-2024',
       department: 'Customer service',
       level: 'HOD',
     },
@@ -1078,7 +1082,7 @@ export const useTrainingCard = defineStore('training', () => {
       desired_state: 'Expert',
       status: 'Completed',
       feedback: 'Satisfactory',
-      date: '12/05/2024',
+      date: '12-05-2024',
       department: 'IT',
       level: 'User',
     },
@@ -1089,7 +1093,7 @@ export const useTrainingCard = defineStore('training', () => {
       desired_state: 'Expert',
       status: 'Not started',
       feedback: 'Satisfactory',
-      date: '22/05/2024',
+      date: '22-05-2024',
       department: 'Finance',
       level: 'IT',
     },
@@ -1100,7 +1104,7 @@ export const useTrainingCard = defineStore('training', () => {
       desired_state: 'Expert',
       status: 'On going',
       feedback: 'Excellent',
-      date: '05/06/2024',
+      date: '05-06-2024',
       department: 'Accounting',
       level: 'Manager',
     },
@@ -1111,7 +1115,7 @@ export const useTrainingCard = defineStore('training', () => {
       desired_state: 'Expert',
       status: 'Completed',
       feedback: 'Good',
-      date: '19/06/2024',
+      date: '19-06-2024',
       department: 'Operation',
       level: 'Knowledge Manager',
     },
@@ -1122,7 +1126,7 @@ export const useTrainingCard = defineStore('training', () => {
       desired_state: 'Intermediate',
       status: 'Not started',
       feedback: 'Pending',
-      date: '02/07/2024',
+      date: '02-07-2024',
       department: 'Customer service',
       level: 'User',
     },
@@ -1133,29 +1137,29 @@ export const useTrainingCard = defineStore('training', () => {
       desired_state: 'Expert',
       status: 'On going',
       feedback: 'Satisfactory',
-      date: '15/07/2024',
+      date: '15-07-2024',
       department: 'IT',
       level: 'IT',
     },
     {
       id: 17,
-      name: 'Leadership',
+      name: 'Time Management',
       current_state: 'Beginner',
       desired_state: 'Expert',
       status: 'Completed',
       feedback: 'Outstanding',
-      date: '30/07/2024',
+      date: '30-07-2024',
       department: 'Finance',
       level: 'HOD',
     },
     {
       id: 18,
-      name: 'Leadership',
+      name: 'Time Management',
       current_state: 'Intermediate',
       desired_state: 'Expert',
       status: 'Not started',
       feedback: 'Satisfactory',
-      date: '14/08/2024',
+      date: '14-08-2024',
       department: 'Accounting',
       level: 'Manager',
     },
@@ -1166,7 +1170,7 @@ export const useTrainingCard = defineStore('training', () => {
       desired_state: 'Intermediate',
       status: 'On going',
       feedback: 'Good',
-      date: '28/08/2024',
+      date: '28-08-2024',
       department: 'Operation',
       level: 'User',
     },
@@ -1177,7 +1181,7 @@ export const useTrainingCard = defineStore('training', () => {
       desired_state: 'Expert',
       status: 'Completed',
       feedback: 'Satisfactory',
-      date: '10/09/2024',
+      date: '10-09-2024',
       department: 'Customer service',
       level: 'Knowledge Manager',
     },
@@ -1188,7 +1192,7 @@ export const useTrainingCard = defineStore('training', () => {
       desired_state: 'Expert',
       status: 'On going',
       feedback: 'Satisfactory',
-      date: '24/09/2024',
+      date: '24-09-2024',
       department: 'IT',
       level: 'IT',
     },
@@ -1199,7 +1203,7 @@ export const useTrainingCard = defineStore('training', () => {
       desired_state: 'Expert',
       status: 'Completed',
       feedback: 'Excellent',
-      date: '08/10/2024',
+      date: '08-10-2024',
       department: 'Finance',
       level: 'HOD',
     },
@@ -1210,7 +1214,7 @@ export const useTrainingCard = defineStore('training', () => {
       desired_state: 'Expert',
       status: 'Not started',
       feedback: 'Satisfactory',
-      date: '22/10/2024',
+      date: '22-10-2024',
       department: 'Accounting',
       level: 'Manager',
     },
@@ -1221,7 +1225,7 @@ export const useTrainingCard = defineStore('training', () => {
       desired_state: 'Expert',
       status: 'On going',
       feedback: 'Good',
-      date: '05/11/2024',
+      date: '05-11-2024',
       department: 'Operation',
       level: 'User',
     },
@@ -1232,7 +1236,7 @@ export const useTrainingCard = defineStore('training', () => {
       desired_state: 'Expert',
       status: 'Completed',
       feedback: 'Satisfactory',
-      date: '19/11/2024',
+      date: '19-11-2024',
       department: 'Customer service',
       level: 'Knowledge Manager',
     },
@@ -1243,7 +1247,7 @@ export const useTrainingCard = defineStore('training', () => {
       desired_state: 'Intermediate',
       status: 'Not started',
       feedback: 'Satisfactory',
-      date: '03/12/2024',
+      date: '03-12-2024',
       department: 'IT',
       level: 'IT',
     },
@@ -1254,7 +1258,7 @@ export const useTrainingCard = defineStore('training', () => {
       desired_state: 'Expert',
       status: 'On going',
       feedback: 'Good',
-      date: '17/12/2024',
+      date: '17-12-2024',
       department: 'Finance',
       level: 'Manager',
     },
@@ -1265,29 +1269,29 @@ export const useTrainingCard = defineStore('training', () => {
       desired_state: 'Expert',
       status: 'Completed',
       feedback: 'Satisfactory',
-      date: '31/12/2024',
+      date: '31-12-2024',
       department: 'Accounting',
       level: 'HOD',
     },
     {
       id: 29,
-      name: 'Negotiation',
+      name: 'Critical Thinking',
       current_state: 'Beginner',
       desired_state: 'Intermediate',
       status: 'On going',
       feedback: 'Satisfactory',
-      date: '14/01/2025',
+      date: '14-01-2025',
       department: 'Operation',
       level: 'User',
     },
     {
       id: 30,
-      name: 'Negotiation',
+      name: 'Critical Thinking',
       current_state: 'Intermediate',
       desired_state: 'Expert',
       status: 'Completed',
       feedback: 'Excellent',
-      date: '28/01/2025',
+      date: '28-01-2025',
       department: 'Customer service',
       level: 'Manager',
     },
@@ -1298,7 +1302,7 @@ export const useTrainingCard = defineStore('training', () => {
       desired_state: 'Expert',
       status: 'Not started',
       feedback: 'Satisfactory',
-      date: '11/02/2025',
+      date: '11-02-2025',
       department: 'IT',
       level: 'IT',
     },
@@ -1309,7 +1313,7 @@ export const useTrainingCard = defineStore('training', () => {
       desired_state: 'Expert',
       status: 'On going',
       feedback: 'Good',
-      date: '25/02/2025',
+      date: '25-02-2025',
       department: 'Finance',
       level: 'Knowledge Manager',
     },
@@ -1320,7 +1324,7 @@ export const useTrainingCard = defineStore('training', () => {
       desired_state: 'Expert',
       status: 'Completed',
       feedback: 'Satisfactory',
-      date: '11/03/2025',
+      date: '11-03-2025',
       department: 'Accounting',
       level: 'Manager',
     },
@@ -1331,7 +1335,7 @@ export const useTrainingCard = defineStore('training', () => {
       desired_state: 'Expert',
       status: 'On going',
       feedback: 'Satisfactory',
-      date: '25/03/2025',
+      date: '25-03-2025',
       department: 'Operation',
       level: 'HOD',
     },
@@ -1342,7 +1346,7 @@ export const useTrainingCard = defineStore('training', () => {
       desired_state: 'Expert',
       status: 'Not started',
       feedback: 'Satisfactory',
-      date: '08/04/2025',
+      date: '08-04-2025',
       department: 'Customer service',
       level: 'User',
     },
@@ -1353,29 +1357,29 @@ export const useTrainingCard = defineStore('training', () => {
       desired_state: 'Expert',
       status: 'Completed',
       feedback: 'Excellent',
-      date: '22/04/2025',
+      date: '22-04-2025',
       department: 'IT',
       level: 'IT',
     },
     {
       id: 37,
-      name: 'Leadership',
+      name: 'Time Management',
       current_state: 'Beginner',
       desired_state: 'Expert',
       status: 'On going',
       feedback: 'Good',
-      date: '06/05/2025',
+      date: '06-05-2025',
       department: 'Finance',
       level: 'Knowledge Manager',
     },
     {
       id: 38,
-      name: 'Leadership',
+      name: 'Time Management',
       current_state: 'Intermediate',
       desired_state: 'Expert',
       status: 'Not started',
       feedback: 'Satisfactory',
-      date: '20/05/2025',
+      date: '20-05-2025',
       department: 'Accounting',
       level: 'Manager',
     },
@@ -1386,7 +1390,7 @@ export const useTrainingCard = defineStore('training', () => {
       desired_state: 'Expert',
       status: 'Completed',
       feedback: 'Satisfactory',
-      date: '03/06/2025',
+      date: '03-06-2025',
       department: 'Operation',
       level: 'HOD',
     },
@@ -1397,7 +1401,7 @@ export const useTrainingCard = defineStore('training', () => {
       desired_state: 'Expert',
       status: 'On going',
       feedback: 'Good',
-      date: '17/06/2025',
+      date: '17-06-2025',
       department: 'Customer service',
       level: 'User',
     },
@@ -1408,7 +1412,7 @@ export const useTrainingCard = defineStore('training', () => {
       desired_state: 'Expert',
       status: 'Completed',
       feedback: 'Satisfactory',
-      date: '01/07/2025',
+      date: '01-07-2025',
       department: 'IT',
       level: 'Manager',
     },
@@ -1419,7 +1423,7 @@ export const useTrainingCard = defineStore('training', () => {
       desired_state: 'Expert',
       status: 'Not started',
       feedback: 'Satisfactory',
-      date: '15/07/2025',
+      date: '15-07-2025',
       department: 'Finance',
       level: 'IT',
     },
@@ -1430,7 +1434,7 @@ export const useTrainingCard = defineStore('training', () => {
       desired_state: 'Expert',
       status: 'On going',
       feedback: 'Excellent',
-      date: '29/07/2025',
+      date: '29-07-2025',
       department: 'Accounting',
       level: 'Knowledge Manager',
     },
@@ -1441,7 +1445,7 @@ export const useTrainingCard = defineStore('training', () => {
       desired_state: 'Expert',
       status: 'Completed',
       feedback: 'Satisfactory',
-      date: '12/08/2025',
+      date: '12-08-2025',
       department: 'Operation',
       level: 'HOD',
     },
@@ -1452,7 +1456,7 @@ export const useTrainingCard = defineStore('training', () => {
       desired_state: 'Expert',
       status: 'On going',
       feedback: 'Good',
-      date: '26/08/2025',
+      date: '26-08-2025',
       department: 'Customer service',
       level: 'User',
     },
@@ -1463,51 +1467,51 @@ export const useTrainingCard = defineStore('training', () => {
       desired_state: 'Expert',
       status: 'Not started',
       feedback: 'Satisfactory',
-      date: '09/09/2025',
+      date: '09-09-2025',
       department: 'IT',
       level: 'Manager',
     },
     {
       id: 47,
-      name: 'Leadership',
+      name: 'Time Management',
       current_state: 'Beginner',
       desired_state: 'Expert',
       status: 'Completed',
       feedback: 'Satisfactory',
-      date: '23/09/2025',
+      date: '23-09-2025',
       department: 'Finance',
       level: 'IT',
     },
     {
       id: 48,
-      name: 'Leadership',
+      name: 'Time Management',
       current_state: 'Intermediate',
       desired_state: 'Expert',
       status: 'On going',
       feedback: 'Excellent',
-      date: '07/10/2025',
+      date: '07-10-2025',
       department: 'Accounting',
       level: 'HOD',
     },
     {
       id: 49,
-      name: 'Problem Solving',
+      name: 'Critical Thinking',
       current_state: 'Beginner',
       desired_state: 'Expert',
       status: 'Not started',
       feedback: 'Satisfactory',
-      date: '21/10/2025',
+      date: '21-10-2025',
       department: 'Operation',
       level: 'Knowledge Manager',
     },
     {
       id: 50,
-      name: 'Problem Solving',
+      name: 'Critical Thinking',
       current_state: 'Intermediate',
       desired_state: 'Expert',
       status: 'Completed',
       feedback: 'Good',
-      date: '04/11/2025',
+      date: '04-11-2025',
       department: 'Customer service',
       level: 'User',
     },
@@ -1518,7 +1522,7 @@ export const useTrainingCard = defineStore('training', () => {
       desired_state: 'Expert',
       status: 'On going',
       feedback: 'Satisfactory',
-      date: '11/11/2025',
+      date: '11-11-2025',
       department: 'IT',
       level: 'IT',
     },
@@ -1529,7 +1533,7 @@ export const useTrainingCard = defineStore('training', () => {
       desired_state: 'Expert',
       status: 'Completed',
       feedback: 'Satisfactory',
-      date: '18/11/2025',
+      date: '18-11-2025',
       department: 'Finance',
       level: 'Manager',
     },
@@ -1540,7 +1544,7 @@ export const useTrainingCard = defineStore('training', () => {
       desired_state: 'Expert',
       status: 'Not started',
       feedback: 'Satisfactory',
-      date: '25/11/2025',
+      date: '25-11-2025',
       department: 'Accounting',
       level: 'User',
     },
@@ -1551,7 +1555,7 @@ export const useTrainingCard = defineStore('training', () => {
       desired_state: 'Expert',
       status: 'On going',
       feedback: 'Good',
-      date: '02/12/2025',
+      date: '02-12-2025',
       department: 'Operation',
       level: 'HOD',
     },
@@ -1562,7 +1566,7 @@ export const useTrainingCard = defineStore('training', () => {
       desired_state: 'Expert',
       status: 'Completed',
       feedback: 'Excellent',
-      date: '03/12/2025',
+      date: '03-12-2025',
       department: 'Customer service',
       level: 'Knowledge Manager',
     },
@@ -1573,29 +1577,29 @@ export const useTrainingCard = defineStore('training', () => {
       desired_state: 'Expert',
       status: 'Not started',
       feedback: 'Satisfactory',
-      date: '04/12/2025',
+      date: '04-12-2025',
       department: 'IT',
       level: 'Manager',
     },
     {
       id: 57,
-      name: 'Leadership',
+      name: 'Critical Thinking',
       current_state: 'Beginner',
       desired_state: 'Expert',
       status: 'On going',
       feedback: 'Satisfactory',
-      date: '05/12/2025',
+      date: '05-12-2025',
       department: 'Finance',
       level: 'IT',
     },
     {
       id: 58,
-      name: 'Leadership',
+      name: 'Critical Thinking',
       current_state: 'Intermediate',
       desired_state: 'Expert',
       status: 'Completed',
       feedback: 'Good',
-      date: '08/12/2025',
+      date: '08-12-2025',
       department: 'Accounting',
       level: 'HOD',
     },
@@ -1606,7 +1610,7 @@ export const useTrainingCard = defineStore('training', () => {
       desired_state: 'Expert',
       status: 'On going',
       feedback: 'Satisfactory',
-      date: '10/12/2025',
+      date: '10-12-2025',
       department: 'Operation',
       level: 'User',
     },
@@ -1617,7 +1621,7 @@ export const useTrainingCard = defineStore('training', () => {
       desired_state: 'Expert',
       status: 'Completed',
       feedback: 'Satisfactory',
-      date: '12/12/2025',
+      date: '12-12-2025',
       department: 'Customer service',
       level: 'Knowledge Manager',
     },
@@ -1628,7 +1632,7 @@ export const useTrainingCard = defineStore('training', () => {
       desired_state: 'Expert',
       status: 'Not started',
       feedback: 'Satisfactory',
-      date: '14/12/2025',
+      date: '14-12-2025',
       department: 'IT',
       level: 'IT',
     },
@@ -1639,7 +1643,7 @@ export const useTrainingCard = defineStore('training', () => {
       desired_state: 'Expert',
       status: 'On going',
       feedback: 'Excellent',
-      date: '16/12/2025',
+      date: '16-12-2025',
       department: 'Finance',
       level: 'Manager',
     },
@@ -1650,7 +1654,7 @@ export const useTrainingCard = defineStore('training', () => {
       desired_state: 'Expert',
       status: 'Completed',
       feedback: 'Satisfactory',
-      date: '18/12/2025',
+      date: '18-12-2025',
       department: 'Accounting',
       level: 'User',
     },
@@ -1661,7 +1665,7 @@ export const useTrainingCard = defineStore('training', () => {
       desired_state: 'Expert',
       status: 'Not started',
       feedback: 'Good',
-      date: '20/12/2025',
+      date: '20-12-2025',
       department: 'Operation',
       level: 'HOD',
     },
@@ -1672,7 +1676,7 @@ export const useTrainingCard = defineStore('training', () => {
       desired_state: 'Expert',
       status: 'On going',
       feedback: 'Satisfactory',
-      date: '22/12/2025',
+      date: '22-12-2025',
       department: 'Customer service',
       level: 'Knowledge Manager',
     },
@@ -1683,51 +1687,51 @@ export const useTrainingCard = defineStore('training', () => {
       desired_state: 'Expert',
       status: 'Completed',
       feedback: 'Satisfactory',
-      date: '24/12/2025',
+      date: '24-12-2025',
       department: 'IT',
       level: 'Manager',
     },
     {
       id: 67,
-      name: 'Leadership',
+      name: 'Time Management',
       current_state: 'Beginner',
       desired_state: 'Expert',
       status: 'Not started',
       feedback: 'Satisfactory',
-      date: '26/12/2025',
+      date: '26-12-2025',
       department: 'Finance',
       level: 'IT',
     },
     {
       id: 68,
-      name: 'Leadership',
+      name: 'Time Management',
       current_state: 'Intermediate',
       desired_state: 'Expert',
       status: 'On going',
       feedback: 'Good',
-      date: '28/12/2025',
+      date: '28-12-2025',
       department: 'Accounting',
       level: 'HOD',
     },
     {
       id: 69,
-      name: 'Emotional Intelligence',
+      name: 'Critical Thinking',
       current_state: 'Beginner',
       desired_state: 'Expert',
       status: 'Completed',
       feedback: 'Excellent',
-      date: '30/12/2025',
+      date: '30-12-2025',
       department: 'Operation',
       level: 'Knowledge Manager',
     },
     {
       id: 70,
-      name: 'Emotional Intelligence',
+      name: 'Critical Thinking',
       current_state: 'Intermediate',
       desired_state: 'Expert',
       status: 'On going',
       feedback: 'Satisfactory',
-      date: '31/12/2025',
+      date: '31-12-2025',
       department: 'Customer service',
       level: 'User',
     },
@@ -1742,25 +1746,36 @@ export const useTrainingCard = defineStore('training', () => {
   ]
   const addItems = async (item, type, selected = null) => {
     if (type === 'development') {
-      goal.value[selected].push(item)
-      localStorage.setItem('myList', JSON.stringify(goal.value))
-      console.log(goal.value)
+      const updateStorage = goal.value[selected].push(item)
+      localStorage.setItem('myList', JSON.stringify(updateStorage))
+      console.log('data structure after storage', goal.value)
     } else if (type === 'assessment') {
-      skill.value.push(item)
+      const updateSkillStorage = skill.value.push(item)
+      localStorage.setItem('skill', JSON.stringify(updateSkillStorage))
     }
+    store.isModalActive = false
   }
   const deleteItems = (selected, id, filtering) => {
+    const getId = selectedId.value
     const getFilter = filtering === '' ? 'career_goals' : filtering
     if (id === 'landing') {
       goal.value[getFilter].splice(selected, 1)
-      localStorage.removeItem('myList')
+      const getList = JSON.parse(localStorage.getItem('myList'))
+      const updatedList = getList[getFilter]?.filter((item) => item.id === getId) || []
+      // console.log(getList)
+      console.log('the selected id', updatedList)
+      localStorage.setItem('myList', JSON.stringify(updatedList))
     } else if (id === 'assessment') {
       skill.value.splice(selected, 1)
+      const getSkill = JSON.parse(localStorage.getItem('skill'))
+      const updateSkill = getSkill?.filter((item) => item.id === getId) || []
+      localStorage.setItem('skill', JSON.stringify(updateSkill))
     }
   }
   // function to choose between Q1, Q2, Q3, Q4
   const handleQuarterType = (dateString) => {
-    const [day, month, year] = dateString.split('/').map(Number)
+    if (!dateString) return 0
+    const [day, month, year] = dateString.split('-').map(Number)
     const date = new Date(year, month - 1, day)
     if (isNaN(date)) {
       throw new Error('in correct date')
@@ -1786,6 +1801,7 @@ export const useTrainingCard = defineStore('training', () => {
       throw new Error('error')
     }
     const data = dataArray
+    // console.log(data)
     const counts = data.reduce(
       (acc, item) => {
         const status = item.status.toLowerCase()
@@ -1803,6 +1819,47 @@ export const useTrainingCard = defineStore('training', () => {
       ongoing: Math.round((counts.onGoing * 100) / total),
       notstarted: Math.round((counts.notStarted * 100) / total),
     }
+  }
+  const getState = (dataArray) => {
+    const skillCategories = [
+      'Public Speaking',
+      'Project Management',
+      'Data Analysis',
+      'Time Management',
+      'Critical Thinking',
+      'Technical Writing',
+    ]
+    const currentArray = []
+    const desiredArray = []
+    skillCategories.forEach((skillName) => {
+      const data = dataArray
+      const counts = data.reduce(
+        (acc, item) => {
+          const nameMatch = item.name.toLowerCase() === skillName.toLowerCase()
+          const getCurrentState = item.current_state.toLowerCase()
+          const getDesiredState = item.desired_state.toLowerCase()
+          if (nameMatch) {
+            if (getCurrentState === 'beginner') {
+              acc.currentState++
+            }
+            if (getDesiredState === 'expert') {
+              acc.desiredState++
+            }
+          }
+          return acc
+        },
+        { currentState: 0, desiredState: 0 },
+      )
+      const one = counts.currentState / 5
+      const two = counts.desiredState / 5
+      currentArray.push(one)
+      desiredArray.push(two)
+    })
+
+    return [
+      { name: 'Current state', data: currentArray },
+      { name: 'Desried State', data: desiredArray },
+    ]
   }
   return {
     menuItems,
@@ -1822,5 +1879,6 @@ export const useTrainingCard = defineStore('training', () => {
     startEditing,
     cancelEdit,
     getPercentage,
+    getState,
   }
 })

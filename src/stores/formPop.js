@@ -7,7 +7,7 @@ export const useStore = defineStore('counter', () => {
       {
         id: 1,
         name: 'Development Plan Type',
-        option: ['Career Goals', 'Area of Interest', 'Mentorship'],
+        option: ['Career Goals', 'Areas of Interest', 'Mentorship'],
         key: 'select',
         field: 'objectives',
       },
@@ -24,7 +24,13 @@ export const useStore = defineStore('counter', () => {
     ],
     second: [
       { id: 1, name: 'What i will do to achieve this', key: 'textarea', field: 'work_rate' },
-      { id: 2, name: 'What does success look like?', key: 'textarea', field: 'feedback' },
+      {
+        id: 2,
+        name: 'Department',
+        key: 'select',
+        field: 'department',
+        option: ['', 'IT', 'Customer Service', 'Operation', 'Accounting', 'Finance'],
+      },
       {
         id: 3,
         name: 'Level',

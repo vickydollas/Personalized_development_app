@@ -3,7 +3,7 @@ import TopHeader from '../components/navbar/TopHeader.vue'
 import NavMenu from '../components/navbar/NavMenu.vue'
 import BodyOption from '@/components/navbar/BodyOption.vue'
 import FormPop from '../components/body/FormPop.vue'
-import { computed, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { useStore } from '../stores/formPop'
 import { useTrainingCard } from '../stores/trainingCard'
 
@@ -21,7 +21,7 @@ const menuItems = ref([
 const popUp = ref([
   { name: 'Skills', key: 'textarea', field: 'name' },
   { name: 'Current State', key: 'select', field: 'current_state' },
-  { name: 'Gap', key: 'textarea', field: 'gap' },
+  { name: 'Date', key: 'date', field: 'date' },
   { name: 'Desired State', key: 'select', field: 'desired_state' },
   { name: 'Initiatives', key: 'textarea', field: 'initiatives' },
 ])
@@ -31,7 +31,15 @@ const submitForm = () => {
 // modal activeness
 const store = useStore()
 const library = useTrainingCard()
+const graphCurrent = library.getState(library.skill)[0].data
+const graphDesired = library.getState(library.skill)[1].data
+// onMounted(() => {
+//   // const usePercentage = library.getState(library.skill)
+//   // const usePercent = library.getPercentage(library.skill)
+//   console.log(graphData)
+// })
 const formData = ref({
+  date: '',
   name: '',
   current_state: '',
   desired_state: '',
@@ -41,11 +49,11 @@ const formData = ref({
 const series = ref([
   {
     name: 'Current State',
-    data: [1.1, 1.9, 2.8, 1.3, 2.3, 2.7], // Yellow bars
+    data: graphCurrent, // Yellow bars
   },
   {
     name: 'Desired State',
-    data: [1.9, 2.7, 4.0, 2.5, 2.8, 4.0], // Green bars
+    data: graphDesired, // Green bars
   },
 ])
 const chartOptions = ref({
@@ -89,7 +97,7 @@ const chartOptions = ref({
     labels: {
       style: { fontSize: '14px', colors: '#333' },
       formatter: (val) => {
-        const levels = ['Beginner', 'Intermediate', 'Proficient', 'Advanced', 'Expert']
+        const levels = ['', 'Beginner', 'Intermediate', 'Expert']
         return levels[Math.round(val)]
       },
     },
@@ -151,7 +159,6 @@ const deleteItem = () => {
           </div>
           <FormPop :layOut="true" title="Skill Request Form">
             <div class="p-5 my-5 rounded-[8px]">
-              <p>{{ formData.name }}</p>
               <div
                 v-for="item in popUp"
                 :key="item.key"
@@ -164,6 +171,12 @@ const deleteItem = () => {
                   class="w-110 rounded-[8px] shadow-[0_0_15px_rgba(0,0,0,0.2)]"
                   rows="3"
                 ></textarea>
+                <input
+                  v-model="formData[item.field]"
+                  v-else-if="item.key === 'date'"
+                  type="date"
+                  class="w-110 rounded-[8px] shadow-[0_0_15px_rgba(0,0,0,0.2)] py-1 px-3"
+                />
                 <select
                   v-model="formData[item.field]"
                   class="w-110 rounded-[8px] shadow-[0_0_15px_rgba(0,0,0,0.2)] py-1 px-3"

@@ -41,6 +41,7 @@ const handleTermchange = (val) => {
   termChange.value = val
 }
 const filterData = computed(() => {
+  // console.log('filtering re-evaluation', library.goal)
   const { quarter, year, level, department } = exportedQuarter.value
   // if (!quarter && !year && !level && !department) return Object.values(library.goal).flat()
   const applyFilter = (filters) => {
@@ -58,8 +59,14 @@ const filterData = computed(() => {
       return matchQuarter && matchYear && matchLevel && matchDepartment
     })
   }
-  if (!filtering.value) return Object.values(library.goal).flat()
-  return applyFilter(library.goal[filtering.value])
+  if (!filtering.value) {
+    const allItems = Object.values(library.goal).flat()
+    // console.log(allItems)
+    return applyFilter(allItems)
+  }
+  const selectedCategoryItems = library.goal[filtering.value] || []
+  // console.log('data when filter is selected', selectedCategoryItems)
+  return applyFilter(selectedCategoryItems)
 })
 const filteredName = computed(() => {
   return filtering.value
@@ -84,18 +91,18 @@ const careerGoalsStats = computed(() => {
       mentorship: Object.values(library.getPercentage(library.goal['mentorship'])),
     },
     filteredSeries: Object.values(library.getPercentage(getTerm(library.goal[currentFilter]))),
-    filteredName: filteredName.value,
+    filteredName: title,
   }
 })
 // form parameters
 const formData = ref({
   goal: '',
-  work_rate: '',
+  work_rate: 'Work',
   completion_date: '',
   challenges: '',
   objectives: '',
-  feedback: '',
-  level: '',
+  feedback: 'Nil',
+  department: '',
   timeline: '',
   status: 'Not Started',
 })
@@ -104,10 +111,10 @@ const filterFormData = computed(() => {
     goal: formData.value.goal,
     work_rate: formData.value.work_rate,
     completion_date: formData.value.completion_date,
-    challenges: formData.value.challenges,
+    // challenges: formData.value.challenges,
     feedback: formData.value.feedback,
     status: formData.value.status,
-    level: formData.value.level,
+    department: formData.value.department,
     timeline: formData.value.timeline,
   }
 })
@@ -262,7 +269,7 @@ const saveEdit = (index) => {
               @click="library.handleSubmit(item, index)"
               @dblclick="library.startEditing(item)"
             >
-              <p class="txt1 py-4 text-[#808080] text-[0.8rem]">{{ item.id }}</p>
+              <p class="txt1 py-4 text-[#808080] text-[0.8rem]">{{ index + 1 }}</p>
               <div class="txt2 py-4 text-[#808080] text-[0.8rem]">
                 <input
                   v-model="library.editBuffer.goal"
