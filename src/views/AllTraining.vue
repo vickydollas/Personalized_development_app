@@ -1,27 +1,44 @@
 <script setup>
 import NavMenu from '@/components/navbar/NavMenu.vue'
 import TopHeader from '../components/navbar/TopHeader.vue'
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import TrainingCard from '../components/training/TrainingCard.vue'
 import BodyOption from '@/components/navbar/BodyOption.vue'
-import GraphDisplay from '../components/body/GraphDisplay.vue'
+import TrainingGraph from '../components/body/TrainingGraph.vue'
+import { useTrainingCard } from '../stores/trainingCard'
+
+const store = useTrainingCard()
 // text area display functionality
 const textDisplay = ref(null)
 const toggleText = (id) => {
   textDisplay.value = textDisplay.value ? null : id
 }
-// menuitems to document the detail of your plan
+const exportedQuarter = ref({})
+const termChange = ref('short')
+const handleQuarterchange = (val) => {
+  exportedQuarter.value = val
+}
+const handleTermchange = (val) => {
+  termChange.value = val
+}
+const getTerm = (dataArray) => {
+  if (!dataArray) return []
+  return dataArray.filter((item) => item.timeline === termChange.value)
+}
+const percentage = computed(() => {
+  return Object.values(store.getPercentage(getTerm(store.menuItems)))
+})
 </script>
 <template>
   <div class="bg-[#EEEEEE] pb-7">
     <TopHeader />
     <NavMenu />
     <div>
-      <BodyOption />
+      <BodyOption @quarterExpo="handleQuarterchange" />
       <div class="py-5 px-4 bg-[#ffffff] my-3 mx-20 rounded-[7px]">
         <h2 class="text-[1.5rem] text-[500]">All Training Schedule</h2>
-        <GraphDisplay :showLast="true" />
-        <TrainingCard :show="true" />
+        <TrainingGraph @exportSeries="handleTermchange" :graphData="percentage" />
+        <TrainingCard :show="true" :quarter="exportedQuarter" />
       </div>
     </div>
   </div>

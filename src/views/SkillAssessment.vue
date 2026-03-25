@@ -25,9 +25,7 @@ const popUp = ref([
   { name: 'Desired State', key: 'select', field: 'desired_state' },
   { name: 'Initiatives', key: 'textarea', field: 'initiatives' },
 ])
-const submitForm = () => {
-  library.addItems(formData.value, 'assessment')
-}
+
 // modal activeness
 const store = useStore()
 const library = useTrainingCard()
@@ -46,6 +44,17 @@ const formData = ref({
   status: 'Not Started',
   feedback: 'Not satisfactory',
 })
+const submitForm = () => {
+  const allCategory = library.skill.flat()
+  const allId = allCategory.map((item) => Number(item.id))
+  const getMaxId = allId.length > 0 ? Math.max(...allId) : 0
+  const newId = (getMaxId + 1).toString()
+  const payload = {
+    id: newId,
+    ...formData.value,
+  }
+  library.addItems(payload, 'assessment')
+}
 const series = ref([
   {
     name: 'Current State',

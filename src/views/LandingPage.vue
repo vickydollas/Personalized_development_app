@@ -26,7 +26,6 @@ const menuItems = ref([
 const store = useStore()
 const library = useTrainingCard()
 const filtering = ref('')
-const filteringMode = ref('')
 const validation = ref(false)
 const sendValidation = () => {
   if (filtering.value !== '') {

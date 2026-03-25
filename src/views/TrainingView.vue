@@ -1,17 +1,33 @@
 <script setup>
 import NavMenu from '@/components/navbar/NavMenu.vue'
 import TopHeader from '../components/navbar/TopHeader.vue'
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import TrainingCard from '../components/training/TrainingCard.vue'
 import BodyOption from '@/components/navbar/BodyOption.vue'
-import GraphDisplay from '../components/body/GraphDisplay.vue'
+import TrainingGraph from '../components/body/TrainingGraph.vue'
 import FormPop from '../components/body/FormPop.vue'
 import { useStore } from '../stores/formPop'
 import { useTrainingCard } from '../stores/trainingCard'
+import { all } from 'axios'
 
 const store = useStore()
 const stores = useTrainingCard()
-// console.log(stores.activeGoal?.month)
+// getting percentage for filter
+const termChange = ref('short')
+const exportedQuarter = ref({})
+const handleTermchange = (val) => {
+  termChange.value = val
+}
+const handleQuarterchange = (val) => {
+  exportedQuarter.value = val
+}
+const getTerm = (dataArray) => {
+  if (!dataArray) return []
+  return dataArray.filter((item) => item.timeline === termChange.value)
+}
+const percentage = computed(() => {
+  return Object.values(stores.getPercentage(getTerm(stores.menuItems)))
+})
 // menuitems to document the detail of your plan
 const menuItems = ref([
   { id: 1, name: 'Month', key: 'month', path: '/' },
@@ -25,20 +41,55 @@ const menuItems = ref([
 ])
 // menuitems for form pop up
 const popUp = ref([
-  { name: 'Month', key: 'date' },
-  { name: 'Training Topic', key: 'textarea' },
-  { name: 'Learning Outcome', key: 'textarea' },
-  { name: 'Training Method', key: 'select', option: ['Begineer', 'Intermediate', 'Expert'] },
-  { name: 'Training Initiator', key: 'select', option: ['Self', 'Instructor'] },
-  { name: 'Skill Matrix Mapping', key: 'textarea' },
+  { name: 'Name', key: 'textarea', field: 'employee' },
+  { name: 'Month', key: 'date', field: 'month' },
+  { name: 'Training Topic', key: 'textarea', field: 'topic' },
+  {
+    name: 'Department',
+    key: 'select',
+    option: [
+      'Marketing',
+      'Finance',
+      'IT Support',
+      'Design',
+      'Sales',
+      'HR dept',
+      'Security',
+      'logistics',
+    ],
+    field: 'department',
+  },
+  { name: 'Training Method', key: 'select', option: ['', 'Physical', 'Online'], field: 'method' },
+  { name: 'Period', key: 'select', option: ['', 'Short', 'Mid', 'Long'], field: 'timeline' },
+  { name: 'Rating', key: 'select', option: ['', 1, 2, 3, 4, 5], field: 'rating' },
 ])
+const formData = ref({
+  employee: '',
+  month: '',
+  topic: '',
+  department: '',
+  method: '',
+  timeline: '',
+  rating: '',
+  status: 'Not started',
+})
+const submitForm = (dataArray) => {
+  const payload = {
+    id: stores.createId(Object.values(stores.menuItems).flat()),
+    ...formData.value,
+  }
+  stores.addItems(payload, 'training')
+}
+const buttonSubmit = () => {
+  stores.deleteItems(stores.indexing, 'training')
+}
 </script>
 <template>
   <div class="bg-[#EEEEEE] pb-7">
     <TopHeader />
     <NavMenu />
     <div>
-      <BodyOption />
+      <BodyOption @quarterExpo="handleQuarterchange" />
       <div class="py-5 px-4 bg-[#ffffff] my-3 mx-20 rounded-[7px]">
         <div class="flex items-center px-5 justify-between">
           <h2 class="text-[1.5rem] text-[500]">Training Schedule</h2>
@@ -55,29 +106,34 @@ const popUp = ref([
               <p class="w-110 mb-1 rounded-[8px]">{{ item.name }}</p>
               <textarea
                 v-if="item.key === 'textarea'"
+                v-model="formData[item.field]"
                 class="w-110 rounded-[8px] shadow-[0_0_15px_rgba(0,0,0,0.2)]"
-                rows="3"
+                rows="2"
               ></textarea>
               <select
-                class="w-110 rounded-[8px] shadow-[0_0_15px_rgba(0,0,0,0.2)] py-1 px-3"
+                v-model="formData[item.field]"
+                class="w-110 rounded-[8px] shadow-[0_0_15px_rgba(0,0,0,0.2)] px-3"
                 v-else-if="item.key === 'select'"
                 name=""
                 id=""
               >
-                <option v-for="opt in item.option" :key="opt" value="">{{ opt }}</option>
+                <option v-for="opt in item.option" :key="opt" :value="opt">{{ opt }}</option>
               </select>
               <input
                 type="date"
+                v-model="formData[item.field]"
                 class="w-110 rounded-[8px] shadow-[0_0_15px_rgba(0,0,0,0.2)] py-1 px-3"
                 v-else
               />
             </div>
           </div>
-          <button class="bg-[#47B65C] px-7 py-2 rounded-[7px]">Submit</button>
+          <button @click="submitForm" class="bg-[#47B65C] mx-10 px-7 py-2 rounded-[7px]">
+            Submit
+          </button>
         </FormPop>
-        <GraphDisplay :showLast="true" />
+        <TrainingGraph @exportSeries="handleTermchange" :graphData="percentage" />
         <div class="grid grid-cols-12">
-          <TrainingCard class="col-span-8" :show="true" />
+          <TrainingCard class="col-span-8" :show="true" :quarter="exportedQuarter" />
           <div class="col-span-4">
             <h3 class="pl-3 mt-5 text-[1.4rem] font-[600]">Details</h3>
             <div v-for="item in menuItems" :key="item.id" class="my-1 px-3">
@@ -99,6 +155,14 @@ const popUp = ref([
                 <p v-show="item.key === 'method'">{{ stores.activeGoal?.method }}</p>
                 <p v-show="item.key === 'mapping'">{{ stores.activeGoal?.skillsMapping }}</p>
               </div>
+            </div>
+            <div class="justify-self-end mt-5 mr-5">
+              <button
+                @click="buttonSubmit"
+                class="mx-3 my-2 py-2 px-8 rounded-[7px] bg-[#FF0000] text-white"
+              >
+                Delete
+              </button>
             </div>
           </div>
         </div>

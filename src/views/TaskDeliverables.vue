@@ -4,8 +4,10 @@ import TopHeader from '../components/navbar/TopHeader.vue'
 import { computed, ref } from 'vue'
 // import BodyOption from '@/components/navbar/BodyOption.vue'
 import { useStore } from '../stores/formPop'
+import { useTrainingCard } from '../stores/trainingCard'
 
 const store = useStore()
+const library = useTrainingCard()
 // text area display functionality
 const textDisplay = ref(null)
 const toggleText = (id) => {
@@ -22,6 +24,12 @@ const isStatus = (status) => {
   } else {
     return { backgroundColor: '#DCFCE7', color: '#1D782E' }
   }
+}
+const saveEdit = (index) => {
+  store.taskDeliverables[index] = { ...library.editBuffer }
+
+  library.editingId = null
+  library.editBuffer = {}
 }
 </script>
 <template>
@@ -43,10 +51,20 @@ const isStatus = (status) => {
         <div
           v-for="(task, index) in store.taskDeliverables"
           :key="task.id"
+          @dblclick="library.startEditing(task, index)"
           class="flex items-center py-2 border-b-2 border-[#EEEEEE]"
         >
           <p class="txt1 text-[0.9rem] py-3 text-[#808080]">{{ index + 1 }}</p>
-          <p class="txt2 text-[0.9rem] py-3 text-[#808080]">{{ task.task }}</p>
+          <div class="txt2 text-[0.9rem] py-3 text-[#808080]">
+            <input
+              v-model="library.editBuffer.task"
+              v-if="task.id === library.editingId"
+              @keyup.esc="library.cancelEdit"
+              @keyup.enter="saveEdit(index)"
+              type="text"
+            />
+            <p v-else>{{ task.task }}</p>
+          </div>
           <p class="txt3 text-[0.9rem] py-3 text-[#808080]">
             <span
               class="py-1 px-5 rounded-[30px] text-[#808080]"

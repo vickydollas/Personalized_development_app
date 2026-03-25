@@ -12,18 +12,50 @@ const props = defineProps({
     type: Number,
     default: 5,
   },
+  quarter: {
+    type: Object,
+    default: null,
+  },
 })
 const searchQuery = ref('')
 const store = useTrainingCard()
 const menu = store.menuItems
-// console.log(store.selectedId)
-const selectiveItems = computed(() => {
+// filter query series
+console.log(props.quarter)
+// const selectiveItems = computed(() => {
+//   const search = searchQuery.value.toLowerCase()
+//   if (!search) return menu
+//   return menu.filter((item) => {
+//     return item.employee?.toLowerCase().includes(search)
+//   })
+// })
+const filterData = computed(() => {
+  const { quarter, year, level, department } = props?.quarter
   const search = searchQuery.value.toLowerCase()
-  if (!search) return menu
-  return menu.filter((item) => {
-    return item.employee?.toLowerCase().includes(search)
-  })
+  const applyFilter = (filters) => {
+    return filters.filter((item) => {
+      // console.log(item.department)
+      const setQuarter = store.handleQuarterType(item.dueDate)
+      const matchQuarter = !quarter || setQuarter.calcQuarter === quarter
+      const matchYear = !year || setQuarter.year === year
+      const matchDepartment =
+        !department ||
+        item?.department.toLowerCase().replaceAll(' ', '') ===
+          department?.toLowerCase().replaceAll(' ', '')
+      const searching = !search || item.employee?.toLowerCase().includes(search)
+      return matchYear && matchQuarter && matchDepartment & searching
+    })
+  }
+  if (!quarter && !year && !department && !search) return store.menuItems
+  return applyFilter(store.menuItems)
 })
+// eidting saving
+const saveEdit = (index) => {
+  menu[index] = { ...store.editBuffer }
+
+  store.editingId = null
+  store.editBuffer = {}
+}
 </script>
 <template>
   <!-- <GraphDisplay /> -->
@@ -44,16 +76,16 @@ const selectiveItems = computed(() => {
         <p :class="[props.show ? 'flex-[0_0_10%]' : 'flex-[0_0_5%]']" class="text-[0.7rem]">
           {{ props.show ? 'Name' : 'S/N' }}
         </p>
-        <p v-if="props.show" class="flex-[0_0_7%] text-[0.7rem]">Department</p>
-        <p :class="[props.show ? 'flex-[0_0_7%]' : 'flex-[0_0_25%]']" class="text-[0.7rem]">
+        <p v-if="props.show" class="flex-[0_0_7%] text-[0.7rem]">Dept</p>
+        <p :class="[props.show ? 'flex-[0_0_9%]' : 'flex-[0_0_25%]']" class="text-[0.7rem]">
           Months
         </p>
-        <p :class="[props.show ? 'flex-[0_0_8%]' : 'flex-[0_0_20%]']" class="text-[0.7rem]">
-          Training Topic
+        <p :class="[props.show ? 'flex-[0_0_7%]' : 'flex-[0_0_20%]']" class="text-[0.7rem]">
+          Topic
         </p>
         <p v-if="props.show" class="flex-[0_0_15%] text-[0.7rem]">Learning Outcome</p>
-        <p :class="[props.show ? 'flex-[0_0_10%]' : 'flex-[0_0_15%]']" class="text-[0.7rem]">
-          Training Method
+        <p :class="[props.show ? 'flex-[0_0_9%]' : 'flex-[0_0_15%]']" class="text-[0.7rem]">
+          T - Method
         </p>
         <p v-if="props.show" class="flex-[0_0_10%] text-[0.7rem]">Skills Matrix Mapping</p>
         <p :class="[props.show ? 'flex-[0_0_8%]' : 'flex-[0_0_20%]']" class="text-[0.7rem]">
@@ -66,18 +98,27 @@ const selectiveItems = computed(() => {
         </p>
       </div>
       <div
-        v-for="(item, index) in selectiveItems.slice(0, props.listing)"
+        v-for="(item, index) in filterData"
         :key="item.id"
-        @click="store.handleSubmit(item)"
+        @click="store.handleSubmit(item, index)"
+        @dblclick="store.startEditing(item)"
         class="flex hover:bg-[#EEEEEE] cursor-pointer items-center"
         :class="[store.selectedId === item.id ? 'bg-[#eeeeee]' : 'bg-inherit']"
       >
-        <p
+        <div
           :class="[props.show ? 'flex-[0_0_10%]' : 'flex-[0_0_5%]']"
           class="text-[#808080] text-[0.6rem] py-4 border-b-2 border-[#EAEAEA]"
         >
-          {{ props.show ? item.employee : index }}
-        </p>
+          <input
+            v-if="store.editingId === item.id"
+            type="text"
+            class="w-17"
+            v-model="store.editBuffer.employee"
+            @keyup.esc="store.cancelEdit"
+            @keyup.enter="saveEdit(index)"
+          />
+          <p v-else>{{ props.show ? item.employee : index }}</p>
+        </div>
         <p
           v-if="props.show"
           class="text-[#808080] flex-[0_0_7%] text-[0.6rem] py-4 border-b-2 border-[#EAEAEA]"
@@ -85,13 +126,13 @@ const selectiveItems = computed(() => {
           {{ item.department }}
         </p>
         <p
-          :class="[props.show ? 'flex-[0_0_7%]' : 'flex-[0_0_25%]']"
+          :class="[props.show ? 'flex-[0_0_9%]' : 'flex-[0_0_25%]']"
           class="text-[#808080] text-[0.6rem] py-4 border-b-2 border-[#EAEAEA]"
         >
           {{ item.month }}
         </p>
         <p
-          :class="[props.show ? 'flex-[0_0_8%]' : 'flex-[0_0_20%]']"
+          :class="[props.show ? 'flex-[0_0_7%]' : 'flex-[0_0_20%]']"
           class="text-[#808080] text-[0.6rem] py-4 border-b-2 border-[#EAEAEA]"
         >
           {{ item.topic }}
@@ -103,7 +144,7 @@ const selectiveItems = computed(() => {
           {{ item.outcome }}
         </p>
         <p
-          :class="[props.show ? 'flex-[0_0_10%]' : 'flex-[0_0_15%]']"
+          :class="[props.show ? 'flex-[0_0_9%]' : 'flex-[0_0_15%]']"
           class="text-[#808080] text-[0.6rem] py-4 border-b-2 border-[#EAEAEA]"
         >
           {{ item.method }}
