@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import NavMenu from '@/components/navbar/NavMenu.vue'
 import TopHeader from '../components/navbar/TopHeader.vue'
 import { onMounted, ref, reactive, computed, watch } from 'vue'
@@ -32,21 +32,31 @@ const sendValidation = () => {
     validation.value = true
   } else validation.value = false
 }
-const exportedQuarter = ref('')
+const exportedQuarter = ref<ExportedQuarter>({})
 const termChange = ref('short')
-const handleQuarterchange = (val) => {
+const handleQuarterchange = (val: ExportedQuarter) => {
   exportedQuarter.value = val
 }
 const handleTermchange = (val) => {
   termChange.value = val
 }
+type ExportedQuarter = {
+  quarter: number,
+  year: number,
+  level: string,
+  department: string
+}
+type HandleQuarterType = {
+  calcQuarter: number,
+  year: number
+}
 const filterData = computed(() => {
   // console.log('filtering re-evaluation', library.goal)
-  const { quarter, year, level, department } = exportedQuarter.value
+  const { quarter, year, level, department } = exportedQuarter.value as ExportedQuarter
   // if (!quarter && !year && !level && !department) return Object.values(library.goal).flat()
   const applyFilter = (filters) => {
     return filters.filter((item) => {
-      const setQuarter = library.handleQuarterType(item.completion_date)
+      const setQuarter = library.handleQuarterType(item.completion_date) as HandleQuarterType
       const matchQuarter = !quarter || setQuarter.calcQuarter === quarter
       const matchYear = !year || setQuarter.year === year
       const matchLevel =
@@ -79,8 +89,8 @@ const careerGoalsStats = computed(() => {
   const title = filteredName
   const currentFilter = filtering.value
   const filter = termChange.value
-  const getTerm = (dataArray) => {
-    if (!dataArray) return []
+  const getTerm = (dataArray: (string | number)[]) => {
+    if (Array.isArray(dataArray)) return []
     return dataArray.filter((item) => item.timeline === filter)
   }
 
@@ -90,7 +100,7 @@ const careerGoalsStats = computed(() => {
       areaOfInterest: Object.values(library.getPercentage(library.goal['areas_of_interest'])),
       mentorship: Object.values(library.getPercentage(library.goal['mentorship'])),
     },
-    filteredSeries: Object.values(library.getPercentage(getTerm(library.goal[currentFilter]))),
+    filteredSeries: Object.values(library.getPercentage(getTerm(filterData.value))),
     filteredName: title,
   }
 })
