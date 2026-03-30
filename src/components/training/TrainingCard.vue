@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useTrainingCard } from '../../stores/trainingCard'
 import GraphDisplay from '../body/GraphDisplay.vue'
 
@@ -22,34 +22,13 @@ const store = useTrainingCard()
 const menu = store.menuItems
 // filter query series
 console.log(props.quarter)
-// const selectiveItems = computed(() => {
-//   const search = searchQuery.value.toLowerCase()
-//   if (!search) return menu
-//   return menu.filter((item) => {
-//     return item.employee?.toLowerCase().includes(search)
-//   })
-// })
 const filterData = computed(() => {
-  const { quarter, year, level, department } = props?.quarter
-  const search = searchQuery.value.toLowerCase()
-  const applyFilter = (filters) => {
-    return filters.filter((item) => {
-      // console.log(item.department)
-      const setQuarter = store.handleQuarterType(item.dueDate)
-      const matchQuarter = !quarter || setQuarter.calcQuarter === quarter
-      const matchYear = !year || setQuarter.year === year
-      const matchDepartment =
-        !department ||
-        item?.department.toLowerCase().replaceAll(' ', '') ===
-          department?.toLowerCase().replaceAll(' ', '')
-      const searching = !search || item.employee?.toLowerCase().includes(search)
-      return matchYear && matchQuarter && matchDepartment & searching
-    })
-  }
-  if (!quarter && !year && !department && !search) return store.menuItems
-  return applyFilter(store.menuItems)
+  return store.applyFilter(store.menuItems, props.quarter, searchQuery.value)
 })
-// eidting saving
+const emit = defineEmits(['filterData'])
+watch(filterData, (newVal) => {
+  emit('filterData', newVal)
+}, { immediate: true, deep: true })
 const saveEdit = (index) => {
   menu[index] = { ...store.editBuffer }
 

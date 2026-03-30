@@ -1,7 +1,7 @@
-<script setup lang="ts">
+<script setup>
 import NavMenu from '@/components/navbar/NavMenu.vue'
 import TopHeader from '../components/navbar/TopHeader.vue'
-import { onMounted, ref, reactive, computed, watch } from 'vue'
+import {  ref, reactive, computed } from 'vue'
 import axios from 'axios'
 import BodyOption from '@/components/navbar/BodyOption.vue'
 import GraphDisplay from '../components/body/GraphDisplay.vue'
@@ -32,31 +32,21 @@ const sendValidation = () => {
     validation.value = true
   } else validation.value = false
 }
-const exportedQuarter = ref<ExportedQuarter>({})
+const exportedQuarter = ref('')
 const termChange = ref('short')
-const handleQuarterchange = (val: ExportedQuarter) => {
+const handleQuarterchange = (val) => {
   exportedQuarter.value = val
 }
 const handleTermchange = (val) => {
   termChange.value = val
 }
-type ExportedQuarter = {
-  quarter: number,
-  year: number,
-  level: string,
-  department: string
-}
-type HandleQuarterType = {
-  calcQuarter: number,
-  year: number
-}
 const filterData = computed(() => {
   // console.log('filtering re-evaluation', library.goal)
-  const { quarter, year, level, department } = exportedQuarter.value as ExportedQuarter
+  const { quarter, year, level, department } = exportedQuarter.value
   // if (!quarter && !year && !level && !department) return Object.values(library.goal).flat()
   const applyFilter = (filters) => {
     return filters.filter((item) => {
-      const setQuarter = library.handleQuarterType(item.completion_date) as HandleQuarterType
+      const setQuarter = library.handleQuarterType(item.completion_date)
       const matchQuarter = !quarter || setQuarter.calcQuarter === quarter
       const matchYear = !year || setQuarter.year === year
       const matchLevel =
@@ -86,11 +76,11 @@ const filteredName = computed(() => {
 })
 
 const careerGoalsStats = computed(() => {
-  const title = filteredName
+  const title = filteredName.value
   const currentFilter = filtering.value
   const filter = termChange.value
-  const getTerm = (dataArray: (string | number)[]) => {
-    if (Array.isArray(dataArray)) return []
+  const getTerm = (dataArray) => {
+    if (!dataArray) return []
     return dataArray.filter((item) => item.timeline === filter)
   }
 

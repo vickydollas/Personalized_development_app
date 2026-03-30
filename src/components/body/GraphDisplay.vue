@@ -31,17 +31,17 @@ const selectedSeries = (item) => {
 }
 const getSeries = [
   {
-    series: [30, 20, 50],
+    series: props.graphData.overAll.careerGoal,
     labels: ['Completed', 'On going', 'Not Started'],
     text: 'Career goals and inspiration',
   },
   {
-    series: [30, 20, 50],
+    series: props.graphData.overAll.areaOfInterest,
     labels: ['Completed', 'On going', 'Not Started'],
     text: 'Area Of Interest',
   },
   {
-    series: [30, 20, 50],
+    series: props.graphData.overAll.mentorship,
     labels: ['Completed', 'On going', 'Not Started'],
     text: 'Mentorship and Skill building',
   },
@@ -104,6 +104,7 @@ const filteredDynamic = computed(() => {
   if (props.showLast) return dynamic.slice(-1)
   return dynamic
 })
+console.log(props.graphData)
 </script>
 <template>
   <div>

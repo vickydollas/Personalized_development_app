@@ -29,13 +29,31 @@ const popUp = ref([
 // modal activeness
 const store = useStore()
 const library = useTrainingCard()
-const graphCurrent = library.getState(library.skill)[0].data
-const graphDesired = library.getState(library.skill)[1].data
-// onMounted(() => {
-//   // const usePercentage = library.getState(library.skill)
-//   // const usePercent = library.getPercentage(library.skill)
-//   console.log(graphData)
-// })
+const exportedQuarter = ref('')
+const handleQuarterchange = (val) => {
+  exportedQuarter.value = val
+}
+const filterData = computed(() => {
+  const { quarter, year, department, level } = exportedQuarter.value
+  const data = library.skill
+  if (!quarter && !year && !department && !level) return data
+  // console.log(quarter, year)
+  return data.filter((item) => {
+    const setQuarter = library.handleQuarterType(item.date)
+    const matchQuarter = !quarter || setQuarter.calcQuarter === quarter
+    const matchYear = !year || setQuarter.year === year
+    const matchDepartment =
+      !department ||
+      item.department.toLowerCase().replaceAll(' ', '') ===
+        department.toLowerCase().replaceAll(' ', '')
+    const matchLevel =
+      !level ||
+      item.level.toLowerCase().replaceAll(' ', '') === level.toLowerCase().replaceAll(' ', '')
+    return matchQuarter && matchYear && matchLevel && matchDepartment
+  })
+})
+const graphCurrent = computed(() => { return library.getState(filterData.value)[0].data })
+const graphDesired = computed(() => { return library.getState(filterData.value)[1].data })
 const formData = ref({
   date: '',
   name: '',
@@ -116,29 +134,6 @@ const chartOptions = ref({
   },
 })
 // data manipulation and filtering
-const exportedQuarter = ref('')
-const handleQuarterchange = (val) => {
-  exportedQuarter.value = val
-}
-const filterData = computed(() => {
-  const { quarter, year, department, level } = exportedQuarter.value
-  const data = library.skill
-  if (!quarter && !year && !department && !level) return data
-  // console.log(quarter, year)
-  return data.filter((item) => {
-    const setQuarter = library.handleQuarterType(item.date)
-    const matchQuarter = !quarter || setQuarter.calcQuarter === quarter
-    const matchYear = !year || setQuarter.year === year
-    const matchDepartment =
-      !department ||
-      item.department.toLowerCase().replaceAll(' ', '') ===
-        department.toLowerCase().replaceAll(' ', '')
-    const matchLevel =
-      !level ||
-      item.level.toLowerCase().replaceAll(' ', '') === level.toLowerCase().replaceAll(' ', '')
-    return matchQuarter && matchYear && matchLevel && matchDepartment
-  })
-})
 const saveEdit = (index) => {
   filterData.value[index] = { ...library.editBuffer }
 

@@ -18,7 +18,6 @@ const props = defineProps({
     type: Boolean,
   },
 })
-// console.log(props.graphData.filteredName)
 const emit = defineEmits(['exportSeries'])
 const validation = computed(() => {
   return props.validation

@@ -2741,6 +2741,23 @@ export const useTrainingCard = defineStore('training', () => {
     const newId = (getMaxId + 1).toString()
     return newId
   }
+  const applyFilter = (filters, props, searchQuery) => {
+    const { quarter, year, level, department } = props
+    const search = searchQuery.toLowerCase()
+    if (!quarter && !year && !department && !search) return filters
+    return filters.filter((item) => {
+      // console.log(item.department)
+      const setQuarter = handleQuarterType(item.dueDate)
+      const matchQuarter = !quarter || setQuarter.calcQuarter === quarter
+      const matchYear = !year || setQuarter.year === year
+      const matchDepartment =
+        !department ||
+        item?.department.toLowerCase().replaceAll(' ', '') ===
+          department?.toLowerCase().replaceAll(' ', '')
+      const searching = !search || item.employee?.toLowerCase().includes(search)
+      return matchYear && matchQuarter && matchDepartment & searching
+    })
+  }
   return {
     menuItems,
     setRating,
@@ -2761,5 +2778,6 @@ export const useTrainingCard = defineStore('training', () => {
     getPercentage,
     getState,
     createId,
+    applyFilter,
   }
 })

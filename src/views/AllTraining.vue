@@ -25,8 +25,12 @@ const getTerm = (dataArray) => {
   if (!dataArray) return []
   return dataArray.filter((item) => item.timeline === termChange.value)
 }
+const exportedFilterData = ref(null)
+const handleFilterData = (val) => {
+  exportedFilterData.value = val
+}
 const percentage = computed(() => {
-  return Object.values(store.getPercentage(getTerm(store.menuItems)))
+  return Object.values(store.getPercentage(getTerm(exportedFilterData.value)))
 })
 </script>
 <template>
@@ -38,7 +42,7 @@ const percentage = computed(() => {
       <div class="py-5 px-4 bg-[#ffffff] my-3 mx-20 rounded-[7px]">
         <h2 class="text-[1.5rem] text-[500]">All Training Schedule</h2>
         <TrainingGraph @exportSeries="handleTermchange" :graphData="percentage" />
-        <TrainingCard :show="true" :quarter="exportedQuarter" />
+        <TrainingCard :show="true" :quarter="exportedQuarter" @filterData="handleFilterData" />
       </div>
     </div>
   </div>

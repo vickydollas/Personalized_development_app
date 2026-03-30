@@ -8,7 +8,6 @@ import TrainingGraph from '../components/body/TrainingGraph.vue'
 import FormPop from '../components/body/FormPop.vue'
 import { useStore } from '../stores/formPop'
 import { useTrainingCard } from '../stores/trainingCard'
-import { all } from 'axios'
 
 const store = useStore()
 const stores = useTrainingCard()
@@ -25,8 +24,12 @@ const getTerm = (dataArray) => {
   if (!dataArray) return []
   return dataArray.filter((item) => item.timeline === termChange.value)
 }
+const exportedFilterData = ref(null)
+const handleFilterData = (val) => {
+  exportedFilterData.value = val
+}
 const percentage = computed(() => {
-  return Object.values(stores.getPercentage(getTerm(stores.menuItems)))
+  return Object.values(stores.getPercentage(getTerm(exportedFilterData.value)))
 })
 // menuitems to document the detail of your plan
 const menuItems = ref([
@@ -89,6 +92,7 @@ const buttonSubmit = () => {
     <TopHeader />
     <NavMenu />
     <div>
+      <!-- {{ exportedFilterData }} -->
       <BodyOption @quarterExpo="handleQuarterchange" />
       <div class="py-5 px-4 bg-[#ffffff] my-3 mx-20 rounded-[7px]">
         <div class="flex items-center px-5 justify-between">
@@ -133,7 +137,7 @@ const buttonSubmit = () => {
         </FormPop>
         <TrainingGraph @exportSeries="handleTermchange" :graphData="percentage" />
         <div class="grid grid-cols-12">
-          <TrainingCard class="col-span-8" :show="true" :quarter="exportedQuarter" />
+          <TrainingCard class="col-span-8" :show="true" :quarter="exportedQuarter" @filterData="handleFilterData" />
           <div class="col-span-4">
             <h3 class="pl-3 mt-5 text-[1.4rem] font-[600]">Details</h3>
             <div v-for="item in menuItems" :key="item.id" class="my-1 px-3">
