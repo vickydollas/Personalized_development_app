@@ -74,7 +74,6 @@ const filteredName = computed(() => {
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(' ')
 })
-const getting = ref('')
 const careerGoalsStats = computed(() => {
   const title = filteredName.value
   const currentFilter = filtering.value
