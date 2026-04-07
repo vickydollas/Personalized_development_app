@@ -93,6 +93,7 @@ const careerGoalsStats = computed(() => {
     filteredName: title,
   }
 })
+const formParam = ref('')
 // form parameters
 const formData = ref({
   goal: '',
